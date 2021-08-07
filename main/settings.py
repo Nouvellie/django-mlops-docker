@@ -2,7 +2,7 @@ import environ
 import os
 import random
 
-# from .version import info
+from .version import info
 from datetime import timedelta
 from pathlib import Path
 
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 
 CUSTOM_APPS = [
     'apps.core',
+    'apps.mlops',
 ]
 
 DJANGO_APPS = [
@@ -108,7 +109,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-# STATIC_ROOT = '/static/' 
+# STATIC_ROOT = '/static/' # For docker.
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 

@@ -13,4 +13,10 @@ urlpatterns = [
         '',
         include('apps.core.urls'),
     ),
+
+    # Apps:
+    path(
+        '',
+        include('apps.mlops.urls'),
+    ),
 ]
