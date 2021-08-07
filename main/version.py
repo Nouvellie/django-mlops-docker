@@ -6,16 +6,27 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.0.1"
+__version__     =     "0.0.2"
 __logs__        =  {
-    'version':      "0.0.1",
+    'version':      "0.0.2",
     'date':         "08/07/2021",
-    'info':         ["Base project created."],
+    'info':         ["Jupyter notebook for Fashion Mnist example.", "Converter from model to TFLite.", "Predict with both methods."],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
     "prod":         None,
 }
+
+
+# __logs__        =  {
+#     'version':      "0.0.1",
+#     'date':         "08/07/2021",
+#     'info':         ["Base project created."],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "610d7c2",
+#     "prod":         None,
+# }
 
 
 full_info = {
