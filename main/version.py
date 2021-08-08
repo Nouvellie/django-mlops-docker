@@ -1,22 +1,41 @@
 __author__      =     "Rocuant Roberto"
 __created__     =     "08/07/2021" # MM/DD/YYYY
-__credits__     =     None
+__credits__     =     "Ávila Jorge (mlops app)"
 __copyright__   =     None
 __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.0.2"
+__version__     =     "0.1.0"
 __logs__        =  {
-    'version':      "0.0.2",
-    'date':         "08/07/2021",
-    'info':         ["Jupyter notebook for Fashion Mnist example.", "Converter from model to TFLite.", "Predict with both methods."],
-    'problems':     ["",],
-    'fixed':        None,
+    'version':      "0.1.0",
+    'date':         "08/08/2021",
+    'info':         ["Pipeline, preprocessing, model loader, file loader and model input ready for fashion mnist and generics models.", "Custom typing for some values.", "PEP8."],
+    'problems':     ["Output decoder not ready yet.", "HDF5 not ready yet.", "DVC not implemented yet."],
+    'fixed':        False,
     'commit':       "",
     "prod":         None,
 }
 
+# __logs__        =  {
+#     'version':      "0.0.3",
+#     'date':         "08/07/2021",
+#     'info':         ["Pipeline py added.", "Pre processing py added.", "Media FashionMnist folder updated.", "Complete Pipeline class."],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
+#     'version':      "0.0.2",
+#     'date':         "08/07/2021",
+#     'info':         ["Jupyter notebook for Fashion Mnist example.", "Converter from model to TFLite.", "Predict with both methods."],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.0.1",

@@ -1,0 +1,17 @@
+[
+    [
+        "resize_img",
+        {
+            "target_size": [
+                28,
+                28
+            ]
+        }
+    ],
+    [
+        "rescale_img",
+        {
+            "factor": 255.0
+        }
+    ]
+]
