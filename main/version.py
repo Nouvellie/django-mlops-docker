@@ -10,7 +10,7 @@ __version__     =     "0.1.1"
 __logs__        =  {
     'version':      "0.1.1",
     'date':         "08/08/2021",
-    'info':         ["Output decoder not ready yet. OK", "Argmax and threshold adapted.", "FashionMnist TFLite View ready.", "Model updated.", "Url and APIView name changed.", "Commit added.",],
+    'info':         ["Output decoder not ready yet. OK", "Argmax and threshold adapted.", "FashionMnist TFLite View ready.", "Model updated.", "Url and APIView name changed.", "Commit added (fixed).",],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
