@@ -1,0 +1,16 @@
+{
+    "ordered_model_output": [
+        "t-shirt-top",
+        "trouser",
+        "pullover",
+        "dress",
+        "coat",
+        "sandal",
+        "shirt",
+        "sneaker",
+        "bag",
+        "ankle-boot"
+    ],
+    "decode_output_by": "threshold",
+    "threshold": [0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75]
+}

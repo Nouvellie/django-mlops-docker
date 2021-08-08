@@ -4,6 +4,7 @@ import numpy as np
 from math import floor
 from pathlib import Path
 from typing import (
+    Dict,
     List,
     Optional,
     Union,
@@ -45,22 +46,22 @@ class OutputDecoder:
             threshold=self.threshold
         )
 
-    def decode_by_argmax(self, output: List[float]):
+    def decode_by_argmax(self, list_output: List[float]) -> List:
         """Output decoding via argmax."""
-        return [self.ordered_model_output[np.argmax(output)]]
+        return [self.ordered_model_output[np.argmax(list_output)]]
 
-    def decode_by_threshold(self, output: List[float]):
+    def decode_by_threshold(self, list_output: List[float]) -> List:
         """Output decoding via threshold."""
         if isinstance(self.threshold, list):
             assert len(self.threshold) == len(
                 self.ordered_model_output), 'The list of thresholds does not have the same length as the output'
-            return [class_ for class_, pred, threshold in zip(self.ordered_model_output, output, self.threshold) if pred >= threshold]
+            return [class_ for class_, pred, threshold in zip(self.ordered_model_output, list_output, self.threshold) if pred >= threshold]
         elif isinstance(self.threshold, float):
-            return [class_ for class_, pred in zip(self.ordered_model_output, output) if pred >= self.threshold]
+            return [class_ for class_, pred in zip(self.ordered_model_output, list_output) if pred >= self.threshold]
         else:
             raise("'threshold' must be a float or a list")
 
-    def output_decoding(self, model_output, confidence: bool = False) -> dict:
+    def output_decoding(self, model_output: np.ndarray, confidence: bool = False) -> Dict:
         """Decode the model output.
         Args:
                 model_output (np.array): Output of a keras model.
@@ -81,13 +82,13 @@ class OutputDecoder:
                     np.round(list_output[0]))]
             # Multilabel case: 2+ outputs.
             else:
-                output_decoded = self.decode_by_threshold()
+                output_decoded = self.decode_by_threshold(list_output)
 
         if confidence:
             return dict(
                 output_decoded=output_decoded,
                 model_confidence={
-                    class_: floor(output * 10 ** 4) / 10 ** 4 for class_, output in zip(self.ordered_model_output, list_output)
+                    class_: output for class_, output in zip(self.ordered_model_output, list_output)
                 }
             )
         else:
@@ -101,7 +102,7 @@ class OutputDecoder:
         with open(str(postprocessing_path), "r", encoding="utf8") as pp:
             postprocessing = json.load(pp)
 
-        self.ordered_model_output = postprocessing.get("order_output_model")
+        self.ordered_model_output = postprocessing.get("ordered_model_output")
         self.decode_output_by = postprocessing.get("decode_output_by")
         self.threshold = postprocessing.get("threshold")
         self.config = postprocessing

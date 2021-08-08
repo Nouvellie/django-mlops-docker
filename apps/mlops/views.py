@@ -13,10 +13,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # Preloaded models.
-fashion_mnist_tflite_model = TFLiteModelLoader(model_dir="1/fashionmnist")
+fashion_mnist__argmax_tflite_model = TFLiteModelLoader(model_dir="1/fashionmnist")
+fashion_mnist_threshold_tflite_model = TFLiteModelLoader(model_dir="1/fashionmnist2")
 
 
-class FashionMnistAPIView(APIView):
+class TFLiteFashionMnistAPIView(APIView):
     """API for Fashion Mnist model."""
 
     def post(self, request, format=None):
@@ -33,9 +34,19 @@ class FashionMnistAPIView(APIView):
 
             model_input = list(request.FILES.getlist('image'))[0]
 
-            tflite_result = fashion_mnist_tflite_model.predict(model_input)
+            tflite_argmax_result_true = fashion_mnist__argmax_tflite_model.predict(model_input, confidence=True)
+            tflite_argmax_result_false = fashion_mnist__argmax_tflite_model.predict(model_input, confidence=False)
+            tflite_threshold_result_true = fashion_mnist_threshold_tflite_model.predict(model_input, confidence=True)
+            tflite_threshold_result_false = fashion_mnist_threshold_tflite_model.predict(model_input, confidence=True)
 
-            return Response(status=status.HTTP_200_OK)
+            result = {
+                'argmax_true': tflite_argmax_result_true,
+                'argmax_false': tflite_argmax_result_false,
+                'threshold_true': tflite_threshold_result_true,
+                'threshold_false': tflite_threshold_result_false,
+            }
+
+            return Response(result, status=status.HTTP_200_OK)
         except:
             full_traceback = re.sub(r"\n\s*", " || ", traceback.format_exc())
 
