@@ -20,6 +20,7 @@ from tensorflow import (
     convert_to_tensor,
     lite,
 )
+from tensorflow.keras.models import model_from_json
 from typing import (
     Any,
     Dict,
@@ -54,7 +55,7 @@ class BaseModelLoader(ABC):
         postprocessing_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/postprocessing.json")
 
         self.postprocessing = OutputDecoder()
-        self.postprocessing.from_json(postprocessing_path) 
+        self.postprocessing.from_json(postprocessing_path)
 
     def model_input_load(self):
         if self.model_type == 1:
@@ -114,7 +115,7 @@ class TFLiteModelLoader(BaseModelLoader):
         self.interpreter.allocate_tensors()
         self.input_details = self.interpreter.get_input_details()
         self.output_details = self.interpreter.get_output_details()
-        # print(f"The model {self.model_dir.title()} has been pre-loaded successfully. (TFLITE)")
+        # print(f"The model {self.model_dir.title()} has been successfully pre-loaded. (TFLITE)")
 
     def predict(self, model_input: Any, confidence: bool = False) -> Dict:
         try:
@@ -137,5 +138,30 @@ class TFLiteModelLoader(BaseModelLoader):
                 full_traceback = re.sub(
                     r"\n\s*", " || ", traceback.format_exc())
                 print(full_traceback, e)
-            else:
-                pass
+
+
+class HDF5JSONModelLoader(BaseModelLoader):
+    """Class to generate predictions from a HDF5JSON model"""
+
+    def model_preload(self):
+        hdf5_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/model.hdf5")
+        json_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/model.json")
+
+        with open(json_path, "r") as jp:
+            self.model = model_from_json(jp.read())
+        self.model.load_weights(hdf5_path)
+        # print(f"The model {self.model_dir.title()} has been successfully pre-loaded. (HDF5-JSON)")
+
+    def predict(self, model_input: Any, confidence: bool = False) -> Dict:
+        try:
+            model_input = self.generate_model_input(model_input)
+
+            prediction = self.model.predict(model_input)
+            result = self.postprocessing.output_decoding(
+                model_output=prediction, confidence=confidence)
+            return result
+        except Exception as e:
+            if DEBUG:
+                full_traceback = re.sub(
+                    r"\n\s*", " || ", traceback.format_exc())
+                print(full_traceback, e)

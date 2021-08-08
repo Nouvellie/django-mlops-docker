@@ -6,11 +6,11 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.1.1"
+__version__     =     "0.2.0"
 __logs__        =  {
-    'version':      "0.1.1",
+    'version':      "0.2.0",
     'date':         "08/08/2021",
-    'info':         ["Output decoder not ready yet. OK", "Argmax and threshold adapted.", "FashionMnist TFLite View ready.", "Model updated.", "Url and APIView name changed.", "Commit added (fixed).",],
+    'info':         ["HDF5JSON not ready yet. OK", "TFLite threshold output fixed (views.py).",],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
@@ -18,12 +18,22 @@ __logs__        =  {
 }
 
 # __logs__        =  {
+#     'version':      "0.1.1",
+#     'date':         "08/08/2021",
+#     'info':         ["Output decoder not ready yet. OK", "Argmax and threshold adapted.", "FashionMnist TFLite View ready.", "Model updated.", "Url and APIView name changed.", "Commit added (fixed).",],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "959c309",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
 #     'version':      "0.1.0",
 #     'date':         "08/08/2021",
 #     'info':         ["Pipeline, preprocessing, model loader, file loader and model input ready for fashion mnist and generics models.", "Custom typing for some values.", "PEP8.", "The code was cleaned up.", "Example images added.",],
-#     'problems':     ["Output decoder not ready yet.*", "HDF5 not ready yet.", "DVC not implemented yet.", "Fix pipeline from_json."],
+#     'problems':     ["Output decoder not ready yet.*", "HDF5JSON not ready yet.*", "DVC not implemented yet.", "Fix pipeline from_json."],
 #     'fixed':        False,
-#     'commit':       "895c9a1f60",
+#     'commit':       "ea35174",
 #     "prod":         None,
 # }
 
