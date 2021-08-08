@@ -51,15 +51,12 @@ class OutputDecoder:
 
     def decode_by_threshold(self, output: List[float]):
         """Output decoding via threshold."""
-        print("987")
         if isinstance(self.threshold, list):
             assert len(self.threshold) == len(
                 self.ordered_model_output), 'the list of thresholds does not have the same length as the output'
-            print("a1", type([class_ for class_, pred, threshold in zip(
                 self.ordered_model_output, output, self.threshold) if pred >= threshold]))
             return [class_ for class_, pred, threshold in zip(self.ordered_model_output, output, self.threshold) if pred >= threshold]
         elif isinstance(self.threshold, float):
-            print("a2", type([class_ for class_, pred in zip(
                 self.ordered_model_output, output) if pred >= self.threshold]))
             return [class_ for class_, pred in zip(self.ordered_model_output, output) if pred >= self.threshold]
         else:

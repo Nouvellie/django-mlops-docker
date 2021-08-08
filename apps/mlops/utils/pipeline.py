@@ -45,13 +45,9 @@ class Pipeline:
 
             # Apply preprocessing. (args and kwargs provided)
             if args:
-                print("caca")
                 model_input = self.apply(model_input, func_name, *args, **kwargs)
-                print("caca")
             else:
-                print("poto")
                 model_input = self.apply(model_input, func_name, **kwargs)
-                print("poto")
         return model_input
 
     @classmethod
@@ -73,6 +69,7 @@ class Pipeline:
             pipe[0]: self.is_available(pipe[0]) for pipe in pipeline
         }
 
+        # TODO: Fix this.
         # If all functions are not available.
         # if not all(available_functions.values()):
         # 	not_available_functions = available_functions
