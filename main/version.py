@@ -10,9 +10,9 @@ __version__     =     "0.2.0"
 __logs__        =  {
     'version':      "0.2.0",
     'date':         "08/08/2021",
-    'info':         ["HDF5JSON not ready yet. OK", "TFLite threshold output fixed (views.py).", "Jupyter example fixed."],
-    'problems':     ["",],
-    'fixed':        None,
+    'info':         ["HDF5JSON not ready yet. OK", "TFLite threshold output fixed (views.py).", "Jupyter example fixed.", "Imdb jupyter added.", "Jupyter folder on media path now.",],
+    'problems':     ["Imdb jupyter not ready yet.",],
+    'fixed':        False,
     'commit':       "",
     "prod":         None,
 }
