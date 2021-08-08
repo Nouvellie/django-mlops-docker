@@ -64,12 +64,12 @@ class Pipeline:
         with open(str(preprocessing_path), "r", encoding="utf8") as pp:
             pipeline = json.load(pp)
 
-        # Check the availability of the functions.
-        available_functions = {
-            pipe[0]: self.is_available(pipe[0]) for pipe in pipeline
-        }
-
         # TODO: Fix this.
+        # Check the availability of the functions.
+        # available_functions = {
+        #     pipe[0]: self.is_available(pipe[0]) for pipe in pipeline
+        # }
+
         # If all functions are not available.
         # if not all(available_functions.values()):
         # 	not_available_functions = available_functions
