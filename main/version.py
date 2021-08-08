@@ -11,7 +11,7 @@ __logs__        =  {
     'version':      "0.1.0",
     'date':         "08/08/2021",
     'info':         ["Pipeline, preprocessing, model loader, file loader and model input ready for fashion mnist and generics models.", "Custom typing for some values.", "PEP8.", "The code was cleaned up.", "Example images added.",],
-    'problems':     ["Output decoder not ready yet.", "HDF5 not ready yet.", "DVC not implemented yet.",],
+    'problems':     ["Output decoder not ready yet.", "HDF5 not ready yet.", "DVC not implemented yet.", "Fix pipeline from_json."],
     'fixed':        False,
     'commit':       "",
     "prod":         None,
