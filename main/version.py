@@ -10,7 +10,7 @@ __version__     =     "0.1.1"
 __logs__        =  {
     'version':      "0.1.1",
     'date':         "08/08/2021",
-    'info':         ["Output decoder not ready yet. OK", "Argmax and threshold adapted.", "FashionMnist TFLite View ready.", "Model updated.", "Url and APIView name changed."],
+    'info':         ["Output decoder not ready yet. OK", "Argmax and threshold adapted.", "FashionMnist TFLite View ready.", "Model updated.", "Url and APIView name changed.", "Commit added.",],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
@@ -23,7 +23,7 @@ __logs__        =  {
 #     'info':         ["Pipeline, preprocessing, model loader, file loader and model input ready for fashion mnist and generics models.", "Custom typing for some values.", "PEP8.", "The code was cleaned up.", "Example images added.",],
 #     'problems':     ["Output decoder not ready yet.*", "HDF5 not ready yet.", "DVC not implemented yet.", "Fix pipeline from_json."],
 #     'fixed':        False,
-#     'commit':       "",
+#     'commit':       "895c9a1f60",
 #     "prod":         None,
 # }
 
@@ -33,7 +33,7 @@ __logs__        =  {
 #     'info':         ["Pipeline py added.", "Pre processing py added.", "Media FashionMnist folder updated.", "Complete Pipeline class."],
 #     'problems':     ["",],
 #     'fixed':        None,
-#     'commit':       "",
+#     'commit':       "0bb56be",
 #     "prod":         None,
 # }
 
@@ -43,7 +43,7 @@ __logs__        =  {
 #     'info':         ["Jupyter notebook for Fashion Mnist example.", "Converter from model to TFLite.", "Predict with both methods."],
 #     'problems':     ["",],
 #     'fixed':        None,
-#     'commit':       "",
+#     'commit':       "ec12892",
 #     "prod":         None,
 # }
 
