@@ -9,129 +9,129 @@ from .output_decoder import OutputDecoder
 from .pipeline import Pipeline
 from .preprocessing import pipeline_function_register
 from abc import (
-    ABC,
-    abstractmethod,
+	ABC,
+	abstractmethod,
 )
 from main.settings import (
-    DEBUG,
-    MODEL_ROOT,
+	DEBUG,
+	MODEL_ROOT,
 )
 from tensorflow import (
-    convert_to_tensor,
-    lite,
+	convert_to_tensor,
+	lite,
 )
 from typing import (
-    Any,
-    List,
+	Any,
+	List,
 )
 
 
 class BaseModelLoader(ABC):
-    """Metaclass for defining the model loader."""
+	"""Metaclass for defining the model loader."""
 
-    def __new__(cls, model_dir: str, *args, **kwargs):
-        return super(BaseModelLoader, cls).__new__(cls, *args, **kwargs)
+	def __new__(cls, model_dir: str, *args, **kwargs):
+		return super(BaseModelLoader, cls).__new__(cls, *args, **kwargs)
 
-    def __init__(self, model_dir: str):
-        self.model_type = int(model_dir.split("/")[0])
-        self.model_dir = model_dir
-        self.model_preload()
-        self.preprocessing_load()
-        self.postprocessing_load()
-        self.model_input_load()
-        self.preload_file_loader()
+	def __init__(self, model_dir: str):
+		self.model_type = int(model_dir.split("/")[0])
+		self.model_dir = model_dir
+		self.model_preload()
+		self.preprocessing_load()
+		self.postprocessing_load()
+		self.model_input_load()
+		self.preload_file_loader()
 
-    def preprocessing_load(self):
-        """Function to apply preprocessing to an array."""
-        preprocessing_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/preprocessing.json")
+	def preprocessing_load(self):
+		"""Function to apply preprocessing to an array."""
+		preprocessing_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/preprocessing.json")
 
-        self.preprocessing = Pipeline()
-        self.preprocessing.from_json(preprocessing_path)
+		self.preprocessing = Pipeline()
+		self.preprocessing.from_json(preprocessing_path)
 
-    def postprocessing_load(self):
-        """Function to apply postprocessing to model output."""
-        postprocessing_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/postprocessing.json")
+	def postprocessing_load(self):
+		"""Function to apply postprocessing to model output."""
+		postprocessing_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/postprocessing.json")
 
-        self.postprocessing = OutputDecoder()
-        self.postprocessing.from_json(postprocessing_path)
+		self.postprocessing = OutputDecoder()
+		self.postprocessing.from_json(postprocessing_path)
 
-    def model_input_load(self):
-        if self.model_type == 1:
-            self.ModelInput = FashionMnistImageModelInput()
-        elif self.model_type == 2:
-        #     self.ModelInput = OtherModelInput()
-            pass
-        else:
-            pass
+	def model_input_load(self):
+		if self.model_type == 1:
+			self.ModelInput = FashionMnistImageModelInput()
+		elif self.model_type == 2:
+		#     self.ModelInput = OtherModelInput()
+			pass
+		else:
+			pass
 
-    def preload_file_loader(self):
-        """Function to load the file as an array."""
-        if self.model_type == 1:
-            self.file_loader = FashionMnistFileLoader()
-        elif self.model_type == 2:
-        #     self.file_loader = OtherFileLoader()
-            pass
-        else:
-            pass
+	def preload_file_loader(self):
+		"""Function to load the file as an array."""
+		if self.model_type == 1:
+			self.file_loader = FashionMnistFileLoader()
+		elif self.model_type == 2:
+		#     self.file_loader = OtherFileLoader()
+			pass
+		else:
+			pass
 
-    def generate_model_input(self, model_input: Any) -> List:
-        """From file -> array -> preprocessing -> model input."""
-        model_input = self.file_loader(model_input)
-        model_input = self.preprocessing(model_input)
-        if self.model_type == 1:
-            model_input = self.ModelInput.fashionmnist_input(model_input)
-        elif self.model_type == 2:
-            # model_input = self.ModelInput.other_input(model_input)
-            pass
-        else:
-            pass
-        return model_input
+	def generate_model_input(self, model_input: Any) -> List:
+		"""From file -> array -> preprocessing -> model input."""
+		model_input = self.file_loader(model_input)
+		model_input = self.preprocessing(model_input)
+		if self.model_type == 1:
+			model_input = self.ModelInput.fashionmnist_input(model_input)
+		elif self.model_type == 2:
+			# model_input = self.ModelInput.other_input(model_input)
+			pass
+		else:
+			pass
+		return model_input
 
 
-    @abstractmethod
-    def model_preload(self):
-        pass
+	@abstractmethod
+	def model_preload(self):
+		pass
 
-    @abstractmethod
-    def predict(self):
-        pass
+	@abstractmethod
+	def predict(self):
+		pass
 
 
 class TFLiteModelLoader(BaseModelLoader):
-    """Class to generate predictions from a TFLite model"""
-    NUM_THREADS = 4
+	"""Class to generate predictions from a TFLite model"""
+	NUM_THREADS = 4
 
-    def model_preload(self):
-        tflite_name = [name for name in os.listdir(MODEL_ROOT + f"{self.model_dir}") if name.endswith(".tflite")][0]
-        model_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/{tflite_name}")
+	def model_preload(self):
+		tflite_name = [name for name in os.listdir(MODEL_ROOT + f"{self.model_dir}") if name.endswith(".tflite")][0]
+		model_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/{tflite_name}")
 
-        if self.NUM_THREADS > 0:
-            self.interpreter = lite.Interpreter(
-                model_path=str(model_path), num_threads=self.NUM_THREADS)
-        else:
-            self.interpreter = lite.Interpreter(model_path=str(model_path))
+		if self.NUM_THREADS > 0:
+			self.interpreter = lite.Interpreter(
+				model_path=str(model_path), num_threads=self.NUM_THREADS)
+		else:
+			self.interpreter = lite.Interpreter(model_path=str(model_path))
 
-        self.interpreter.allocate_tensors()
-        self.input_details = self.interpreter.get_input_details()
-        self.output_details = self.interpreter.get_output_details()
-        # print(f"The model {self.model_dir.title()} has been pre-loaded successfully. (TFLITE)")
+		self.interpreter.allocate_tensors()
+		self.input_details = self.interpreter.get_input_details()
+		self.output_details = self.interpreter.get_output_details()
+		# print(f"The model {self.model_dir.title()} has been pre-loaded successfully. (TFLITE)")
 
-    def predict(self, model_input: Any):
-        try:
-            model_input = self.generate_model_input(model_input)
-            
-            for i, j in enumerate(model_input):
-                model_input_tensor = convert_to_tensor(np.array(j), np.float32)
-                self.interpreter.set_tensor(self.input_details[i]['index'], model_input_tensor)
+	def predict(self, model_input: Any):
+		try:
+			model_input = self.generate_model_input(model_input)
+			
+			for i, j in enumerate(model_input):
+				model_input_tensor = convert_to_tensor(np.array(j), np.float32)
+				self.interpreter.set_tensor(self.input_details[i]['index'], model_input_tensor)
 
-            self.interpreter.invoke()
+			self.interpreter.invoke()
 
-            prediction = self.interpreter.get_tensor(self.output_details[0]['index'])
-            print(prediction)
-        except Exception as e:
-            if DEBUG:
-                full_traceback = re.sub(
-                    r"\n\s*", " || ", traceback.format_exc())
-                print(full_traceback, e)
-            else:
-                pass
+			prediction = self.interpreter.get_tensor(self.output_details[0]['index'])
+			print(prediction)
+		except Exception as e:
+			if DEBUG:
+				full_traceback = re.sub(
+					r"\n\s*", " || ", traceback.format_exc())
+				print(full_traceback, e)
+			else:
+				pass
