@@ -10,7 +10,7 @@ __version__     =     "0.3.0"
 __logs__        =  {
     'version':      "0.3.0",
     'date':         "08/12/2021",
-    'info':         ["Pip requirements added.", "Virtualenv instead conda info."],
+    'info':         ["Pip requirements added.", "Virtualenv instead conda info.", "Jupyter fix.", "Ipykernel for new environ.", "Imdb notebook fix.", "Imdb model adapted. (tflite)", "Prediction OK on Imdb model.",],
     'problems':     ["",],
     'fixed':        False,
     'commit':       "",
