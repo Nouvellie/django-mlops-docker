@@ -10,8 +10,8 @@ __version__     =     "0.4.0"
 __logs__        =  {
     'version':      "0.4.0",
     'date':         "08/12/2021",
-    'info':         ["Imdb APIView.", "Imdb pre-post adaptation.", "Imdb jupyter not ready yet. OK", "TFLite Imdb ready.", "Imdb jupyter fixed."],
-    'problems':     ["Model input fix.",],
+    'info':         ["Imdb APIView.", "Imdb pre-post adaptation.", "Imdb jupyter not ready yet. OK", "TFLite Imdb ready.", "Imdb jupyter fixed.", "Model input updated.",],
+    'problems':     ["Model input fix.", "Imdb predict with text or file. (txt)"],
     'fixed':        False,
     'commit':       "",
     "prod":         None,
@@ -22,7 +22,7 @@ __logs__        =  {
 #     'date':         "08/12/2021",
 #     'info':         ["Pip requirements added.", "Virtualenv instead conda info.", "Jupyter fix.", "Ipykernel for new environ.", "Imdb notebook fix.", "Imdb model adapted. (tflite)", "Prediction OK on Imdb model.",],
 #     'problems':     ["",],
-#     'fixed':        False,
+#     'fixed':        None,
 #     'commit':       "8556750",
 #     "prod":         None,
 # }
