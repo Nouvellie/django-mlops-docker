@@ -6,23 +6,33 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.3.0"
+__version__     =     "0.4.0"
 __logs__        =  {
-    'version':      "0.3.0",
+    'version':      "0.4.0",
     'date':         "08/12/2021",
-    'info':         ["Pip requirements added.", "Virtualenv instead conda info.", "Jupyter fix.", "Ipykernel for new environ.", "Imdb notebook fix.", "Imdb model adapted. (tflite)", "Prediction OK on Imdb model.",],
-    'problems':     ["",],
+    'info':         ["Imdb APIView.", "Imdb pre-post adaptation.", "Imdb jupyter not ready yet. OK", "TFLite Imdb ready.", "Imdb jupyter fixed."],
+    'problems':     ["Model input fix.",],
     'fixed':        False,
     'commit':       "",
     "prod":         None,
 }
 
 # __logs__        =  {
+#     'version':      "0.3.0",
+#     'date':         "08/12/2021",
+#     'info':         ["Pip requirements added.", "Virtualenv instead conda info.", "Jupyter fix.", "Ipykernel for new environ.", "Imdb notebook fix.", "Imdb model adapted. (tflite)", "Prediction OK on Imdb model.",],
+#     'problems':     ["",],
+#     'fixed':        False,
+#     'commit':       "8556750",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
 #     'version':      "0.2.0",
 #     'date':         "08/08/2021",
 #     'info':         ["HDF5JSON not ready yet. OK", "TFLite threshold output fixed (views.py).", "Jupyter example fixed.", "Imdb jupyter added.", "Jupyter folder on media path now.",],
-#     'problems':     ["Imdb jupyter not ready yet.",],
-#     'fixed':        False,
+#     'problems':     ["Imdb jupyter not ready yet.*",],
+#     'fixed':        True,
 #     'commit':       "22f8f86",
 #     "prod":         None,
 # }

@@ -1,0 +1,7 @@
+{
+    "ordered_model_output": [
+        "good"
+    ],
+    "decode_output_by": "argmax",
+    "threshold": null
+}

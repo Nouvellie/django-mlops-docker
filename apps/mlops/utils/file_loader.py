@@ -19,3 +19,9 @@ class FashionMnistFileLoader:
         model_input = Image.open(model_input)
         model_input = model_input.convert('L')
         return model_input
+
+
+class ImdbFileLoader:
+
+    def __call__(self, model_input: str) -> str:
+        return model_input

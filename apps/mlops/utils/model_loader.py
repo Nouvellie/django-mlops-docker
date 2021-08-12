@@ -3,8 +3,11 @@ import os
 import re
 import traceback
 
-from .file_loader import FashionMnistFileLoader
-from .model_input import FashionMnistImageModelInput
+from .file_loader import (
+    FashionMnistFileLoader,
+    ImdbFileLoader,
+)
+from .model_input import ModelInputGenerator
 from .output_decoder import OutputDecoder
 from .pipeline import Pipeline
 from .preprocessing import pipeline_function_register
@@ -58,21 +61,14 @@ class BaseModelLoader(ABC):
         self.postprocessing.from_json(postprocessing_path)
 
     def model_input_load(self):
-        if self.model_type == 1:
-            self.ModelInput = FashionMnistImageModelInput()
-        elif self.model_type == 2:
-            #     self.ModelInput = OtherModelInput()
-            pass
-        else:
-            pass
+        self.ModelInput = ModelInputGenerator()
 
     def preload_file_loader(self):
         """Function to load the file as an array."""
         if self.model_type == 1:
             self.file_loader = FashionMnistFileLoader()
         elif self.model_type == 2:
-            #     self.file_loader = OtherFileLoader()
-            pass
+            self.file_loader = ImdbFileLoader()
         else:
             pass
 
@@ -80,13 +76,7 @@ class BaseModelLoader(ABC):
         """From file -> array -> preprocessing -> model input."""
         model_input = self.file_loader(model_input)
         model_input = self.preprocessing(model_input)
-        if self.model_type == 1:
-            model_input = self.ModelInput.fashionmnist_input(model_input)
-        elif self.model_type == 2:
-            # model_input = self.ModelInput.other_input(model_input)
-            pass
-        else:
-            pass
+        model_input = self.ModelInput.model_input_generator(model_input)
         return model_input
 
     @abstractmethod
@@ -121,10 +111,16 @@ class TFLiteModelLoader(BaseModelLoader):
         try:
             model_input = self.generate_model_input(model_input)
 
-            for i, j in enumerate(model_input):
-                model_input_tensor = convert_to_tensor(np.array(j), np.float32)
-                self.interpreter.set_tensor(
-                    self.input_details[i]['index'], model_input_tensor)
+            if self.model_type == 1:
+                for i, j in enumerate(model_input):
+                    model_input_tensor = convert_to_tensor(np.array(j), np.float32)
+                    self.interpreter.set_tensor(
+                        self.input_details[i]['index'], model_input_tensor)
+
+            elif self.model_type == 2:
+                for i, j in enumerate(model_input):
+                    self.interpreter.set_tensor(
+                        self.input_details[i]['index'], j)
 
             self.interpreter.invoke()
 
