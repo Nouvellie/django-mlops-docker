@@ -24,4 +24,10 @@ class FashionMnistFileLoader:
 class ImdbFileLoader:
 
     def __call__(self, model_input: str) -> str:
-        return model_input
+        try:
+            model_input = model_input.read().decode("utf-8")
+            return model_input
+        except AttributeError:
+            return model_input
+        except :
+            raise TypeError("Please send a review.")

@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.4.0"
+__version__     =     "0.5.0"
 __logs__        =  {
-    'version':      "0.4.0",
+    'version':      "0.5.0",
     'date':         "08/12/2021",
-    'info':         ["Imdb APIView.", "Imdb pre-post adaptation.", "Imdb jupyter not ready yet. OK", "TFLite Imdb ready.", "Imdb jupyter fixed.", "Model input updated.",],
-    'problems':     ["Model input fix.", "Imdb predict with text or file. (txt)"],
+    'info':         ["Imdb predict from file ready.", "Model input fix. OK", "Imdb predict with text or file. (txt) OK"],
+    'problems':     ["Raise error if it is not a text file.",],
     'fixed':        False,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.4.0",
+#     'date':         "08/12/2021",
+#     'info':         ["Imdb APIView.", "Imdb pre-post adaptation.", "Imdb jupyter not ready yet. OK", "TFLite Imdb ready.", "Imdb jupyter fixed.", "Model input updated.",],
+#     'problems':     ["Model input fix*.", "Imdb predict with text or file. (txt)*"],
+#     'fixed':        True,
+#     'commit':       "",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.3.0",
