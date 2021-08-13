@@ -109,15 +109,15 @@ __logs__        =  {
 
 
 full_info = {
-	'__author__': __author__,
-	'__created__': __created__,
-	'__credits__': __credits__,
-	'__copyright__': __copyright__,
-	'__email__': __email__,
-	'__logs__': __logs__,
-	'__maintainer__': __maintainer__,
+    '__author__': __author__,
+    '__created__': __created__,
+    '__credits__': __credits__,
+    '__copyright__': __copyright__,
+    '__email__': __email__,
+    '__logs__': __logs__,
+    '__maintainer__': __maintainer__,
     '__prod__': __prod__,
-	'__version__': __version__,	
+    '__version__': __version__, 
 }
 
 class dotdict(dict):

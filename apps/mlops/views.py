@@ -28,6 +28,8 @@ argmax_imdb_sentiment_tflite_model = TFLiteModelLoader(
 	model_dir="2/imdbsentiment")
 threshold_stackoverflow_tflite_model = TFLiteModelLoader(
 	model_dir="3/stackoverflow")
+argmax_catsvsdogs_tflite_model = TFLiteModelLoader(
+	model_dir="4/catsvsdogs")
 
 
 class TFLiteFashionMnistAPIView(APIView):
@@ -117,7 +119,7 @@ class HDF5JSONFashionMnistAPIView(APIView):
 
 
 class TFLiteImdbSentimentAPIView(APIView):
-	"""API for Fashion Mnist model."""
+	"""API for Imdb Sentiment model."""
 
 	def post(self, request, format=None):
 		try:
@@ -147,7 +149,7 @@ class TFLiteImdbSentimentAPIView(APIView):
 
 
 class TFLiteStackoverflowAPIView(APIView):
-	"""API for Fashion Mnist model."""
+	"""API for StackOverFlow model."""
 
 	def post(self, request, format=None):
 		try:
@@ -160,6 +162,40 @@ class TFLiteStackoverflowAPIView(APIView):
 			model_input = request.data.get('code')
 
 			argmax_true_tflite_result = threshold_stackoverflow_tflite_model.predict(
+				model_input, confidence=True)
+
+			result = {
+				'argmax_true': argmax_true_tflite_result,
+			}
+
+			return Response(result, status=status.HTTP_200_OK)
+		except:
+			full_traceback = re.sub(r"\n\s*", " || ", traceback.format_exc())
+
+			if DEBUG:
+				return Response({'error': "bad_request", 'detail': full_traceback, }, status=status.HTTP_400_BAD_REQUEST)
+			else:
+				return Response({'error': "bad_request", }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TFLiteCatsvsdogsAPIView(APIView):
+	"""API for Cats vs Dogs model."""
+
+	def post(self, request, format=None):
+		try:
+			start_time = time.time()
+
+			# If the api does not receive an image.
+			if request.data.get('image') is None:
+				return Response({'error': 'Please send an image.', }, status=status.HTTP_400_BAD_REQUEST)
+
+			# If the image format is not png.
+			# if not request.data['image'].name.endswith(".png"):
+			#     return Response({'error': 'unsupported_media_type',}, status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+
+			model_input = list(request.FILES.getlist('image'))[0]
+
+			argmax_true_tflite_result = argmax_catsvsdogs_tflite_model.predict(
 				model_input, confidence=True)
 
 			result = {

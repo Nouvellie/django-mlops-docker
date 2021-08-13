@@ -1,5 +1,6 @@
 from .views import (
     HDF5JSONFashionMnistAPIView,
+    TFLiteCatsvsdogsAPIView,
     TFLiteFashionMnistAPIView,
     TFLiteImdbSentimentAPIView,
     TFLiteStackoverflowAPIView,
@@ -30,5 +31,11 @@ urlpatterns = [
         'tflite-soverflow',
         TFLiteStackoverflowAPIView.as_view(),
         name='tflite_soverflow',
+    ),
+
+    path(
+        'tflite-cvsdogs',
+        TFLiteCatsvsdogsAPIView.as_view(),
+        name='tflite_cvdogs',
     ),
 ]

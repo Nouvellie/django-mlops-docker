@@ -4,6 +4,7 @@ import re
 import traceback
 
 from .file_loader import (
+    CatsvsdogsFileLoader,
     FashionMnistFileLoader,
     ImdbSentimentFileLoader,
     StackoverflowFileLoader,
@@ -72,6 +73,8 @@ class BaseModelLoader(ABC):
             self.file_loader = ImdbSentimentFileLoader()
         elif self.model_type == 3:
             self.file_loader = StackoverflowFileLoader()
+        elif self.model_type == 4:
+            self.file_loader = CatsvsdogsFileLoader()
         else:
             pass
 
@@ -114,9 +117,10 @@ class TFLiteModelLoader(BaseModelLoader):
         try:
             model_input = self.generate_model_input(model_input)
 
-            if self.model_type == 1:
+            if self.model_type in (1, 4):
                 for i, j in enumerate(model_input):
                     model_input_tensor = convert_to_tensor(np.array(j), np.float32)
+                    print(model_input_tensor)
                     self.interpreter.set_tensor(
                         self.input_details[i]['index'], model_input_tensor)
 
