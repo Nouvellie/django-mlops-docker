@@ -1,6 +1,7 @@
 import json
 import numpy as np
 
+from django.utils.translation import gettext as _
 from math import floor
 from pathlib import Path
 from typing import (
@@ -48,18 +49,37 @@ class OutputDecoder:
 
     def decode_by_argmax(self, list_output: List[float]) -> List:
         """Output decoding via argmax."""
-        return [self.ordered_model_output[np.argmax(list_output)]]
+        if len(list_output) == 1 and list_output[0] > 0.5:
+            output_decoded = [self.ordered_model_output[0]]
+            model_output_pos = 0
+        elif len(list_output) == 1 and list_output[0] < 0.5:
+            output_decoded = [self.ordered_model_output[1]]
+            model_output_pos = 1
+        else:
+            output_decoded = [self.ordered_model_output[np.argmax(list_output)]]
+            model_output_pos = np.argmax(list_output)
+        return output_decoded, model_output_pos
 
     def decode_by_threshold(self, list_output: List[float]) -> List:
         """Output decoding via threshold."""
-        if isinstance(self.threshold, list):
-            assert len(self.threshold) == len(
-                self.ordered_model_output), 'The list of thresholds does not have the same length as the output'
-            return [class_ for class_, pred, threshold in zip(self.ordered_model_output, list_output, self.threshold) if pred >= threshold]
-        elif isinstance(self.threshold, float):
-            return [class_ for class_, pred in zip(self.ordered_model_output, list_output) if pred >= self.threshold]
+        if len(list_output) == 1 and list_output[0] > 0.5:
+            output_decoded = [self.ordered_model_output[0]]
+            model_output_pos = 0
+        elif len(list_output) == 1 and list_output[0] < 0.5:
+            output_decoded = [self.ordered_model_output[1]]
+            model_output_pos = 1
+            # self.ordered_model_output[int(np.round(list_output[0]))]
         else:
-            raise("'threshold' must be a float or a list")
+            if isinstance(self.threshold, list):
+                assert len(self.threshold) == len(
+                    self.ordered_model_output), 'The list of thresholds does not have the same length as the output'
+                output_decoded = [class_ for class_, pred, threshold in zip(self.ordered_model_output, list_output, self.threshold) if pred >= threshold]
+            elif isinstance(self.threshold, float):
+                output_decoded = [class_ for class_, pred in zip(self.ordered_model_output, list_output) if pred >= self.threshold]
+            else:
+                raise("'threshold' must be a float or a list")
+            return output_decoded, _
+        return output_decoded, model_output_pos
 
     def output_decoding(self, model_output: np.ndarray, confidence: bool = False) -> Dict:
         """Decode the model output.
@@ -74,21 +94,23 @@ class OutputDecoder:
         list_output = model_output[0].tolist()
 
         if self.decode_output_by == 'argmax':
-            output_decoded = self.decode_by_argmax(list_output)
+            output_decoded, model_output_pos = self.decode_by_argmax(list_output)
         elif self.decode_output_by == 'threshold':
-            # Special case: binary output.
-            if len(list_output) == 1:
-                output_decoded = self.ordered_model_output[int(
-                    np.round(list_output[0]))]
-            # Multilabel case: 2+ outputs.
-            else:
-                output_decoded = self.decode_by_threshold(list_output)
+            output_decoded, model_output_pos = self.decode_by_threshold(list_output)
 
-        if confidence:
+        if confidence and len(list_output) > 1:
             return dict(
                 output_decoded=output_decoded,
                 model_confidence={
-                    class_: output for class_, output in zip(self.ordered_model_output, list_output)
+                    class_: (floor(output  * 10 ** 4) / 10 ** 4) for class_, output in zip(self.ordered_model_output, list_output)
+                }
+            )
+        elif confidence and len(list_output) == 1:
+            return dict(
+                output_decoded=output_decoded,
+                model_confidence={
+                    self.ordered_model_output[0]: floor(list_output[0]  * 10 ** 4) / 10 ** 4,
+                    self.ordered_model_output[1]: floor((1 - list_output[0])  * 10 ** 4) / 10 ** 4
                 }
             )
         else:

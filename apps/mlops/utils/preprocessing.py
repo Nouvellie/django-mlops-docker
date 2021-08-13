@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 from .pipeline import pipeline_function_register
 from tensorflow import keras
@@ -28,7 +29,9 @@ def img_to_array(model_input: Any) -> Any:
 
 @pipeline_function_register
 def load_img(model_input: Any, target_size: Tuple = (180, 180)) -> Any:
+    path_to_remove = str(model_input)
     model_input = keras.preprocessing.image.load_img(
         model_input, target_size=(180,180)
     )
+    os.remove(path_to_remove)
     return model_input

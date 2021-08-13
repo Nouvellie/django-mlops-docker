@@ -10,7 +10,7 @@ __version__     =     "0.7.0"
 __logs__        =  {
     'version':      "0.7.0",
     'date':         "08/13/2021",
-    'info':         ["Catsvsdogs TFLite model ready.", "Pip md updated."],
+    'info':         ["Catsvsdogs TFLite model ready.", "Pip md updated.", "Postprocessing with binary results adapted. (argmax)", "Postprocessing results adapted for argmax/thresholds. (with/without binary results)", "Gettext _ added.", "Confidence output with math.floor.", "Image seek().", "Image erased after output."],
     'problems':     ["Preprocessing json problems.",],
     'fixed':        False,
     'commit':       "",

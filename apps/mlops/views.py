@@ -193,9 +193,12 @@ class TFLiteCatsvsdogsAPIView(APIView):
 
 			argmax_true_tflite_result = argmax_catsvsdogs_tflite_model.predict(
 				model_input, confidence=True)
+			argmax_false_tflite_result = argmax_catsvsdogs_tflite_model.predict(
+				model_input)
 
 			result = {
 				'argmax_true': argmax_true_tflite_result,
+				'argmax_false': argmax_false_tflite_result,
 			}
 
 			return Response(result, status=status.HTTP_200_OK)

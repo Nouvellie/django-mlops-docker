@@ -1,6 +1,7 @@
 {
     "ordered_model_output": [
-        "dog"
+        "dog",
+        "cat"
     ],
     "decode_output_by": "argmax",
     "threshold": null
