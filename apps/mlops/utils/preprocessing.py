@@ -24,3 +24,11 @@ def rescale_img(model_input: Any, factor: float = 255.0) -> Any:
 def img_to_array(model_input: Any) -> Any:
     model_input = keras.preprocessing.image.img_to_array(model_input)
     return model_input
+
+
+@pipeline_function_register
+def load_img(model_input: Any, target_size: Tuple = (180, 180)) -> Any:
+    model_input = keras.preprocessing.image.load_img(
+        model_input, target_size=(180,180)
+    )
+    return model_input

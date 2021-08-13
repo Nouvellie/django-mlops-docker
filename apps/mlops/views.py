@@ -189,10 +189,6 @@ class TFLiteCatsvsdogsAPIView(APIView):
 			if request.data.get('image') is None:
 				return Response({'error': 'Please send an image.', }, status=status.HTTP_400_BAD_REQUEST)
 
-			# If the image format is not png.
-			# if not request.data['image'].name.endswith(".png"):
-			#     return Response({'error': 'unsupported_media_type',}, status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
-
 			model_input = list(request.FILES.getlist('image'))[0]
 
 			argmax_true_tflite_result = argmax_catsvsdogs_tflite_model.predict(

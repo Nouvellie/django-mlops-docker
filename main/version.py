@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.6.0"
+__version__     =     "0.7.0"
 __logs__        =  {
-    'version':      "0.6.0",
-    'date':         "08/12/2021",
-    'info':         ["Imdb to imdb sentiment changed.", "Stackoverflow text model added on jupyter.", "Stackover flow TFLite ready.", "Stackoverflow hdf5json maybe ready.", "Pip md updated.", "Stackoverflow API View ready.",],
-    'problems':     ["Text classification model get Vectorized input not str.",],
+    'version':      "0.7.0",
+    'date':         "08/13/2021",
+    'info':         ["Catsvsdogs TFLite model ready.", "Pip md updated."],
+    'problems':     ["Preprocessing json problems.",],
     'fixed':        False,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.6.0",
+#     'date':         "08/12/2021",
+#     'info':         ["Imdb to imdb sentiment changed.", "Stackoverflow text model added on jupyter.", "Stackover flow TFLite ready.", "Stackoverflow hdf5json maybe ready.", "Pip md updated.", "Stackoverflow API View ready.",],
+#     'problems':     ["Text classification model get Vectorized input not str.",],
+#     'fixed':        False,
+#     'commit':       "9f2a67e",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.5.0",

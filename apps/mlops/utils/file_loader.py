@@ -57,7 +57,7 @@ class CatsvsdogsFileLoader:
     def __call__(self, model_input: Generic[InMemoryUploadedFile]) -> Generic[PILImage]:
         path = default_storage.save(f"tmp/{model_input.name}", ContentFile(model_input.file.read()))
         model_input = os.path.join(settings.MEDIA_ROOT, path)
-        model_input = keras.preprocessing.image.load_img(
-            model_input, target_size=(180,180)
-        )
+        # model_input = keras.preprocessing.image.load_img(
+        #     model_input, target_size=(180,180)
+        # )
         return model_input
