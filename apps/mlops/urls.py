@@ -1,7 +1,7 @@
 from .views import (
     HDF5JSONFashionMnistAPIView,
     TFLiteFashionMnistAPIView,
-    TFLiteImdbAPIView,
+    TFLiteImdbSentimentAPIView,
 )
 from django.urls import path
 
@@ -20,8 +20,8 @@ urlpatterns = [
     ),
 
     path(
-        'tflite-imdb',
-        TFLiteImdbAPIView.as_view(),
-        name='tflite_imdb',
+        'tflite-isentiment',
+        TFLiteImdbSentimentAPIView.as_view(),
+        name='tflite_isentiment',
     ),
 ]

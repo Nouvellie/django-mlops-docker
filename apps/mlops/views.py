@@ -24,8 +24,8 @@ argmax_fashion_mnist_hdf5json_model = HDF5JSONModelLoader(
 	model_dir="1/fashionmnist")
 threshold_fashion_mnist_hdf5json_model = HDF5JSONModelLoader(
 	model_dir="1/fashionmnist2")
-argmax_imdb_tflite_model = TFLiteModelLoader(
-	model_dir="2/imdb")
+argmax_imdb_sentiment_tflite_model = TFLiteModelLoader(
+	model_dir="2/imdbsentiment")
 
 
 class TFLiteFashionMnistAPIView(APIView):
@@ -114,7 +114,7 @@ class HDF5JSONFashionMnistAPIView(APIView):
 				return Response({'error': "bad_request", }, status=status.HTTP_400_BAD_REQUEST)
 
 
-class TFLiteImdbAPIView(APIView):
+class TFLiteImdbSentimentAPIView(APIView):
 	"""API for Fashion Mnist model."""
 
 	def post(self, request, format=None):
@@ -127,7 +127,7 @@ class TFLiteImdbAPIView(APIView):
 
 			model_input = request.data.get('review')
 
-			argmax_true_tflite_result = argmax_imdb_tflite_model.predict(
+			argmax_true_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
 				model_input, confidence=True)
 
 			result = {

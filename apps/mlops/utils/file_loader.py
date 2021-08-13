@@ -21,7 +21,7 @@ class FashionMnistFileLoader:
         return model_input
 
 
-class ImdbFileLoader:
+class ImdbSentimentFileLoader:
 
     def __call__(self, model_input: str) -> str:
         try:
@@ -29,5 +29,5 @@ class ImdbFileLoader:
             return model_input
         except AttributeError:
             return model_input
-        except :
+        except:
             raise TypeError("Please send a review.")

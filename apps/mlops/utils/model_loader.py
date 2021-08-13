@@ -5,7 +5,7 @@ import traceback
 
 from .file_loader import (
     FashionMnistFileLoader,
-    ImdbFileLoader,
+    ImdbSentimentFileLoader,
 )
 from .model_input import ModelInputGenerator
 from .output_decoder import OutputDecoder
@@ -68,7 +68,7 @@ class BaseModelLoader(ABC):
         if self.model_type == 1:
             self.file_loader = FashionMnistFileLoader()
         elif self.model_type == 2:
-            self.file_loader = ImdbFileLoader()
+            self.file_loader = ImdbSentimentFileLoader()
         else:
             pass
 
