@@ -19,7 +19,7 @@
 - [Jupyter Notebooks. (examples and modelcreation)](https://github.com/Nouvellie/django-tflite/tree/main/media/jupyter)
 
 <br><br><p align="center">
-  <img width="75%" height="75%" src="https://github.com/Nouvellie/django-js-ml/blob/main/project/media/img/django.svg" alt="Django MLOps">
+  <img width="75%" height="75%" src="https://github.com/Nouvellie/django-tflite/blob/main/media/assets/django.svg" alt="Django MLOps (TFLite)">
 </p>
 
 <br><br>
