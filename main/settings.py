@@ -7,7 +7,7 @@ from datetime import timedelta
 from pathlib import Path
 
 URIPATH = Path(os.path.dirname(__file__)).joinpath(".env")
-env = environ.Env(DEBUG=(bool,False))
+env = environ.Env(DEBUG=(bool, False))
 environ.Env.read_env(env_file=str(URIPATH))
 
 BASE_DIR = Path(__file__).resolve().parent.parent

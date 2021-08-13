@@ -119,7 +119,8 @@ class TFLiteModelLoader(BaseModelLoader):
 
             if self.model_type in (1, 4):
                 for i, j in enumerate(model_input):
-                    model_input_tensor = convert_to_tensor(np.array(j), np.float32)
+                    model_input_tensor = convert_to_tensor(
+                        np.array(j), np.float32)
                     self.interpreter.set_tensor(
                         self.input_details[i]['index'], model_input_tensor)
 

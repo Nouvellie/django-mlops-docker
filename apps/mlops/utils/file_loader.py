@@ -12,7 +12,7 @@ from typing import (
     Generic,
     TypeVar,
 )
-        
+
 
 # Some extra settings.
 ImageFile.LOAD_TRUNCATED_IMAGES = True

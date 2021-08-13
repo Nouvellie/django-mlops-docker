@@ -45,7 +45,8 @@ class Pipeline:
 
             # Apply preprocessing. (args and kwargs provided)
             if args:
-                model_input = self.apply(model_input, func_name, *args, **kwargs)
+                model_input = self.apply(
+                    model_input, func_name, *args, **kwargs)
             else:
                 model_input = self.apply(model_input, func_name, **kwargs)
         return model_input
