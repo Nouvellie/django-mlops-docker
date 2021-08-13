@@ -5,6 +5,6 @@
         "javascript",
         "python"
     ],
-    "decode_output_by": "argmax",
-    "threshold": null
+    "decode_output_by": "threshold",
+    "threshold": [0.5, 0.5, 0.5, 0.5]
 }

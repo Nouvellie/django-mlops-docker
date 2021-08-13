@@ -34,8 +34,10 @@ threshold_imdb_sentiment_tflite_model = TFLiteModelLoader(
 	model_dir="2/imdbsentiment2")
 
 ## STACKOVERFLOW ##
-threshold_stackoverflow_tflite_model = TFLiteModelLoader(
+argmax_stackoverflow_tflite_model = TFLiteModelLoader(
 	model_dir="3/stackoverflow")
+threshold_stackoverflow_tflite_model = TFLiteModelLoader(
+	model_dir="3/stackoverflow2")
 
 ## CATS VS DOGS ##
 argmax_catsvsdogs_tflite_model = TFLiteModelLoader(
@@ -180,11 +182,20 @@ class TFLiteStackoverflowAPIView(APIView):
 
 			model_input = request.data.get('code')
 
-			argmax_true_tflite_result = threshold_stackoverflow_tflite_model.predict(
+			argmax_true_tflite_result = argmax_stackoverflow_tflite_model.predict(
 				model_input, confidence=True)
+			argmax_false_tflite_result = argmax_stackoverflow_tflite_model.predict(
+				model_input)
+			threshold_true_tflite_result = threshold_stackoverflow_tflite_model.predict(
+				model_input, confidence=True)
+			threshold_false_tflite_result = threshold_stackoverflow_tflite_model.predict(
+				model_input)
 
 			result = {
 				'argmax_true': argmax_true_tflite_result,
+				'argmax_false': argmax_false_tflite_result,
+				'threshold_true': threshold_true_tflite_result,
+				'threshold_false': threshold_false_tflite_result,
 			}
 
 			return Response(result, status=status.HTTP_200_OK)
@@ -218,6 +229,8 @@ class TFLiteCatsvsdogsAPIView(APIView):
 			result = {
 				'argmax_true': argmax_true_tflite_result,
 				'argmax_false': argmax_false_tflite_result,
+				# 'threshold_true': threshold_true_tflite_result,
+				# 'threshold_false': threshold_false_tflite_result,
 			}
 
 			return Response(result, status=status.HTTP_200_OK)
