@@ -26,6 +26,8 @@ threshold_fashion_mnist_hdf5json_model = HDF5JSONModelLoader(
 	model_dir="1/fashionmnist2")
 argmax_imdb_sentiment_tflite_model = TFLiteModelLoader(
 	model_dir="2/imdbsentiment")
+threshold_stackoverflow_tflite_model = TFLiteModelLoader(
+	model_dir="3/stackoverflow")
 
 
 class TFLiteFashionMnistAPIView(APIView):
@@ -128,6 +130,36 @@ class TFLiteImdbSentimentAPIView(APIView):
 			model_input = request.data.get('review')
 
 			argmax_true_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
+				model_input, confidence=True)
+
+			result = {
+				'argmax_true': argmax_true_tflite_result,
+			}
+
+			return Response(result, status=status.HTTP_200_OK)
+		except:
+			full_traceback = re.sub(r"\n\s*", " || ", traceback.format_exc())
+
+			if DEBUG:
+				return Response({'error': "bad_request", 'detail': full_traceback, }, status=status.HTTP_400_BAD_REQUEST)
+			else:
+				return Response({'error': "bad_request", }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TFLiteStackoverflowAPIView(APIView):
+	"""API for Fashion Mnist model."""
+
+	def post(self, request, format=None):
+		try:
+			start_time = time.time()
+
+			# If the api does not receive an image.
+			if request.data.get('code') is None:
+				return Response({'error': 'Please send a code.', }, status=status.HTTP_400_BAD_REQUEST)
+
+			model_input = request.data.get('code')
+
+			argmax_true_tflite_result = threshold_stackoverflow_tflite_model.predict(
 				model_input, confidence=True)
 
 			result = {

@@ -10,9 +10,9 @@ __version__     =     "0.6.0"
 __logs__        =  {
     'version':      "0.6.0",
     'date':         "08/12/2021",
-    'info':         ["Imdb to imdb sentiment changed.", "Stackoverflow text model added on jupyter.", "Stackover flow TFLite ready.", "Stackoverflow hdf5json maybe ready.",],
-    'problems':     ["Raise error if it is not a text file.",],
-    'fixed':        None,
+    'info':         ["Imdb to imdb sentiment changed.", "Stackoverflow text model added on jupyter.", "Stackover flow TFLite ready.", "Stackoverflow hdf5json maybe ready.", "Pip md updated.", "Stackoverflow API View ready.",],
+    'problems':     ["Text classification model get Vectorized input not str.",],
+    'fixed':        False,
     'commit':       "",
     "prod":         None,
 }
@@ -23,7 +23,7 @@ __logs__        =  {
 #     'info':         ["Imdb predict from file ready.", "Model input fix. OK", "Imdb predict with text or file. (txt) OK"],
 #     'problems':     ["Raise error if it is not a text file.",],
 #     'fixed':        False,
-#     'commit':       "",
+#     'commit':       "5961ed1",
 #     "prod":         None,
 # }
 
@@ -33,7 +33,7 @@ __logs__        =  {
 #     'info':         ["Imdb APIView.", "Imdb pre-post adaptation.", "Imdb jupyter not ready yet. OK", "TFLite Imdb ready.", "Imdb jupyter fixed.", "Model input updated.",],
 #     'problems':     ["Model input fix*.", "Imdb predict with text or file. (txt)*"],
 #     'fixed':        True,
-#     'commit':       "",
+#     'commit':       "4543ca7",
 #     "prod":         None,
 # }
 

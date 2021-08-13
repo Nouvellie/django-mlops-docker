@@ -31,3 +31,15 @@ class ImdbSentimentFileLoader:
             return model_input
         except:
             raise TypeError("Please send a review.")
+
+
+class StackoverflowFileLoader:
+
+    def __call__(self, model_input: str) -> str:
+        try:
+            model_input = model_input.read().decode("utf-8")
+            return model_input
+        except AttributeError:
+            return model_input
+        except:
+            raise TypeError("Please send a code.")

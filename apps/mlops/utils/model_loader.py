@@ -6,6 +6,7 @@ import traceback
 from .file_loader import (
     FashionMnistFileLoader,
     ImdbSentimentFileLoader,
+    StackoverflowFileLoader,
 )
 from .model_input import ModelInputGenerator
 from .output_decoder import OutputDecoder
@@ -69,6 +70,8 @@ class BaseModelLoader(ABC):
             self.file_loader = FashionMnistFileLoader()
         elif self.model_type == 2:
             self.file_loader = ImdbSentimentFileLoader()
+        elif self.model_type == 3:
+            self.file_loader = StackoverflowFileLoader()
         else:
             pass
 
@@ -117,7 +120,7 @@ class TFLiteModelLoader(BaseModelLoader):
                     self.interpreter.set_tensor(
                         self.input_details[i]['index'], model_input_tensor)
 
-            elif self.model_type == 2:
+            elif self.model_type in (2, 3):
                 for i, j in enumerate(model_input):
                     self.interpreter.set_tensor(
                         self.input_details[i]['index'], j)

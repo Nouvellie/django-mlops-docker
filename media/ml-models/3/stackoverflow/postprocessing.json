@@ -1,0 +1,10 @@
+{
+    "ordered_model_output": [
+        "c#",
+        "java",
+        "javascript",
+        "python"
+    ],
+    "decode_output_by": "threshold",
+    "threshold": [0.5, 0.5, 0.5, 0.5]
+}
