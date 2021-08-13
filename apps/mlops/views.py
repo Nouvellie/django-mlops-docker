@@ -1,3 +1,4 @@
+import os
 import re
 import time
 import traceback
@@ -43,6 +44,10 @@ threshold_stackoverflow_tflite_model = TFLiteModelLoader(
 argmax_catsvsdogs_tflite_model = TFLiteModelLoader(
     model_dir="4/catsvsdogs")
 threshold_catsvsdogs_tflite_model = TFLiteModelLoader(
+    model_dir="4/catsvsdogs2")
+argmax_catsvsdogs_hdf5json_model = HDF5JSONModelLoader(
+    model_dir="4/catsvsdogs")
+threshold_catsvsdogs_hdf5json_model = HDF5JSONModelLoader(
     model_dir="4/catsvsdogs2")
 
 
@@ -237,6 +242,45 @@ class TFLiteCatsvsdogsAPIView(APIView):
                 'argmax_false': argmax_false_tflite_result,
                 'threshold_true': threshold_true_tflite_result,
                 'threshold_false': threshold_false_tflite_result,
+            }
+
+            return Response(result, status=status.HTTP_200_OK)
+        except:
+            full_traceback = re.sub(r"\n\s*", " || ", traceback.format_exc())
+
+            if DEBUG:
+                return Response({'error': "bad_request", 'detail': full_traceback, }, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({'error': "bad_request", }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class HDF5JSONCatsvsdogsAPIView(APIView):
+    """API for Cats vs Dogs model."""
+
+    def post(self, request, format=None):
+        try:
+            start_time = time.time()
+
+            # If the api does not receive an image.
+            if request.data.get('image') is None:
+                return Response({'error': 'Please send an image.', }, status=status.HTTP_400_BAD_REQUEST)
+
+            model_input = list(request.FILES.getlist('image'))[0]
+
+            argmax_true_hdf5json_result = argmax_catsvsdogs_hdf5json_model.predict(
+                model_input, confidence=True)
+            argmax_false_hdf5json_result = argmax_catsvsdogs_hdf5json_model.predict(
+                model_input)
+            threshold_true_hdf5json_result = threshold_catsvsdogs_hdf5json_model.predict(
+                model_input, confidence=True)
+            threshold_false_hdf5json_result = threshold_catsvsdogs_hdf5json_model.predict(
+                model_input)
+
+            result = {
+                'argmax_true': argmax_true_hdf5json_result,
+                'argmax_false': argmax_false_hdf5json_result,
+                'threshold_true': threshold_true_hdf5json_result,
+                'threshold_false': threshold_false_hdf5json_result,
             }
 
             return Response(result, status=status.HTTP_200_OK)

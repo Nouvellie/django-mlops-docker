@@ -1,4 +1,5 @@
 from .views import (
+    HDF5JSONCatsvsdogsAPIView,
     HDF5JSONFashionMnistAPIView,
     TFLiteCatsvsdogsAPIView,
     TFLiteFashionMnistAPIView,
@@ -37,5 +38,11 @@ urlpatterns = [
         'tflite-cvsdogs',
         TFLiteCatsvsdogsAPIView.as_view(),
         name='tflite_cvdogs',
+    ),
+
+    path(
+        'hdf5json-cvsdogs',
+        HDF5JSONCatsvsdogsAPIView.as_view(),
+        name='hdf5json_cvdogs',
     ),
 ]
