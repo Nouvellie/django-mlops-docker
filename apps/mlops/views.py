@@ -16,6 +16,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 ######################## PRELOADED MODELS ########################
+
 ## FASHION MNIST ##
 argmax_fashion_mnist_tflite_model = TFLiteModelLoader(
 	model_dir="1/fashionmnist")
@@ -24,15 +25,18 @@ threshold_fashion_mnist_tflite_model = TFLiteModelLoader(
 argmax_fashion_mnist_hdf5json_model = HDF5JSONModelLoader(
 	model_dir="1/fashionmnist")
 threshold_fashion_mnist_hdf5json_model = HDF5JSONModelLoader(
+
 	model_dir="1/fashionmnist2")
 ## IMDB SENTIMENT ##
 argmax_imdb_sentiment_tflite_model = TFLiteModelLoader(
 	model_dir="2/imdbsentiment")
 threshold_imdb_sentiment_tflite_model = TFLiteModelLoader(
 	model_dir="2/imdbsentiment2")
+
 ## STACKOVERFLOW ##
 threshold_stackoverflow_tflite_model = TFLiteModelLoader(
 	model_dir="3/stackoverflow")
+
 ## CATS VS DOGS ##
 argmax_catsvsdogs_tflite_model = TFLiteModelLoader(
 	model_dir="4/catsvsdogs")
