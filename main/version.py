@@ -10,7 +10,7 @@ __version__     =     "0.8.0"
 __logs__        =  {
     'version':      "0.8.0",
     'date':         "08/13/2021",
-    'info':         ["Model loader updated for more than one request.", "FashionMnist x1x2 ready.", "Imdb sentiment x1 ready.", "Stackoverflow x1 ready.",],
+    'info':         ["Model loader updated for more than one request.", "FashionMnist x1x2 ready.", "Imdb sentiment x1 ready.", "Stackoverflow x1 ready.", "Catsvsdogs x1 ready."],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
