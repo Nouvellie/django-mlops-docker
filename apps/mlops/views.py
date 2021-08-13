@@ -15,7 +15,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-# Preloaded models.
+######################## PRELOADED MODELS ########################
+## FASHION MNIST ##
 argmax_fashion_mnist_tflite_model = TFLiteModelLoader(
 	model_dir="1/fashionmnist")
 threshold_fashion_mnist_tflite_model = TFLiteModelLoader(
@@ -24,10 +25,15 @@ argmax_fashion_mnist_hdf5json_model = HDF5JSONModelLoader(
 	model_dir="1/fashionmnist")
 threshold_fashion_mnist_hdf5json_model = HDF5JSONModelLoader(
 	model_dir="1/fashionmnist2")
+## IMDB SENTIMENT ##
 argmax_imdb_sentiment_tflite_model = TFLiteModelLoader(
 	model_dir="2/imdbsentiment")
+threshold_imdb_sentiment_tflite_model = TFLiteModelLoader(
+	model_dir="2/imdbsentiment2")
+## STACKOVERFLOW ##
 threshold_stackoverflow_tflite_model = TFLiteModelLoader(
 	model_dir="3/stackoverflow")
+## CATS VS DOGS ##
 argmax_catsvsdogs_tflite_model = TFLiteModelLoader(
 	model_dir="4/catsvsdogs")
 
@@ -133,9 +139,18 @@ class TFLiteImdbSentimentAPIView(APIView):
 
 			argmax_true_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
 				model_input, confidence=True)
+			argmax_false_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
+				model_input)
+			threshold_true_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
+				model_input, confidence=True)
+			threshold_false_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
+				model_input)
 
 			result = {
 				'argmax_true': argmax_true_tflite_result,
+				'argmax_false': argmax_false_tflite_result, 
+				'threshold_true': threshold_true_tflite_result,
+				'threshold_false': threshold_false_tflite_result,
 			}
 
 			return Response(result, status=status.HTTP_200_OK)

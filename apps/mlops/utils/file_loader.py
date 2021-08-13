@@ -32,7 +32,7 @@ class ImdbSentimentFileLoader:
 
     def __call__(self, model_input: str) -> str:
         try:
-            model_input = model_input.read().decode("utf-8")
+            model_input = model_input.open().read().decode("utf-8")
             return model_input
         except AttributeError:
             return model_input
@@ -44,7 +44,7 @@ class StackoverflowFileLoader:
 
     def __call__(self, model_input: str) -> str:
         try:
-            model_input = model_input.read().decode("utf-8")
+            model_input = model_input.open().read().decode("utf-8")
             return model_input
         except AttributeError:
             return model_input

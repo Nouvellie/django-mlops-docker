@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.7.0"
+__version__     =     "0.8.0"
 __logs__        =  {
-    'version':      "0.7.0",
+    'version':      "0.8.0",
     'date':         "08/13/2021",
-    'info':         ["Catsvsdogs TFLite model ready.", "Pip md updated.", "Postprocessing with binary results adapted. (argmax)", "Postprocessing results adapted for argmax/thresholds. (with/without binary results)", "Gettext _ added.", "Confidence output with math.floor.", "Image seek().", "Image erased after output.", "Preprocessing json problems. OK",],
-    'problems':     ["Preprocessing json problems.*",],
-    'fixed':        True,
+    'info':         ["Model loader updated for more than one request.", "FashionMnist x2 ready.", "Imdb sentiment x1 ready.",],
+    'problems':     ["",],
+    'fixed':        None,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.7.0",
+#     'date':         "08/13/2021",
+#     'info':         ["Catsvsdogs TFLite model ready.", "Pip md updated.", "Postprocessing with binary results adapted. (argmax)", "Postprocessing results adapted for argmax/thresholds. (with/without binary results)", "Gettext _ added.", "Confidence output with math.floor.", "Image seek().", "Image erased after output.", "Preprocessing json problems. OK",],
+#     'problems':     ["Preprocessing json problems.*",],
+#     'fixed':        True,
+#     'commit':       "a29234f",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.6.0",
