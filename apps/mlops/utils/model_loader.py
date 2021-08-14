@@ -158,7 +158,6 @@ class HDF5JSONModelLoader(BaseModelLoader):
     def predict(self, model_input: Any, confidence: bool = False) -> Dict:
         try:
             model_input = self.generate_model_input(model_input)
-
             prediction = self.model.predict(model_input)
             result = self.postprocessing.output_decoding(
                 model_output=prediction, confidence=confidence)

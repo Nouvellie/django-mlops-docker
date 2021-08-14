@@ -43,6 +43,11 @@ $ pip install tensorflow-gpu==2.6.0
 $ python -m ipykernel install --user --name=djangotflite
 ```
 
+## Remove environ from jupyter kernell
+```sh
+$ jupyter kernelspec uninstall djangotflite
+```
+
 ## Graphviz
 #### Ubuntu:
 

@@ -26,8 +26,8 @@ threshold_fashion_mnist_tflite_model = TFLiteModelLoader(
 argmax_fashion_mnist_hdf5json_model = HDF5JSONModelLoader(
     model_dir="1/fashionmnist")
 threshold_fashion_mnist_hdf5json_model = HDF5JSONModelLoader(
-
     model_dir="1/fashionmnist2")
+
 ## IMDB SENTIMENT ##
 argmax_imdb_sentiment_tflite_model = TFLiteModelLoader(
     model_dir="2/imdbsentiment")

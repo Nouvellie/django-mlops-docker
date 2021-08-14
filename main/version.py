@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.8.0"
+__version__     =     "0.9.0"
 __logs__        =  {
-    'version':      "0.8.0",
+    'version':      "0.9.0",
     'date':         "08/13/2021",
-    'info':         ["Model loader updated for more than one request.", "FashionMnist x1x2 ready.", "Imdb sentiment x1 ready.", "Stackoverflow x1 ready.", "Catsvsdogs x1x2 ready."],
+    'info':         ["New Cats vs dogs model. (50 epoch, 99%)", "Pep8",],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.8.0",
+#     'date':         "08/13/2021",
+#     'info':         ["Model loader updated for more than one request.", "FashionMnist x1x2 ready.", "Imdb sentiment x1 ready.", "Stackoverflow x1 ready.", "Catsvsdogs x1x2 ready."],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.7.0",
