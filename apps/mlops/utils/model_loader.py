@@ -95,7 +95,7 @@ class BaseModelLoader(ABC):
 
 
 class TFLiteModelLoader(BaseModelLoader):
-    """Class to generate predictions from a TFLite model"""
+    """Class to generate predictions from a TFLite model."""
     NUM_THREADS = 4
 
     def model_preload(self):
@@ -116,7 +116,7 @@ class TFLiteModelLoader(BaseModelLoader):
     def predict(self, model_input: Any, confidence: bool = False) -> Dict:
         try:
             model_input = self.generate_model_input(model_input)
-
+            
             if self.model_type in (1, 4):
                 for i, j in enumerate(model_input):
                     model_input_tensor = convert_to_tensor(
@@ -144,7 +144,7 @@ class TFLiteModelLoader(BaseModelLoader):
 
 
 class HDF5JSONModelLoader(BaseModelLoader):
-    """Class to generate predictions from a HDF5JSON model"""
+    """Class to generate predictions from a HDF5JSON model."""
 
     def model_preload(self):
         hdf5_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/model.hdf5")
@@ -167,3 +167,13 @@ class HDF5JSONModelLoader(BaseModelLoader):
                 full_traceback = re.sub(
                     r"\n\s*", " || ", traceback.format_exc())
                 print(full_traceback, e)
+
+
+class CheckpointModelLoader(BaseModelLoader):
+    """Class to generate predictions from a Checkpoint model."""
+
+    def model_preload(self):
+        pass
+
+    def predict(self):
+        pass

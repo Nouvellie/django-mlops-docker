@@ -4,6 +4,7 @@ import time
 import traceback
 
 from .utils.model_loader import (
+    CheckpointModelLoader,
     HDF5JSONModelLoader,
     TFLiteModelLoader,
 )
@@ -160,7 +161,7 @@ class TFLiteImdbSentimentAPIView(APIView):
                 model_input, confidence=True)
             threshold_false_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
                 model_input)
-
+            
             result = {
                 'argmax_true': argmax_true_tflite_result,
                 'argmax_false': argmax_false_tflite_result,
