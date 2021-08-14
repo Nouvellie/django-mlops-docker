@@ -10,7 +10,7 @@ __version__     =     "0.9.0"
 __logs__        =  {
     'version':      "0.9.0",
     'date':         "08/13/2021",
-    'info':         ["New Cats vs dogs model. (50 epoch, 99%)", "Pep8",],
+    'info':         ["New Cats vs dogs improved model. (50 epoch, 99%)", "Pep8", "New improved Fashion MNist model.",],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",

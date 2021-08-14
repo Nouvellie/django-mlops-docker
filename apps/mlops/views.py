@@ -120,6 +120,8 @@ class HDF5JSONFashionMnistAPIView(APIView):
             threshold_false_hdf5json_result = threshold_fashion_mnist_hdf5json_model.predict(
                 model_input)
 
+
+
             result = {
                 'argmax_true': argmax_true_hdf5json_result,
                 'argmax_false': argmax_false_hdf5json_result,
