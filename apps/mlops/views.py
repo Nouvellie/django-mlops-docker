@@ -34,6 +34,8 @@ argmax_imdb_sentiment_tflite_model = TFLiteModelLoader(
     model_dir="2/imdbsentiment")
 threshold_imdb_sentiment_tflite_model = TFLiteModelLoader(
     model_dir="2/imdbsentiment2")
+processed_argmax_imdb_sentiment_tflite_model = TFLiteModelLoader(
+    model_dir="2/imdbsentiment3")
 
 ## STACKOVERFLOW ##
 argmax_stackoverflow_tflite_model = TFLiteModelLoader(
@@ -161,12 +163,15 @@ class TFLiteImdbSentimentAPIView(APIView):
                 model_input, confidence=True)
             threshold_false_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
                 model_input)
+            processed_argmax_true_tflite_result = processed_argmax_imdb_sentiment_tflite_model.predict(
+                model_input, confidence=True)
             
             result = {
                 'argmax_true': argmax_true_tflite_result,
                 'argmax_false': argmax_false_tflite_result,
                 'threshold_true': threshold_true_tflite_result,
                 'threshold_false': threshold_false_tflite_result,
+                'processed_argmax_true': processed_argmax_true_tflite_result,
             }
 
             return Response(result, status=status.HTTP_200_OK)

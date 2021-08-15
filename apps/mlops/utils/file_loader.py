@@ -13,7 +13,6 @@ from typing import (
     TypeVar,
 )
 
-
 # Some extra settings.
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 InMemoryUploadedFile = TypeVar('InMemoryUploadedFile')

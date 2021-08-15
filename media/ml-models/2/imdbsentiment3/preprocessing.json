@@ -1,0 +1,8 @@
+[
+	[
+        "process_review_text",
+        {
+            "preprocess": true
+        }
+    ]
+]

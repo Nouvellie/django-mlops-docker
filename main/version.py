@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.10.0"
+__version__     =     "0.11.0"
 __logs__        =  {
-    'version':      "0.10.0",
-    'date':         "08/13/2021",
-    'info':         ["New improved Imdb Sentiment model. x1",],
-    'problems':     ["CheckpointModelLoader not created yet.",],
-    'fixed':        False,
-    'commit':       "6289fb7",
+    'version':      "0.11.0",
+    'date':         "08/15/2021",
+    'info':         ["New pipeline function for Imdb Sentiment.", "Imdb Sentiment 3 with preprocess function.", "General function updated.", "ImdbSentimentTextModificator class created.", "New libs installed.", "Pip readme updated.", "ImdbSentiment get better result with the preprocessed text."],
+    'problems':     ["",],
+    'fixed':        None,
+    'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.10.0",
+#     'date':         "08/13/2021",
+#     'info':         ["New improved Imdb Sentiment model. x1",],
+#     'problems':     ["CheckpointModelLoader not created yet.",],
+#     'fixed':        False,
+#     'commit':       "f57d9d1",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.9.0",
@@ -23,7 +33,7 @@ __logs__        =  {
 #     'info':         ["New Cats vs dogs improved model. (50 epoch, 99%)", "Pep8", "New improved Fashion MNist model.",],
 #     'problems':     ["",],
 #     'fixed':        None,
-#     'commit':       "",
+#     'commit':       "6289fb7",
 #     "prod":         None,
 # }
 
