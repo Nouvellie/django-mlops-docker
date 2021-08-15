@@ -10,7 +10,7 @@ __version__     =     "0.11.0"
 __logs__        =  {
     'version':      "0.11.0",
     'date':         "08/15/2021",
-    'info':         ["New pipeline function for Imdb Sentiment.", "Imdb Sentiment 3 with preprocess function.", "General function updated.", "ImdbSentimentTextModificator class created.", "New libs installed.", "Pip readme updated.", "ImdbSentiment get better result with the preprocessed text."],
+    'info':         ["New pipeline function for Imdb Sentiment.", "Imdb Sentiment 3 with preprocess function.", "General function updated.", "ImdbSentimentTextModificator class created.", "New libs installed.", "Pip readme updated.", "ImdbSentiment get better result with the preprocessed text.", "Samples added for every model.", "Not ready yet abb for jupyter notebooks models."],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
