@@ -6,10 +6,13 @@ from math import floor
 from pathlib import Path
 from typing import (
     Dict,
+    Generic,
     List,
     Optional,
+    TypeVar,
     Union,
 )
+SelfClass = TypeVar('SelfClass')
 
 
 class OutputDecoder:
@@ -31,16 +34,17 @@ class OutputDecoder:
     >> decoder = OutputDecoder(ordered_model_output = ["class1", "class2", "class3"], threshold = 0.5)
     """
 
-    def __new__(cls, ordered_model_output: Optional[List[str]] = None, argmax: bool = False, threshold: Optional[Union[float, List[float]]] = None, *args, **kwargs):
+    def __new__(cls, ordered_model_output: Optional[List[str]] = None, argmax: bool = False, threshold: Optional[Union[float, List[float]]] = None, *args, **kwargs) -> Generic[SelfClass]:
         return super(OutputDecoder, cls).__new__(cls, *args, **kwargs)
 
-    def __init__(self, ordered_model_output: Optional[List[str]] = None, argmax: bool = False, threshold: Optional[Union[float, List[float]]] = None):
+    def __init__(self, ordered_model_output: Optional[List[str]] = None, argmax: bool = False, threshold: Optional[Union[float, List[float]]] = None) -> None:
         self.ordered_model_output = ordered_model_output
         self.decode_output_by = 'argmax' if argmax is True else 'threshold'
         self.threshold = threshold
-        self.decoder_config()
+        self.config_decoder()
 
-    def decoder_config(self):
+    def config_decoder(self) -> None:
+        """Generates a list after finishing the process of extracting inputs from the json."""
         self.config = dict(
             ordered_model_output=self.ordered_model_output,
             decode_output_by=self.decode_output_by,
@@ -69,7 +73,6 @@ class OutputDecoder:
         elif len(list_output) == 1 and list_output[0] < 0.5:
             output_decoded = [self.ordered_model_output[1]]
             model_output_pos = 1
-            # self.ordered_model_output[int(np.round(list_output[0]))]
         else:
             if isinstance(self.threshold, list):
                 assert len(self.threshold) == len(
@@ -123,7 +126,7 @@ class OutputDecoder:
                 output_decoded=output_decoded
             )
 
-    def from_json(self, postprocessing_path: str):
+    def from_json(self, postprocessing_path: str) -> None:
         postprocessing_path = Path(postprocessing_path)
 
         with open(str(postprocessing_path), "r", encoding="utf8") as pp:

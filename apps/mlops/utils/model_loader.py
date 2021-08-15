@@ -29,17 +29,20 @@ from tensorflow.keras.models import model_from_json
 from typing import (
     Any,
     Dict,
+    Generic,
     List,
+    TypeVar,
 )
+SelfClass = TypeVar('SelfClass')
 
 
 class BaseModelLoader(ABC):
     """Metaclass for defining the model loader."""
 
-    def __new__(cls, model_dir: str, *args, **kwargs):
+    def __new__(cls, model_dir: str, *args, **kwargs) -> Generic[SelfClass]:
         return super(BaseModelLoader, cls).__new__(cls, *args, **kwargs)
 
-    def __init__(self, model_dir: str):
+    def __init__(self, model_dir: str) -> None:
         self.model_type = int(model_dir.split("/")[0])
         self.model_dir = model_dir
         self.model_preload()
@@ -48,24 +51,24 @@ class BaseModelLoader(ABC):
         self.model_input_load()
         self.preload_file_loader()
 
-    def preprocessing_load(self):
+    def preprocessing_load(self) -> None:
         """Function to apply preprocessing to an array."""
         preprocessing_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/preprocessing.json")
 
         self.preprocessing = Pipeline()
         self.preprocessing.from_json(preprocessing_path)
 
-    def postprocessing_load(self):
+    def postprocessing_load(self) -> None:
         """Function to apply postprocessing to model output."""
         postprocessing_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/postprocessing.json")
 
         self.postprocessing = OutputDecoder()
         self.postprocessing.from_json(postprocessing_path)
 
-    def model_input_load(self):
+    def model_input_load(self) -> None:
         self.ModelInput = ModelInputGenerator()
 
-    def preload_file_loader(self):
+    def preload_file_loader(self) -> None:
         """Function to load the file as an array."""
         if self.model_type == 1:
             self.file_loader = FashionMnistFileLoader()
@@ -86,11 +89,11 @@ class BaseModelLoader(ABC):
         return model_input
 
     @abstractmethod
-    def model_preload(self):
+    def model_preload(self) -> None:
         pass
 
     @abstractmethod
-    def predict(self):
+    def predict(self) -> Dict:
         pass
 
 
@@ -98,7 +101,7 @@ class TFLiteModelLoader(BaseModelLoader):
     """Class to generate predictions from a TFLite model."""
     NUM_THREADS = 4
 
-    def model_preload(self):
+    def model_preload(self) -> None:
         tflite_name = [name for name in os.listdir(MODEL_ROOT + f"{self.model_dir}") if name.endswith(".tflite")][0]
         model_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/{tflite_name}")
 
@@ -146,7 +149,7 @@ class TFLiteModelLoader(BaseModelLoader):
 class HDF5JSONModelLoader(BaseModelLoader):
     """Class to generate predictions from a HDF5JSON model."""
 
-    def model_preload(self):
+    def model_preload(self) -> None:
         hdf5_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/model.hdf5")
         json_path = os.path.join(MODEL_ROOT + f"{self.model_dir}/model.json")
 
@@ -172,8 +175,8 @@ class HDF5JSONModelLoader(BaseModelLoader):
 class CheckpointModelLoader(BaseModelLoader):
     """Class to generate predictions from a Checkpoint model."""
 
-    def model_preload(self):
+    def model_preload(self) -> None:
         pass
 
-    def predict(self):
+    def predict(self) -> Dict:
         pass

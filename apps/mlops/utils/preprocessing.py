@@ -13,6 +13,7 @@ from typing import (
 
 @pipeline_function_register
 def resize_img(model_input: Any, target_size: Tuple = (28, 28)) -> Any:
+    """Changes the size of the image from a given tuple."""
     return model_input.resize(target_size)
 
 
@@ -24,12 +25,14 @@ def rescale_img(model_input: Any, factor: float = 255.0) -> Any:
 
 @pipeline_function_register
 def img_to_array(model_input: Any) -> Any:
+    """Converts the incoming image into an array."""
     model_input = keras.preprocessing.image.img_to_array(model_input)
     return model_input
 
 
 @pipeline_function_register
 def load_img(model_input: Any, target_size: Tuple = (180, 180)) -> Any:
+    """Loads the image with a custom target size."""
     path_to_remove = str(model_input)
     model_input = keras.preprocessing.image.load_img(
         model_input, target_size=target_size
@@ -39,6 +42,7 @@ def load_img(model_input: Any, target_size: Tuple = (180, 180)) -> Any:
 
 @pipeline_function_register
 def process_review_text(model_input: str, preprocess: bool = False) -> str:
+    """Processes the review, cleans and corrects certain characters."""
     if preprocess:
         modificated_text = ImdbSentimentTextModificator(model_input)
         model_input = modificated_text.processed_review

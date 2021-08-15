@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.11.0"
+__version__     =     "0.12.0"
 __logs__        =  {
-    'version':      "0.11.0",
+    'version':      "0.12.0",
     'date':         "08/15/2021",
-    'info':         ["New pipeline function for Imdb Sentiment.", "Imdb Sentiment 3 with preprocess function.", "General function updated.", "ImdbSentimentTextModificator class created.", "New libs installed.", "Pip readme updated.", "ImdbSentiment get better result with the preprocessed text.", "Samples added for every model.", "Not ready yet abb for jupyter notebooks models."],
+    'info':         ["Output def added.", "SelfClass generic typevar created.", "ModelInput init updated."],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.11.0",
+#     'date':         "08/15/2021",
+#     'info':         ["New pipeline function for Imdb Sentiment.", "Imdb Sentiment 3 with preprocess function.", "General function updated.", "ImdbSentimentTextModificator class created.", "New libs installed.", "Pip readme updated.", "ImdbSentiment get better result with the preprocessed text.", "Samples added for every model.", "Not ready yet abb for jupyter notebooks models."],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "ea792e1",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.10.0",
