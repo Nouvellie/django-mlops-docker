@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.12.0"
+__version__     =     "0.13.0"
 __logs__        =  {
-    'version':      "0.12.0",
-    'date':         "08/15/2021",
-    'info':         ["Output def added.", "SelfClass generic typevar created.", "ModelInput init updated."],
+    'version':      "0.13.0",
+    'date':         "08/17/2021",
+    'info':         ["Swagger added.",  "Pip readme updated.", "Swagger added to urls.",],
     'problems':     ["",],
     'fixed':        None,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.12.0",
+#     'date':         "08/15/2021",
+#     'info':         ["Output def added.", "SelfClass generic typevar created.", "ModelInput init updated."],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.11.0",
