@@ -11,6 +11,16 @@
 - Django Environ.
 - Jupyter lab. (examples/creations)
 
+## Run docker (two options)
+
+```sh
+$ sudo bash ./build_project.sh
+```
+
+```sh
+$ docker-compose up --build
+```
+
 ## Links
 
 - [API's.](https://github.com/Nouvellie/django-tflite/blob/main/apps/mlops/views.py)
@@ -24,7 +34,7 @@
 - [Django Environ.](https://github.com/Nouvellie/django-tflite/blob/main/main/.env)
 
 <br><br><p align="center">
-  <img width="75%" height="75%" src="https://github.com/Nouvellie/django-tflite/blob/main/media/assets/django.svg" alt="Django MLOps (TFLite)">
+  <img width="75%" height="75%" src="https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/media/assets/django.svg" alt="Django MLOps (TFLite)">
 </p>
 
 <br><br>
