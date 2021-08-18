@@ -32,6 +32,9 @@ $ docker-compose up --build
 - [Model Loader. (TFLite-HDF5JSON)](https://github.com/Nouvellie/django-tflite/blob/main/apps/mlops/utils/model_loader.py)
 - [Versioning.](https://github.com/Nouvellie/django-tflite/blob/main/main/version.py)
 - [Django Environ.](https://github.com/Nouvellie/django-tflite/blob/main/main/.env)
+- [Docker-compose.](https://github.com/Nouvellie/django-mlops-docker/blob/main/docker-compose.yml)
+- [DockerFile.](https://github.com/Nouvellie/django-mlops-docker/blob/main/Dockerfile)
+- [Nginx conf.](https://github.com/Nouvellie/django-mlops-docker/blob/main/config/nginx/conf.d/myproject.conf)
 
 <br><br><p align="center">
   <img width="75%" height="75%" src="https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/media/assets/django.svg" alt="Django MLOps (TFLite)">
