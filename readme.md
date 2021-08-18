@@ -24,10 +24,10 @@ $ docker-compose up --build
 ## Links
 
 - [API's.](https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/apps/mlops/views.py)
-- [Jupyter Notebooks. (examples and modelcreation)](https://github.com/Nouvellie/django-mlops-docker/tree/main/media/jupyter)
+- [Jupyter Notebooks. (examples and modelcreation)](https://github.com/Nouvellie/django-mlops-docker/tree/main/src/main/media/jupyter)
 - [Requirements.](https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/requirements/pip.md)
-- [Machine Learnings.](https://github.com/Nouvellie/django-mlops-docker/tree/main/media/ml-models)
-- [MLOps.](https://github.com/Nouvellie/django-mlops-docker/tree/main/apps/mlops/utils)
+- [Machine Learnings.](https://github.com/Nouvellie/django-mlops-docker/tree/main/src/main/media/ml-models)
+- [MLOps.](https://github.com/Nouvellie/django-mlops-docker/tree/main/src/main/apps/mlops/utils)
 - [Pipeline.](https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/apps/mlops/utils/pipeline.py)
 - [Model Loader. (TFLite-HDF5JSON)](https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/apps/mlops/utils/model_loader.py)
 - [Versioning.](https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/main/version.py)
