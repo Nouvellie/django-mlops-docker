@@ -16,7 +16,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -110,8 +110,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-# STATIC_ROOT = '/static/' # For docker.
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') # Without docker.
+# STATIC_ROOT = '/static/' # With docker.
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
