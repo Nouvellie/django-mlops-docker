@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
     nginx:
-        image: nginx:latest        
+        image: nginx:1.21.1        
         ports:
             - "8080:80"
         volumes:
@@ -16,7 +16,7 @@ services:
         container_name: djangomlopsdockergunicorn
         build:
             context: .
-        command: bash -c "/home/main/djangomlopsdocker/bin/gunicorn --workers 4 --bind 0.0.0.0:8000 main.wsgi:application"
+        command: bash -c "/home/main/djangomlopsdocker/bin/gunicorn --workers 1 --bind 0.0.0.0:8000 main.wsgi:application"
         volumes:
             - static_volume:/home/main/static
             - media_volume:/home/main/media
