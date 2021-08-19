@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.14.0"
+__version__     =     "0.15.0"
 __logs__        =  {
-    'version':      "0.14.0",
-    'date':         "08/17/2021",
-    'info':         ["Docker-compose created.", "Dockerfile created.", "Nginx and gunicorn added to docker.",],
-    'problems':     ["",],
+    'version':      "0.15.0",
+    'date':         "08/19/2021",
+    'info':         ["Authentication app added.",],
+    'problems':     ["Full authentication app.",],
     'fixed':        None,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.14.0",
+#     'date':         "08/17/2021",
+#     'info':         ["Docker-compose created.", "Dockerfile created.", "Nginx and gunicorn added to docker.",],
+#     'problems':     ["",],
+#     'fixed':        None,
+#     'commit':       "",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.13.0",

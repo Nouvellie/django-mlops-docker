@@ -14,7 +14,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env('DEBUG')
+# DEBUG = env('DEBUG')
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
 CUSTOM_APPS = [
     'apps.core',
     'apps.mlops',
+    'apps.authentication',
 ]
 
 DJANGO_APPS = [
@@ -47,6 +49,17 @@ DJANGOREST_APPS = [
 ]
 
 INSTALLED_APPS = DJANGO_APPS + DJANGOREST_APPS + CUSTOM_APPS
+
+AUTH_USER_MODEL = 'authentication.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated', 
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

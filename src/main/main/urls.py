@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="DJANGO TFLITE API",
+      title="DJANGO MLOPS DOCKER API",
       default_version='v1',
       description="Django API adaptation. (MLOps, TFLite, Hdf5Json, Pipeline...)",
       terms_of_service="https://github.com/Nouvellie/django-tflite/blob/main/readme.md",
@@ -35,6 +35,11 @@ urlpatterns = [
     path(
         '',
         include('apps.mlops.urls'),
+    ),
+
+    path(
+        'auth/',
+        include('apps.authentication.urls'),
     ),
     
     # path(
