@@ -1,5 +1,8 @@
 from .views import (
-    SignUpView,
+    SignInAPI,
+    SignUpAPI,
+    TokenAPI,
+    UserAPI,
 )
 from django.urls import path
 
@@ -7,7 +10,22 @@ from django.urls import path
 urlpatterns = [
     path(
         'signup',
-        SignUpView.as_view(),
+        SignUpAPI.as_view(),
         name='signup',
+    ),
+    path(
+        'signin',
+        SignInAPI.as_view(),
+        name='signin',
+    ),
+    path(
+        'token',
+        TokenAPI.as_view(),
+        name='token',
+    ),
+    path(
+        'user',
+        UserAPI.as_view(),
+        name='user_info',
     ),
 ]

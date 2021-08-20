@@ -6,16 +6,26 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.15.0"
+__version__     =     "0.16.0"
 __logs__        =  {
-    'version':      "0.15.0",
-    'date':         "08/19/2021",
-    'info':         ["Authentication app added.",],
-    'problems':     ["Full authentication app.",],
-    'fixed':        None,
+    'version':      "0.16.0",
+    'date':         "08/20/2021",
+    'info':         ["SignIn View added.", "SignUp View added.", "Token View added.", "User View added.", "Serializer for all the Views.", "Custom User model.", "Token functions. (token.py)", "Custom validations.", "Generate or refresh token on serializers.",],
+    'problems':     ["Create staff user.",],
+    'fixed':        False,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.15.0",
+#     'date':         "08/19/2021",
+#     'info':         ["Authentication app added.",],
+#     'problems':     ["Full authentication app.",],
+#     'fixed':        None,
+#     'commit':       "2330a95",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.14.0",
