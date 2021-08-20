@@ -1,6 +1,7 @@
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.urls import reverse
+from main.settings import DEBUG
 from threading import Thread
 from typing import (
     Generic,
@@ -44,9 +45,14 @@ def send_email(request, user=None):
 		acc_hash = str(request.user.acc_hash)
 		username = str(request.user.username)
 		email = str(request.user.email)
+	# if DEBUG:
+	# 	pre_url = 'http://'
+	# else:
+	# 	pre_url = 'https://'
+	pre_url = 'http://'
 	current_site = str(get_current_site(request))
 	relative_link = str(reverse('verify_account'))
-	abs_url = f"http://{current_site}{relative_link}?verify={acc_hash}"
+	abs_url = f"{pre_url}{current_site}{relative_link}?verify={acc_hash}"
 	body = f"""
 		<html align="center" style="font-family: Arial">
 		  <head></head>

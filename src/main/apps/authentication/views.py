@@ -93,7 +93,7 @@ class TokenAPI(GenericAPIView):
 
 
 class VerifyAPI(GenericAPIView):
-
+	
 	def post(self, request, format=None):
 		try:
 			send_email(request)
@@ -113,4 +113,4 @@ class VerifyAccountAPI(GenericAPIView):
 		elif not account_verified['status']:
 			return Response({'error': account_verified['error']}, status=HTTP_400_BAD_REQUEST)
 		else:
-			return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
+			return Response({'error': 'A problem occurred while the account was being validated, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
