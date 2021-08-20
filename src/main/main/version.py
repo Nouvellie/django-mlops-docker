@@ -11,7 +11,7 @@ __logs__        =  {
     'version':      "0.17.0",
     'date':         "08/20/2021",
     'info':         ["Create staff user. OK", "Account email verification ready.", "Email settings adapted on settings.", "Acc hash added.", "Account verification function added.", "Except for some verification errors.", "Account bans message adapted.", "Version added on Swagger."],
-    'problems':     ["DEBUG for emails url.", "Fix typing for all the new stuff.",],
+    'problems':     ["DEBUG for emails url.", "Fix typing for all the new stuff.", "ML models muted."],
     'fixed':        False,
     'commit':       "",
     "prod":         None,
