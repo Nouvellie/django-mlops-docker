@@ -78,11 +78,11 @@ class SignInSerializer(serializers.ModelSerializer):
         user = authenticate(**data)
         # Banned or disabled user.
         if not user and User.objects.filter(username=data['username']).count() > 0:
-            raise serializers.ValidationError("The user has been deactivated.")
+            raise serializers.ValidationError("This account has been deactivated by an administrator.")
         if user:
             if not user.is_verified:
                 raise serializers.ValidationError(
-                    "The user has not been verified.")
+                    "This account has not been verified.")
             user_logged_in.send(sender=user.__class__, user=user)
             return user
         raise serializers.ValidationError("Incorrect credentials.")

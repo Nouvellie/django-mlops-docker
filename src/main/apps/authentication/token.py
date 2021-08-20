@@ -1,3 +1,4 @@
+from .models import User
 from datetime import (
     datetime,
     timedelta,
@@ -36,3 +37,21 @@ def refresh_token(user, refresh=True):
     Token.objects.filter(user=user).delete()
     token, _ = Token.objects.get_or_create(user=user)
     return token.key
+
+
+def account_verification(acc_hash):
+    account_verified = {}
+    account_verified['status'] = False
+
+    user = User.objects.get(acc_hash=acc_hash)
+
+    if not user.is_active:
+        account_verified['error'] = 'This account cannot be verified because it has been deactivated by an administrator.'
+    elif user.is_verified:
+        account_verified['error'] = 'This account has already been verified.'
+    else:
+        user.is_verified = True
+        user.save()
+        account_verified['status'] = True
+
+    return account_verified
