@@ -16,14 +16,14 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'is_verified')
 
 
 class UserInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'created_at', 'first_name', 'last_name')
+        fields = ('username', 'email', 'is_verified', 'created_at', 'first_name', 'last_name')
 
 
 class SignUpSerializer(serializers.ModelSerializer):

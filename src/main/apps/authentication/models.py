@@ -6,11 +6,12 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from rest_framework.authtoken.models import Token
 
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, email, username, password, **other_fields):
+    def create_user(self, username, email, password, **other_fields):
 
         if not email:
             raise ValueError(_("You must provide an email address."))
@@ -24,44 +25,6 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, email, username, password, **other_fields):
-
-        other_fields.setdefault('is_staff', True)
-        other_fields.setdefault('is_superuser', True)
-        other_fields.setdefault('is_active', True)
-        other_fields.setdefault('is_verified', True)
-
-        if other_fields.get('is_staff') is not True:
-            raise ValueError(
-                'Superuser must be assigned to is_staff=True.')
-        if other_fields.get('is_superuser') is not True:
-            raise ValueError(
-                'Superuser must be assigned to is_superuser=True.')
-        if other_fields.get('is_verified') is not True:
-            raise ValueError(
-                'Superuser must be assigned to is_verified=True.')
-
-        return self.create_user(email, username, password, **other_fields)
-
-    def create_staffuser(self, email, username, password, **other_fields):
-
-        other_fields.setdefault('is_staff', True)
-        other_fields.setdefault('is_superuser', False)
-        other_fields.setdefault('is_active', True)
-        other_fields.setdefault('is_verified', True)
-
-        if other_fields.get('is_staff') is not True:
-            raise ValueError(
-                'Staffuser must be assigned to is_staff=True.')
-        if other_fields.get('is_superuser') is not False:
-            raise ValueError(
-                'Staffuser must be assigned to is_superuser=False.')
-        if other_fields.get('is_verified') is not True:
-            raise ValueError(
-                'Staffuser must be assigned to is_verified=True.')
-
-        return self.create_user(email, username, password, **other_fields)
-
 
 class User(AbstractBaseUser, PermissionsMixin):
 
@@ -73,7 +36,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_('first name'), max_length=150, blank=True)
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(
+        default=False, 
+        help_text=_(
+            'This user has verified their account after it has been created.'))
     is_active = models.BooleanField(
         default=True,
         help_text=_(
@@ -93,7 +59,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
-        return f"User '{self.username}' with email '{self.email}'."
-
-    def token(self):
-        return ''
+        return self.username
