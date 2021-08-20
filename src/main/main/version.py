@@ -10,7 +10,7 @@ __version__     =     "0.16.0"
 __logs__        =  {
     'version':      "0.16.0",
     'date':         "08/20/2021",
-    'info':         ["SignIn View added.", "SignUp View added.", "Token View added.", "User View added.", "Serializer for all the Views.", "Custom User model.", "Token functions. (token.py)", "Custom validations.", "Generate or refresh token on serializers.",],
+    'info':         ["SignIn View added.", "SignUp View added.", "Token View added.", "User View added.", "Serializer for all the Views.", "Custom User model.", "Token functions. (token.py)", "Custom validations.", "Generate or refresh token on serializers.", "Last SignIn update function added. (login)"],
     'problems':     ["Create staff user.",],
     'fixed':        False,
     'commit':       "",
