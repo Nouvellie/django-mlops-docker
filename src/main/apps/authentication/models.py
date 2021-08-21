@@ -9,12 +9,20 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authtoken.models import Token
+from typing import (
+    Dict,
+    Generic,
+    List,
+    TypeVar,
+)
+NewUser = TypeVar('NewUser')
 
 
 class UserManager(BaseUserManager):
+    """Creates a modified class based on BaseUserManager."""
 
-    def create_user(self, username, email, password, **other_fields):
-
+    def create_user(self, username: str, email: str, password: str, **other_fields) -> Generic[NewUser]:
+        """User creation."""
         if not email:
             raise ValueError(_("You must provide an email address."))
 
@@ -29,6 +37,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """Creates a modified class based on AbstractBaseUser."""
 
     username = models.CharField(
         max_length=255,
@@ -40,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     acc_hash = models.UUIDField(unique=True, default=uuid.uuid4)
     is_verified = models.BooleanField(
-        default=False, 
+        default=False,
         help_text=_(
             'This user has verified their account after it has been created.'))
     is_active = models.BooleanField(
@@ -61,5 +70,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.username

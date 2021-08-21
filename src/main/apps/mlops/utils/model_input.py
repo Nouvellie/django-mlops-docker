@@ -10,6 +10,7 @@ SelfClass = TypeVar('SelfClass')
 
 class ModelInputGenerator:
     """Generate inputs for the Fashion Mnist model"""
+
     def __new__(cls, *args, **kwargs) -> Generic[SelfClass]:
         return super(ModelInputGenerator, cls).__new__(cls, *args, **kwargs)
 

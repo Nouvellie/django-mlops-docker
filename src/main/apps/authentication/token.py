@@ -5,9 +5,11 @@ from datetime import (
     timezone,
 )
 from rest_framework.authtoken.models import Token
+from typing import Dict
 
 
-def check_token(user):
+def check_token(user: User) -> Token:
+    """This function verifies the token, its validity and expiration."""
     token_status = {}
     token_status['info'] = {}
     token, _ = Token.objects.get_or_create(user=user)
@@ -28,18 +30,21 @@ def check_token(user):
     return token_status
 
 
-def get_token(user):
+def get_token(user: User) -> Token:
+    """This function returns only the token of the queried user."""
     token, _ = Token.objects.get_or_create(user=user)
     return token.key
 
 
-def refresh_token(user, refresh=True):
+def refresh_token(user, refresh: bool = True) -> Token:
+    """This function returns a refreshed token of the queried user."""
     Token.objects.filter(user=user).delete()
     token, _ = Token.objects.get_or_create(user=user)
     return token.key
 
 
-def account_verification(acc_hash):
+def account_verification(acc_hash: str) -> Dict:
+    """This function receives the verification sent to the email, processes it and, if it is correct, validates the account."""
     account_verified = {}
     account_verified['status'] = False
 

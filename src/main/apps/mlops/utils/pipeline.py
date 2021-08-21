@@ -68,7 +68,7 @@ class Pipeline:
 
         with open(str(preprocessing_path), "r", encoding="utf8") as pp:
             pipeline = json.load(pp)
-            
+
         self.pipeline = pipeline
         # print("\n", f"Pipeline loaded from {preprocessing_path!r}")
 

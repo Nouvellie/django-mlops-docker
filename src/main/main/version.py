@@ -5,17 +5,26 @@ __copyright__   =     None
 __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
-__structure__   =     "str(version) - str(date) - list(info) - list(problems) - none-bool(fixed) - str(commit) - none-bool(prod)"
-__version__     =     "0.17.0"
+__structure__   =     "str(version) - str(date) - list(info) - bool(todo) - str(commit) - none-bool(prod)"
+__version__     =     "0.18.0"
 __logs__        =  {
-    'version':      "0.17.0",
-    'date':         "08/20/2021",
-    'info':         ["Create staff user. OK", "Account email verification ready.", "Email settings adapted on settings.", "Acc hash added.", "Account verification function added.", "Except for some verification errors.", "Account bans message adapted.", "Version added on Swagger."],
-    'problems':     ["DEBUG for emails url.", "Fix typing for all the new stuff.", "ML models muted."],
-    'fixed':        False,
+    'version':      "0.18.0",
+    'date':         "08/21/2021",
+    'info':         ["All the code updated.", "Typing for all the code.", "Full SignIn/SignUp APIs.", "Verify account fully complete.", "Default Renderer/Parser classes.", "Customserializer OK.", "Swagger updated.", "Doc updated.", "Fix typing for all the new stuff.",],
+    'todo':         True,
     'commit':       "",
     "prod":         None,
 }
+
+# __logs__        =  {
+#     'version':      "0.17.0",
+#     'date':         "08/20/2021",
+#     'info':         ["Create staff user. OK", "Account email verification ready.", "Email settings adapted on settings.", "Acc hash added.", "Account verification function added.", "Except for some verification errors.", "Account bans message adapted.", "Version added on Swagger."],
+#     'problems':     ["DEBUG for emails url.*TODO*", "Fix typing for all the new stuff.*TODO*", "ML models muted.*TODO*"],
+#     'fixed':        True,
+#     'commit':       "4c89ce4",
+#     "prod":         None,
+# }
 
 # __logs__        =  {
 #     'version':      "0.16.0",
@@ -81,8 +90,8 @@ __logs__        =  {
 #     'version':      "0.10.0",
 #     'date':         "08/13/2021",
 #     'info':         ["New improved Imdb Sentiment model. x1",],
-#     'problems':     ["CheckpointModelLoader not created yet.",],
-#     'fixed':        False,
+#     'problems':     ["CheckpointModelLoader not created yet.*TODO*",],
+#     'fixed':        True,
 #     'commit':       "f57d9d1",
 #     "prod":         None,
 # }
@@ -121,8 +130,8 @@ __logs__        =  {
 #     'version':      "0.6.0",
 #     'date':         "08/12/2021",
 #     'info':         ["Imdb to imdb sentiment changed.", "Stackoverflow text model added on jupyter.", "Stackover flow TFLite ready.", "Stackoverflow hdf5json maybe ready.", "Pip md updated.", "Stackoverflow API View ready.",],
-#     'problems':     ["Text classification model get Vectorized input not str.",],
-#     'fixed':        False,
+#     'problems':     ["Text classification model get Vectorized input. (not str).*TODO*",],
+#     'fixed':        True,
 #     'commit':       "9f2a67e",
 #     "prod":         None,
 # }
@@ -131,8 +140,8 @@ __logs__        =  {
 #     'version':      "0.5.0",
 #     'date':         "08/12/2021",
 #     'info':         ["Imdb predict from file ready.", "Model input fix. OK", "Imdb predict with text or file. (txt) OK"],
-#     'problems':     ["Raise error if it is not a text file.",],
-#     'fixed':        False,
+#     'problems':     ["Raise error if it is not a text file.*TODO*",],
+#     'fixed':        True,
 #     'commit':       "5961ed1",
 #     "prod":         None,
 # }
@@ -181,8 +190,8 @@ __logs__        =  {
 #     'version':      "0.1.0",
 #     'date':         "08/08/2021",
 #     'info':         ["Pipeline, preprocessing, model loader, file loader and model input ready for fashion mnist and generics models.", "Custom typing for some values.", "PEP8.", "The code was cleaned up.", "Example images added.",],
-#     'problems':     ["Output decoder not ready yet.*", "HDF5JSON not ready yet.*", "DVC not implemented yet.", "Fix pipeline from_json."],
-#     'fixed':        False,
+#     'problems':     ["Output decoder not ready yet.*", "HDF5JSON not ready yet.*", "DVC not implemented yet.*TODO*", "Fix pipeline from_json.*TODO*"],
+#     'fixed':        True,
 #     'commit':       "ea35174",
 #     "prod":         None,
 # }
@@ -217,6 +226,17 @@ __logs__        =  {
 #     "prod":         None,
 # }
 
+TODO_TASKS = { # TASK-STATUS-VERSION
+    'DVC not implemented yet.': False,
+    'Fix pipeline from_json.': False,
+    'Raise error if it is not a text file.': False,
+    'Text classification model get Vectorized input. (not str).': False,
+    'CheckpointModelLoader not created yet.': False,
+    'DEBUG for emails url.': False,
+    'ML models muted.': False,
+    'Html/css for emails.': False,
+    'Mlops input serializer.': False, 
+}
 
 full_info = {
     '__author__': __author__,

@@ -66,6 +66,7 @@ class BaseModelLoader(ABC):
         self.postprocessing.from_json(postprocessing_path)
 
     def model_input_load(self) -> None:
+        """Creates a generic modelinput."""
         self.ModelInput = ModelInputGenerator()
 
     def preload_file_loader(self) -> None:
@@ -90,10 +91,12 @@ class BaseModelLoader(ABC):
 
     @abstractmethod
     def model_preload(self) -> None:
+        """This function is used to generate the preload of the model."""
         pass
 
     @abstractmethod
     def predict(self) -> Dict:
+        """With this function the inference of the model is generated."""
         pass
 
 
@@ -119,7 +122,7 @@ class TFLiteModelLoader(BaseModelLoader):
     def predict(self, model_input: Any, confidence: bool = False) -> Dict:
         try:
             model_input = self.generate_model_input(model_input)
-            
+
             if self.model_type in (1, 4):
                 for i, j in enumerate(model_input):
                     model_input_tensor = convert_to_tensor(

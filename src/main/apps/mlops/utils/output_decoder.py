@@ -127,6 +127,7 @@ class OutputDecoder:
             )
 
     def from_json(self, postprocessing_path: str) -> None:
+        """Sets a post process from a json file."""
         postprocessing_path = Path(postprocessing_path)
 
         with open(str(postprocessing_path), "r", encoding="utf8") as pp:

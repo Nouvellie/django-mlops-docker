@@ -4,6 +4,7 @@ from django.urls import reverse
 from main.settings import DEBUG
 from threading import Thread
 from typing import (
+    Dict,
     Generic,
     List,
     TypeVar,
@@ -12,48 +13,50 @@ SelfClass = TypeVar('SelfClass')
 
 
 class EmailThread(Thread):
+    """Class for sending e-mails at the thread level."""
 
-	def __new__(cls, email, *args, **kwargs) -> Generic[SelfClass]:
-		return super(EmailThread, cls).__new__(cls, *args, **kwargs)
+    def __new__(cls, email, *args, **kwargs) -> Generic[SelfClass]:
+        return super(EmailThread, cls).__new__(cls, *args, **kwargs)
 
+    def __init__(self, email, *args, **kwargs) -> None:
+        self.email = email
+        Thread.__init__(self)
 
-	def __init__(self, email, *args, **kwargs):
-		self.email = email
-		Thread.__init__(self)
-
-
-	def run(self):
-		self.email.content_subtype = "html"
-		self.email.send()
+    def run(self) -> None:
+        """Sending e-mail, parallel to the main process."""
+        self.email.content_subtype = "html"
+        self.email.send()
 
 
 class EmailPreparation:
+    """Preparation class for sending e-mails at the thread level."""
 
-	@staticmethod
-	def send(data):
-		email = EmailMessage(
-			subject=data['subject'], body=data['body'], to=[data['to']])
-		EmailThread(email).start()
+    @staticmethod
+    def send(data: List) -> None:
+        """Send all the necessary parameters that make up the e-mail."""
+        email = EmailMessage(
+            subject=data['subject'], body=data['body'], to=[data['to']])
+        EmailThread(email).start()
 
 
-def send_email(request, user=None):
-	if user:
-		acc_hash = str(user.acc_hash)
-		username = str(user.username)
-		email = str(user.email)
-	else:
-		acc_hash = str(request.user.acc_hash)
-		username = str(request.user.username)
-		email = str(request.user.email)
-	# if DEBUG:
-	# 	pre_url = 'http://'
-	# else:
-	# 	pre_url = 'https://'
-	pre_url = 'http://'
-	current_site = str(get_current_site(request))
-	relative_link = str(reverse('verify_account'))
-	abs_url = f"{pre_url}{current_site}{relative_link}?verify={acc_hash}"
-	body = f"""
+def send_email(request: Dict, user=None) -> None:
+    if user:
+        acc_hash = str(user.acc_hash)
+        username = str(user.username)
+        email = str(user.email)
+    else:
+        acc_hash = str(request.user.acc_hash)
+        username = str(request.user.username)
+        email = str(request.user.email)
+    # if DEBUG:
+    # 	pre_url = 'http://'
+    # else:
+    # 	pre_url = 'https://'
+    pre_url = 'http://'
+    current_site = str(get_current_site(request))
+    relative_link = str(reverse('verify_account'))
+    abs_url = f"{pre_url}{current_site}{relative_link}?verify={acc_hash}"
+    body = f"""
 		<html align="center" style="font-family: Arial">
 		  <head></head>
 		  <body style="background-color: rgb(12, 14, 19); color: white;" >
@@ -66,10 +69,10 @@ def send_email(request, user=None):
 		  </body>
 		</html>
 	"""
-	data = {
-		'body': body, 
-		'to': email,
-		'subject': f"Nouvellie: Account verification.",
-		'url': abs_url,
-	}
-	EmailPreparation.send(data)
+    data = {
+        'body': body,
+        'to': email,
+        'subject': f"Nouvellie: Account verification.",
+        'url': abs_url,
+    }
+    EmailPreparation.send(data)

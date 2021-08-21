@@ -15,7 +15,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
-# DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -57,11 +56,17 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.MultiPartParser',
+    ],
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated', 
     ),
-    'NON_FIELD_ERRORS_KEY': 'error_info',
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
     'DETAIL_KEY': 'error',
+    'NON_FIELD_ERRORS_KEY': 'error_info',
 }
 
 MIDDLEWARE = [

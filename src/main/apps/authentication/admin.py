@@ -4,6 +4,8 @@ from django.contrib.auth.admin import UserAdmin
 
 
 class UserAdminConfig(UserAdmin):
+    """This class allows you to manage the User model, from the Django admin menu."""
+
     ordering = ['-created_at']
     list_display = ('username', 'email', 'is_active',
                     'is_verified', 'is_staff', 'is_superuser', 'acc_hash')

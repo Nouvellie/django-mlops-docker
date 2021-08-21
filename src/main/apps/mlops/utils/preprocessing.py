@@ -40,6 +40,7 @@ def load_img(model_input: Any, target_size: Tuple = (180, 180)) -> Any:
     os.remove(path_to_remove)
     return model_input
 
+
 @pipeline_function_register
 def process_review_text(model_input: str, preprocess: bool = False) -> str:
     """Processes the review, cleans and corrects certain characters."""

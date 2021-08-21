@@ -20,6 +20,7 @@ class ImdbSentimentTextModificator:
     Generate inputs for the Fashion Mnist model.
     Credits: # https://github.com/laxmimerit/preprocess_kgptalkie (github-based class)
     """
+
     def __new__(cls, review: str, *args, **kwargs) -> Generic[SelfClass]:
         return super(ImdbSentimentTextModificator, cls).__new__(cls, *args, **kwargs)
 

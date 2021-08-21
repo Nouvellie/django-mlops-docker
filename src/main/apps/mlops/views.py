@@ -55,7 +55,7 @@ from rest_framework.views import APIView
 
 
 class TFLiteFashionMnistAPIView(APIView):
-    """API for Fashion Mnist model."""
+    """API for Fashion Mnist tflite model."""
 
     def post(self, request, format=None):
         try:
@@ -98,7 +98,7 @@ class TFLiteFashionMnistAPIView(APIView):
 
 
 class HDF5JSONFashionMnistAPIView(APIView):
-    """API for Fashion Mnist model."""
+    """API for Fashion Mnist hdf5json model."""
 
     def post(self, request, format=None):
         try:
@@ -123,8 +123,6 @@ class HDF5JSONFashionMnistAPIView(APIView):
             threshold_false_hdf5json_result = threshold_fashion_mnist_hdf5json_model.predict(
                 model_input)
 
-
-
             result = {
                 'argmax_true': argmax_true_hdf5json_result,
                 'argmax_false': argmax_false_hdf5json_result,
@@ -143,7 +141,7 @@ class HDF5JSONFashionMnistAPIView(APIView):
 
 
 class TFLiteImdbSentimentAPIView(APIView):
-    """API for Imdb Sentiment model."""
+    """API for Imdb Sentiment tflite model."""
 
     def post(self, request, format=None):
         try:
@@ -165,7 +163,7 @@ class TFLiteImdbSentimentAPIView(APIView):
                 model_input)
             processed_argmax_true_tflite_result = processed_argmax_imdb_sentiment_tflite_model.predict(
                 model_input, confidence=True)
-            
+
             result = {
                 'argmax_true': argmax_true_tflite_result,
                 'argmax_false': argmax_false_tflite_result,
@@ -185,7 +183,7 @@ class TFLiteImdbSentimentAPIView(APIView):
 
 
 class TFLiteStackoverflowAPIView(APIView):
-    """API for StackOverFlow model."""
+    """API for StackOverFlow tflite model."""
 
     def post(self, request, format=None):
         try:
@@ -224,7 +222,7 @@ class TFLiteStackoverflowAPIView(APIView):
 
 
 class TFLiteCatsvsdogsAPIView(APIView):
-    """API for Cats vs Dogs model."""
+    """API for Cats vs Dogs tflite model."""
 
     def post(self, request, format=None):
         try:
@@ -263,7 +261,7 @@ class TFLiteCatsvsdogsAPIView(APIView):
 
 
 class HDF5JSONCatsvsdogsAPIView(APIView):
-    """API for Cats vs Dogs model."""
+    """API for Cats vs Dogs hdf5json model."""
 
     def post(self, request, format=None):
         try:

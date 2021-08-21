@@ -5,6 +5,7 @@ from django.contrib.auth.signals import user_logged_in
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 from typing import (
+    Dict,
     Generic,
     List,
     TypeVar,
@@ -13,6 +14,7 @@ InputDataDict = TypeVar('InputDataDict')
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """Returns a modified serialized dictionary of the user model."""
 
     class Meta:
         model = User
@@ -20,13 +22,17 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserInfoSerializer(serializers.ModelSerializer):
+    """Returns a modified serialized info dictionary of the user model."""
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'is_verified', 'created_at', 'first_name', 'last_name')
+        fields = ('username', 'email', 'is_verified',
+                  'created_at', 'first_name', 'last_name')
 
 
 class SignUpSerializer(serializers.ModelSerializer):
+    """This class serializes the creation of a new account, with all its corresponding validations."""
+
     password = serializers.CharField(write_only=True, required=True, validators=[
         validate_password], style={'input_type': 'password', })
     password2 = serializers.CharField(write_only=True, required=True, style={
@@ -38,7 +44,8 @@ class SignUpSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True},
                         'password2': {'write_only': True}, }
 
-    def create(self, validated_data):
+    def create(self, validated_data: Generic[InputDataDict]) -> User:
+        """User creation."""
         password = validated_data.pop('password', None)
         validated_data.pop('password2', None)
         instance = self.Meta.model(**validated_data)
@@ -49,13 +56,15 @@ class SignUpSerializer(serializers.ModelSerializer):
         Token.objects.create(user=user)
         return instance
 
-    def validate(self, data):
+    def validate(self, data: Generic[InputDataDict]) -> Dict:
+        """InputData validation."""
         if data['password'] != data['password2']:
             raise serializers.ValidationError(
                 {"password": "Password fields didn't match."})
         return data
 
-    def update(self, instance, validated_data):
+    def update(self, instance: User, validated_data: Generic[InputDataDict]) -> User:
+        """Password handle."""
         for data, value in validated_data.items():
             if data == 'password':
                 instance.set_password(value)
@@ -66,6 +75,8 @@ class SignUpSerializer(serializers.ModelSerializer):
 
 
 class SignInSerializer(serializers.ModelSerializer):
+    """Validates the credentials of an account when signin."""
+
     username = serializers.CharField(required=True)
     password = serializers.CharField(
         required=True, style={'input_type': 'password', })
@@ -75,10 +86,12 @@ class SignInSerializer(serializers.ModelSerializer):
         fields = ('username', 'password')
 
     def validate(self, data: Generic[InputDataDict]) -> User:
+        """InputData validation."""
         user = authenticate(**data)
         # Banned or disabled user.
         if not user and User.objects.filter(username=data['username']).count() > 0:
-            raise serializers.ValidationError("This account has been deactivated by an administrator.")
+            raise serializers.ValidationError(
+                "This account has been deactivated by an administrator.")
         if user:
             if not user.is_verified:
                 raise serializers.ValidationError(
@@ -86,3 +99,15 @@ class SignInSerializer(serializers.ModelSerializer):
             user_logged_in.send(sender=user.__class__, user=user)
             return user
         raise serializers.ValidationError("Incorrect credentials.")
+
+
+class CustomSerializer(serializers.Serializer):
+    file = serializers.FileField(required=True)
+    age = serializers.IntegerField(required=True)
+    sex = serializers.IntegerField(required=True)
+    report = serializers.CharField(required=True, max_length=20)
+    report2 = serializers.CharField(required=True, max_length=20)
+
+    class Meta:
+
+        fields = ('file', 'age', 'sex', 'report', 'report2')

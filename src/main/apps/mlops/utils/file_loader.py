@@ -20,6 +20,7 @@ PILImage = TypeVar('PILImage')
 
 
 class FashionMnistFileLoader:
+    """Preloading of inputs (mostly files) from the FashionMnist API."""
 
     def __call__(self, model_input: Generic[InMemoryUploadedFile]) -> Generic[PILImage]:
         model_input = Image.open(model_input)
@@ -28,6 +29,7 @@ class FashionMnistFileLoader:
 
 
 class ImdbSentimentFileLoader:
+    """Preloading of inputs (mostly files) from the ImdbSentiment API."""
 
     def __call__(self, model_input: str) -> str:
         try:
@@ -40,6 +42,7 @@ class ImdbSentimentFileLoader:
 
 
 class StackoverflowFileLoader:
+    """Preloading of inputs (mostly files) from the Stackoverflow API."""
 
     def __call__(self, model_input: str) -> str:
         try:
@@ -52,6 +55,7 @@ class StackoverflowFileLoader:
 
 
 class CatsvsdogsFileLoader:
+    """Preloading of inputs (mostly files) into the Catsvsdogs API."""
 
     def __call__(self, model_input: Generic[InMemoryUploadedFile]) -> str:
         path = default_storage.save(f"tmp/{model_input.name}", ContentFile(model_input.file.read()))
