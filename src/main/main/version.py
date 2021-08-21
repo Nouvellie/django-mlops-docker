@@ -21,6 +21,7 @@ __logs__        =  {
         "Custom exception created. (CustomError)",
         "Some output fixed and adapted. (error)",
         "ImdbSentiment now accepts 'docx, md, txt'":,
+        "Raise error if it is not a text file. OK",
     ],
     'todo':         True,
     'commit':       "",
@@ -30,7 +31,6 @@ __logs__        =  {
 TODO_TASKS = { # TASK-STATUS-VERSION
     'DVC not implemented yet.': False,
     'Fix pipeline from_json.': False,
-    'Raise error if it is not a text file.': False,
     'Text classification model get Vectorized input. (not str).': False,
     'CheckpointModelLoader not created yet.': False,
     'DEBUG for emails url.': False,
@@ -38,6 +38,9 @@ TODO_TASKS = { # TASK-STATUS-VERSION
     'Html/css for emails.': False,
     'Mlops input serializer.': False,
     'Remove AllyAny from MLOps.': False,
+    "Check email environ config": False,
+
+    "Raise error if it is not a text file.": True,
 }
 
 full_info = {
