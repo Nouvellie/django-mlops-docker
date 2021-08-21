@@ -6,31 +6,12 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - bool(todo) - str(commit) - none-bool(prod)"
-__version__     =     "0.19.0"
+__version__     =     "0.20.0"
 __logs__        =  {
-    'version':      "0.19.0",
+    'version':      "0.20.0",
     'date':         "08/21/2021",
     'info':         [
-        "New versioning info struct.",
-        "TFLite/HDF5JSON FashionMnist serialized.",
-        "TFLite/HDF5JSON FashionMnist API reworked.",
-        "TFLite/HDF5JSON CatsVsDogs serialized.",
-        "TFLite/HDF5JSON CatsVsDogs API reworked.",
-        "TFLite ImdbSentiment serialized.",
-        "TFLite ImdbSentiment API reworked.",
-        "Custom exception created. (CustomError)",
-        "Some output fixed and adapted. (error)",
-        "ImdbSentiment now accepts 'docx, md, txt'",
-        "Raise error if it is not a text file. OK",
-        "TFLite Stackoverflow serialized.",
-        "TFLite Stackoverflow API reworked.",
-        "Mlops input serializer. OK",
-        "ML models muted. OK",
-        "Remove AllyAny from MLOps. OK",
-        "Rstrip removed.",
-        "Token on swagger",
-        "SignIn API/Serializer fixed.",
-        "Banned or unverified account status ready.",
+        "",
     ],
     'todo':         True,
     'commit':       "",
@@ -46,12 +27,6 @@ TODO_TASKS = { # TASK-STATUS
     "Html/css for emails.": False,
     "Check email environ config": False,
     "SignIn swagger redirect": False,
-
-    "Raise error if it is not a text file.": True,
-    "Mlops input serializer.": True,
-    "ML models muted.": True,
-    "Remove AllyAny from MLOps.": True,
-    "Token on swagger": True,
 }
 
 full_info = {

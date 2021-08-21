@@ -1,4 +1,34 @@
 # __logs__        =  {
+#     'version':      "0.19.0",
+#     'date':         "08/21/2021",
+#     'info':         [
+#         "New versioning info struct.",
+#         "TFLite/HDF5JSON FashionMnist serialized.",
+#         "TFLite/HDF5JSON FashionMnist API reworked.",
+#         "TFLite/HDF5JSON CatsVsDogs serialized.",
+#         "TFLite/HDF5JSON CatsVsDogs API reworked.",
+#         "TFLite ImdbSentiment serialized.",
+#         "TFLite ImdbSentiment API reworked.",
+#         "Custom exception created. (CustomError)",
+#         "Some output fixed and adapted. (error)",
+#         "ImdbSentiment now accepts 'docx, md, txt'",
+#         "Raise error if it is not a text file. OK",
+#         "TFLite Stackoverflow serialized.",
+#         "TFLite Stackoverflow API reworked.",
+#         "Mlops input serializer. OK",
+#         "ML models muted. OK",
+#         "Remove AllyAny from MLOps. OK",
+#         "Rstrip removed.",
+#         "Token on swagger",
+#         "SignIn API/Serializer fixed.",
+#         "Banned or unverified account status ready.",
+#     ],
+#     'todo':         True,
+#     'commit':       "1396622",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
 #     'version':      "0.18.0",
 #     'date':         "08/21/2021",
 #     'info':         [

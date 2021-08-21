@@ -83,7 +83,6 @@ class TFLiteFashionMnist(GenericAPIView):
 
 	def post(self, request, format=None, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
-
 		if serializer.is_valid(raise_exception=True):
 			model_input = serializer.validated_data['image']
 
@@ -114,7 +113,6 @@ class HDF5JSONFashionMnist(GenericAPIView):
 
 	def post(self, request, format=None, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
-
 		if serializer.is_valid(raise_exception=True):
 			model_input = serializer.validated_data['image']
 
@@ -145,7 +143,6 @@ class TFLiteImdbSentiment(GenericAPIView):
 
 	def post(self, request, format=None, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
-
 		if serializer.is_valid(raise_exception=True):
 			model_input = serializer.validated_data['review']
 
@@ -179,7 +176,6 @@ class TFLiteStackoverflow(GenericAPIView):
 
 	def post(self, request, format=None, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
-
 		if serializer.is_valid(raise_exception=True):
 			model_input = serializer.validated_data['code']
 
@@ -210,7 +206,6 @@ class TFLiteCatsVsDogs(GenericAPIView):
 
 	def post(self, request, format=None, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
-
 		if serializer.is_valid(raise_exception=True):
 			model_input = serializer.validated_data['image']
 
@@ -241,7 +236,6 @@ class HDF5JSONCatsVsDogs(GenericAPIView):
 
 	def post(self, request, format=None, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
-
 		if serializer.is_valid(raise_exception=True):
 			model_input = serializer.validated_data['image']
 
