@@ -10,7 +10,7 @@ __version__     =     "0.18.0"
 __logs__        =  {
     'version':      "0.18.0",
     'date':         "08/21/2021",
-    'info':         ["All the code updated.", "Typing for all the code.", "Full SignIn/SignUp APIs.", "Verify account fully complete.", "Default Renderer/Parser classes.", "Customserializer OK.", "Swagger updated.", "Doc updated.", "Fix typing for all the new stuff.",],
+    'info':         ["All the code updated.", "Typing for all the code.", "Full SignIn/SignUp APIs.", "Verify account fully complete.", "Default Renderer/Parser classes.", "Customserializer OK.", "Swagger updated.", "Doc updated.", "Fix typing for all the new stuff.", "New versioning system. (TODO added, problems-fixed removed)",],
     'todo':         True,
     'commit':       "",
     "prod":         None,
