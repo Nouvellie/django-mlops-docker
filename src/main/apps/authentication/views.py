@@ -1,4 +1,3 @@
-from .serializers import CustomSerializer
 from .email import send_email
 from .serializers import (
     SignInSerializer,
@@ -49,7 +48,7 @@ class SignUpAPI(GenericAPIView):
                 "token": get_token(user),
             }, status=HTTP_201_CREATED)
         else:
-            return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': serializer.errors,}, status=HTTP_400_BAD_REQUEST)
 
 
 class SignInAPI(GenericAPIView):
@@ -60,14 +59,14 @@ class SignInAPI(GenericAPIView):
 
     def post(self, request, *args, **kwargs) -> Generic[JSONResponse]:
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.get_user()
             return Response({
                 "credentials": UserSerializer(user, context=self.get_serializer_context()).data,
                 "token": refresh_token(user),
             }, status=HTTP_200_OK)
         else:
-            return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': serializer.errors,}, status=HTTP_400_BAD_REQUEST)
 
 
 class UserAPI(GenericAPIView):
@@ -85,7 +84,7 @@ class UserAPI(GenericAPIView):
                 "token": check_token(user),
             }, status=HTTP_200_OK)
         else:
-            return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': serializer.errors,}, status=HTTP_400_BAD_REQUEST)
 
 
 class TokenAPI(GenericAPIView):
@@ -104,7 +103,7 @@ class TokenAPI(GenericAPIView):
                 "info": token_info['info'],
             }, status=HTTP_200_OK)
         else:
-            return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': serializer.errors,}, status=HTTP_400_BAD_REQUEST)
 
 
 class VerifyAPI(APIView):
@@ -132,12 +131,4 @@ class VerifyAccountAPI(APIView):
         elif not account_verified['status']:
             return Response({'error': account_verified['error']}, status=HTTP_400_BAD_REQUEST)
         else:
-            return Response({'error': 'A problem occurred while the account was being validated, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)           
-
-
-class TestingAPIView(GenericAPIView):
-    permission_classes = (AllowAny,)
-    serializer_class = CustomSerializer
-
-    def post(self, request, *arg, **kwargs):
-        return Response(status=HTTP_200_OK)
+            return Response({'error': 'A problem occurred while the account was being validated, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)

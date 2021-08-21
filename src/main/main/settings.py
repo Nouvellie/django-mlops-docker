@@ -49,8 +49,13 @@ DJANGOREST_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + DJANGOREST_APPS + CUSTOM_APPS
 
+# Use the custom User model.
 AUTH_USER_MODEL = 'authentication.User'
 
+# Allow inactive users to sign in. (is_active=False)
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
+
+# Remporary Token authentication in swagger.
 SWAGGER_SETTINGS = {
    'USE_SESSION_AUTH': False,
    'SECURITY_DEFINITIONS': {

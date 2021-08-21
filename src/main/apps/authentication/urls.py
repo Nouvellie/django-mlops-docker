@@ -2,7 +2,6 @@ from .views import (
     VerifyAPI,
     SignInAPI,
     SignUpAPI,
-    TestingAPIView,
     TokenAPI,
     UserAPI,
     VerifyAccountAPI,
@@ -40,10 +39,5 @@ urlpatterns = [
         'verify',
         VerifyAPI.as_view(),
         name='verify',
-    ),
-    path(
-        'test',
-        TestingAPIView.as_view(),
-        name='test',
     ),
 ]

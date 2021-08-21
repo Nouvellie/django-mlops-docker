@@ -29,6 +29,8 @@ __logs__        =  {
         "Remove AllyAny from MLOps. OK",
         "Rstrip removed.",
         "Token on swagger",
+        "SignIn API/Serializer fixed.",
+        "Banned or unverified account status ready.",
     ],
     'todo':         True,
     'commit':       "",

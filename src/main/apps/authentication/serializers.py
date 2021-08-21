@@ -2,6 +2,7 @@ from .models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.signals import user_logged_in
+from main.exceptions import CustomError
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 from typing import (
@@ -10,7 +11,17 @@ from typing import (
     List,
     TypeVar,
 )
-InputDataDict = TypeVar('InputDataDict')
+from typing import (
+    Generic,
+    TypeVar,
+)
+API_INPUTS = TypeVar('API_INPUTS')
+
+# HELP TEXT.
+FASHION_MNIST_HELP_TEXT = f"Please enter an image to process with FashionMnist model. The filename cannot be longer than 50 characters and only .png format will be accepted."
+IMDB_SENTIMENT_HELP_TEXT = f"Please enter a file or text (review) to be processed with the Imdb Sentiment model. The filename cannot be longer than 50 characters and the allowed formats are '.md, .txt, .docx'. (In case both parameters are sent, the file is validated first and only one is answered.)"
+PASSWORD_HELP_TEXT = f"Please enter a file or text (code) to be processed with the Stackoverflow model. The filename cannot be longer than 50 characters and the allowed formats are '.md, .txt, .docx'. (In case both parameters are sent, the file is validated first and only one is answered.)"
+CATS_VS_DOGS_HELP_TEXT = f"Please enter an image to process with CatsVsDogs model. The filename cannot be longer than 50 characters and only .jpg format will be accepted."
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -44,7 +55,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True},
                         'password2': {'write_only': True}, }
 
-    def create(self, validated_data: Generic[InputDataDict]) -> User:
+    def create(self, validated_data: Generic[API_INPUTS]) -> User:
         """User creation."""
         password = validated_data.pop('password', None)
         validated_data.pop('password2', None)
@@ -56,14 +67,14 @@ class SignUpSerializer(serializers.ModelSerializer):
         Token.objects.create(user=user)
         return instance
 
-    def validate(self, data: Generic[InputDataDict]) -> Dict:
+    def validate(self, data: Generic[API_INPUTS]) -> Dict:
         """InputData validation."""
         if data['password'] != data['password2']:
             raise serializers.ValidationError(
                 {"password": "Password fields didn't match."})
         return data
 
-    def update(self, instance: User, validated_data: Generic[InputDataDict]) -> User:
+    def update(self, instance: User, validated_data: Generic[API_INPUTS]) -> User:
         """Password handle."""
         for data, value in validated_data.items():
             if data == 'password':
@@ -79,26 +90,36 @@ class SignInSerializer(serializers.ModelSerializer):
 
     username = serializers.CharField(required=True)
     password = serializers.CharField(
-        required=True, style={'input_type': 'password', })
+        required=True,
+        write_only=True,
+        label="Password",
+        trim_whitespace=False,
+        style={'input_type': 'password', }
+    )
 
     class Meta:
         model = User
         fields = ('username', 'password',)
 
-    def validate(self, data: Generic[InputDataDict]) -> User:
-        """InputData validation."""
-        user = authenticate(**data)
-        # Banned or disabled user.
-        if not user and User.objects.filter(username=data['username']).count() > 0:
-            raise serializers.ValidationError(
-                "This account has been deactivated by an administrator.")
+    def validate(self, attrs: Generic[API_INPUTS]) -> Generic[API_INPUTS]:
+        """User validation."""
+        user = authenticate(**attrs)
         if user:
-            if not user.is_verified:
-                raise serializers.ValidationError(
-                    "This account has not been verified.")
-            user_logged_in.send(sender=user.__class__, user=user)
-            return user
-        raise serializers.ValidationError("Incorrect credentials.")
+            if user.is_active and user.is_verified:
+                attrs.update({'user': user})     
+                return super().validate(attrs)
+            elif user.is_active and not user.is_verified:
+                raise CustomError(detail="This account has not been verified.", code=403)
+            elif not user.is_active:
+                raise CustomError(detail="This account has been deactivated by an administrator.", code=401)
+        else:
+            raise CustomError(detail="Incorrect credentials.", code=401)
+
+    def get_user(self):
+        """Return User."""
+        return list(self.validated_data.items())[-1][1]
+        
+
 
 
 # class VerifyAccountSerializer(serializers.ModelSerializer):
@@ -108,14 +129,3 @@ class SignInSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = User
 #         fields = ('acc_hash',)
-
-class CustomSerializer(serializers.Serializer):
-    file = serializers.FileField(required=True)
-    age = serializers.IntegerField(required=True)
-    sex = serializers.IntegerField(required=True)
-    report = serializers.CharField(required=True, max_length=20)
-    report2 = serializers.CharField(required=True, max_length=20)
-
-    class Meta:
-
-        fields = ('file', 'age', 'sex', 'report', 'report2',)
