@@ -50,7 +50,10 @@ class StackoverflowFileLoader:
 
     def __call__(self, model_input: str) -> str:
         try:
-            model_input = model_input.open().read().decode("utf-8")
+            if model_input.name.endswith('.docx'):
+                model_input = Document(model_input).paragraphs[0].text
+            elif model_input.name.endswith(('.txt', 'md')):
+                model_input = model_input.open().read()
             return model_input
         except AttributeError:
             return model_input

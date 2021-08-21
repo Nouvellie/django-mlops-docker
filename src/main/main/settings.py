@@ -51,6 +51,10 @@ INSTALLED_APPS = DJANGO_APPS + DJANGOREST_APPS + CUSTOM_APPS
 
 AUTH_USER_MODEL = 'authentication.User'
 
+SWAGGER_SETTINGS = {
+   'USE_SESSION_AUTH': False
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',

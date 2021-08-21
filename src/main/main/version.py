@@ -20,27 +20,34 @@ __logs__        =  {
         "TFLite ImdbSentiment API reworked.",
         "Custom exception created. (CustomError)",
         "Some output fixed and adapted. (error)",
-        "ImdbSentiment now accepts 'docx, md, txt'":,
+        "ImdbSentiment now accepts 'docx, md, txt'",
         "Raise error if it is not a text file. OK",
+        "TFLite Stackoverflow serialized.",
+        "TFLite Stackoverflow API reworked.",
+        "Mlops input serializer. OK",
+        "ML models muted. OK",
+        "Remove AllyAny from MLOps. OK",
+        "Rstrip removed.",
     ],
     'todo':         True,
     'commit':       "",
     "prod":         None,
 }
 
-TODO_TASKS = { # TASK-STATUS-VERSION
-    'DVC not implemented yet.': False,
-    'Fix pipeline from_json.': False,
-    'Text classification model get Vectorized input. (not str).': False,
-    'CheckpointModelLoader not created yet.': False,
-    'DEBUG for emails url.': False,
-    'ML models muted.': False,
-    'Html/css for emails.': False,
-    'Mlops input serializer.': False,
-    'Remove AllyAny from MLOps.': False,
+TODO_TASKS = { # TASK-STATUS
+    "DVC not implemented yet.": False,
+    "Fix pipeline from_json.": False,
+    "Text classification model get Vectorized input. (not str).": False,
+    "CheckpointModelLoader not created yet.": False,
+    "DEBUG for emails url.": False,
+    "Html/css for emails.": False,
     "Check email environ config": False,
+    "Token on swagger": False,
 
     "Raise error if it is not a text file.": True,
+    "Mlops input serializer.": True,
+    "ML models muted.": True,
+    "Remove AllyAny from MLOps.": True,
 }
 
 full_info = {

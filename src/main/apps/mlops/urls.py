@@ -4,7 +4,7 @@ from .views import (
 
     TFLiteImdbSentiment,
     
-    TFLiteStackoverflowAPIView,
+    TFLiteStackoverflow,
 
     TFLiteCatsVsDogs,
     HDF5JSONCatsVsDogs,
@@ -36,7 +36,7 @@ urlpatterns = [
 # Stackoverflow
     path(
         'tflite-soverflow',
-        TFLiteStackoverflowAPIView.as_view(),
+        TFLiteStackoverflow.as_view(),
         name='tflite_soverflow',
     ),
 

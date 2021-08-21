@@ -10,6 +10,9 @@ from .serializers import (
 	IMDB_SENTIMENT_HELP_TEXT,
 	ImdbSentimentSerializer,
 
+	STACKOVERFLOW_HELP_TEXT,
+	StackoverflowSerializer,
+
 	CATS_VS_DOGS_HELP_TEXT,
 	CatsVsDogsSerializer,
 )
@@ -57,10 +60,10 @@ processed_argmax_imdb_sentiment_tflite_model = TFLiteModelLoader(
     model_dir="2/imdbsentiment3")
 
 # ## STACKOVERFLOW ##
-# argmax_stackoverflow_tflite_model = TFLiteModelLoader(
-#     model_dir="3/stackoverflow")
-# threshold_stackoverflow_tflite_model = TFLiteModelLoader(
-#     model_dir="3/stackoverflow2")
+argmax_stackoverflow_tflite_model = TFLiteModelLoader(
+    model_dir="3/stackoverflow")
+threshold_stackoverflow_tflite_model = TFLiteModelLoader(
+    model_dir="3/stackoverflow2")
 
 ## CATS VS DOGS ##
 argmax_catsvsdogs_tflite_model = TFLiteModelLoader(
@@ -76,7 +79,6 @@ threshold_catsvsdogs_hdf5json_model = HDF5JSONModelLoader(
 class TFLiteFashionMnist(GenericAPIView):
 	"""API for Fashion Mnist tflite model."""
 
-	permission_classes = (AllowAny,)
 	serializer_class = FashionMnistSerializer
 
 	def post(self, request, format=None, *args, **kwargs):
@@ -101,14 +103,13 @@ class TFLiteFashionMnist(GenericAPIView):
 				'threshold_false': threshold_false_tflite_result,}, 
 			HTTP_200_OK]
 		else:
-			api_output = [{'error': FASHION_MNIST_HELP_TEXT.rstrip()}, HTTP_400_BAD_REQUEST]
+			api_output = [{'error': FASHION_MNIST_HELP_TEXT}, HTTP_400_BAD_REQUEST]
 		return Response(api_output[0], status=api_output[1])
 
 
 class HDF5JSONFashionMnist(GenericAPIView):
 	"""API for Fashion Mnist hdf5json model."""
 
-	permission_classes = (AllowAny,)
 	serializer_class = FashionMnistSerializer
 
 	def post(self, request, format=None, *args, **kwargs):
@@ -133,14 +134,13 @@ class HDF5JSONFashionMnist(GenericAPIView):
 				'threshold_false': threshold_false_hdf5json_result,}, 
 			HTTP_200_OK]
 		else:
-			api_output = [{'error': FASHION_MNIST_HELP_TEXT.rstrip()}, HTTP_400_BAD_REQUEST]
+			api_output = [{'error': FASHION_MNIST_HELP_TEXT}, HTTP_400_BAD_REQUEST]
 		return Response(api_output[0], status=api_output[1])
 
 
 class TFLiteImdbSentiment(GenericAPIView):
 	"""API for Imdb Sentiment tflite model."""
 
-	permission_classes = (AllowAny,)
 	serializer_class = ImdbSentimentSerializer
 
 	def post(self, request, format=None, *args, **kwargs):
@@ -168,66 +168,20 @@ class TFLiteImdbSentiment(GenericAPIView):
 				'processed_argmax_true': processed_argmax_true_tflite_result,}, 
 			HTTP_200_OK]
 		else:
-			api_output = [{'error': IMDB_SENTIMENT_HELP_TEXT.rstrip()}, HTTP_400_BAD_REQUEST]
+			api_output = [{'error': IMDB_SENTIMENT_HELP_TEXT}, HTTP_400_BAD_REQUEST]
 		return Response(api_output[0], status=api_output[1])
 
 
-# class TFLiteImdbSentimentAPIView(APIView):
-# 	"""API for Imdb Sentiment tflite model."""
-
-# 	permission_classes = (AllowAny,)
-
-# 	def post(self, request, format=None):
-# 		try:
-# 			start_time = time.time()
-
-# 			# If the api does not receive an image.
-# 			if request.data.get('review') is None:
-# 				return Response({'error': 'Please send a review.', }, status=HTTP_400_BAD_REQUEST)
-
-# 			model_input = request.data.get('review')
-
-# 			argmax_true_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
-# 				model_input, confidence=True)
-# 			argmax_false_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
-# 				model_input)
-# 			threshold_true_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
-# 				model_input, confidence=True)
-# 			threshold_false_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
-# 				model_input)
-# 			processed_argmax_true_tflite_result = processed_argmax_imdb_sentiment_tflite_model.predict(
-# 				model_input, confidence=True)
-
-# 			result = {
-# 				'argmax_true': argmax_true_tflite_result,
-# 				'argmax_false': argmax_false_tflite_result,
-# 				'threshold_true': threshold_true_tflite_result,
-# 				'threshold_false': threshold_false_tflite_result,
-# 				'processed_argmax_true': processed_argmax_true_tflite_result,
-# 			}
-
-# 			return Response(result, status=HTTP_200_OK)
-# 		except:
-# 			full_traceback = re.sub(r"\n\s*", " || ", traceback.format_exc())
-
-# 			if DEBUG:
-# 				return Response({'error': "bad_request", 'detail': full_traceback, }, status=HTTP_400_BAD_REQUEST)
-# 			else:
-# 				return Response({'error': "bad_request", }, status=HTTP_400_BAD_REQUEST)
-
-
-class TFLiteStackoverflowAPIView(APIView):
+class TFLiteStackoverflow(GenericAPIView):
 	"""API for StackOverFlow tflite model."""
 
-	def post(self, request, format=None):
-		try:
-			start_time = time.time()
+	serializer_class = StackoverflowSerializer
 
-			# If the api does not receive an image.
-			if request.data.get('code') is None:
-				return Response({'error': 'Please send a code.', }, status=status.HTTP_400_BAD_REQUEST)
+	def post(self, request, format=None, *args, **kwargs):
+		serializer = self.get_serializer(data=request.data)
 
-			model_input = request.data.get('code')
+		if serializer.is_valid(raise_exception=True):
+			model_input = serializer.validated_data['code']
 
 			argmax_true_tflite_result = argmax_stackoverflow_tflite_model.predict(
 				model_input, confidence=True)
@@ -238,27 +192,20 @@ class TFLiteStackoverflowAPIView(APIView):
 			threshold_false_tflite_result = threshold_stackoverflow_tflite_model.predict(
 				model_input)
 
-			result = {
+			api_output = [{
 				'argmax_true': argmax_true_tflite_result,
 				'argmax_false': argmax_false_tflite_result,
 				'threshold_true': threshold_true_tflite_result,
-				'threshold_false': threshold_false_tflite_result,
-			}
-
-			return Response(result, status=status.HTTP_200_OK)
-		except:
-			full_traceback = re.sub(r"\n\s*", " || ", traceback.format_exc())
-
-			if DEBUG:
-				return Response({'error': "bad_request", 'detail': full_traceback, }, status=status.HTTP_400_BAD_REQUEST)
-			else:
-				return Response({'error': "bad_request", }, status=status.HTTP_400_BAD_REQUEST)
+				'threshold_false': threshold_false_tflite_result,}, 
+			HTTP_200_OK]
+		else:
+			api_output = [{'error': STACKOVERFLOW_HELP_TEXT}, HTTP_400_BAD_REQUEST]
+		return Response(api_output[0], status=api_output[1])
 
 
 class TFLiteCatsVsDogs(GenericAPIView):
 	"""API for Cats Vs Dogs tflite model."""
 
-	permission_classes = (AllowAny,)
 	serializer_class = CatsVsDogsSerializer
 
 	def post(self, request, format=None, *args, **kwargs):
@@ -283,14 +230,13 @@ class TFLiteCatsVsDogs(GenericAPIView):
 				'threshold_false': threshold_false_tflite_result,}, 
 			HTTP_200_OK]
 		else:
-			api_output = [{'error': CATS_VS_DOGS_HELP_TEXT.rstrip()}, HTTP_400_BAD_REQUEST]
+			api_output = [{'error': CATS_VS_DOGS_HELP_TEXT}, HTTP_400_BAD_REQUEST]
 		return Response(api_output[0], status=api_output[1])
 
 
 class HDF5JSONCatsVsDogs(GenericAPIView):
 	"""API for Cats vs Dogs hdf5json model."""
 
-	permission_classes = (AllowAny,)
 	serializer_class = CatsVsDogsSerializer
 
 	def post(self, request, format=None, *args, **kwargs):
@@ -315,5 +261,5 @@ class HDF5JSONCatsVsDogs(GenericAPIView):
 				'threshold_false': threshold_false_hdf5json_result,}, 
 			HTTP_200_OK]
 		else:
-			api_output = [{'error': CATS_VS_DOGS_HELP_TEXT.rstrip()}, HTTP_400_BAD_REQUEST]
+			api_output = [{'error': CATS_VS_DOGS_HELP_TEXT}, HTTP_400_BAD_REQUEST]
 		return Response(api_output[0], status=api_output[1])
