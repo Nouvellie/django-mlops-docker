@@ -34,7 +34,7 @@ urlpatterns = [
 
     # Apps:
     path(
-        '',
+        'mlops/',
         include('apps.mlops.urls'),
     ),
 

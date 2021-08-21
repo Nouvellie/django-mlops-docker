@@ -25,6 +25,7 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
     HTTP_426_UPGRADE_REQUIRED,
 )
+from rest_framework.views import APIView
 from typing import (
     Generic,
     TypeVar,
@@ -106,7 +107,7 @@ class TokenAPI(GenericAPIView):
             return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
 
 
-class VerifyAPI(GenericAPIView):
+class VerifyAPI(APIView):
     """Api that sends a link to the user's email to validate the account."""
 
     def post(self, request, format=None):
@@ -117,7 +118,7 @@ class VerifyAPI(GenericAPIView):
             return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
 
 
-class VerifyAccountAPI(GenericAPIView):
+class VerifyAccountAPI(APIView):
     """This api receives the verification sent to the email, processes it and, if it is correct, validates the account."""
 
     permission_classes = (AllowAny,)
@@ -131,7 +132,7 @@ class VerifyAccountAPI(GenericAPIView):
         elif not account_verified['status']:
             return Response({'error': account_verified['error']}, status=HTTP_400_BAD_REQUEST)
         else:
-            return Response({'error': 'A problem occurred while the account was being validated, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': 'A problem occurred while the account was being validated, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)           
 
 
 class TestingAPIView(GenericAPIView):

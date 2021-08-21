@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'is_verified')
+        fields = ('username', 'email', 'is_verified',)
 
 
 class UserInfoSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'is_verified',
-                  'created_at', 'first_name', 'last_name')
+                  'created_at', 'first_name', 'last_name',)
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -40,7 +40,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'password2')
+        fields = ('id', 'username', 'email', 'password', 'password2',)
         extra_kwargs = {'password': {'write_only': True},
                         'password2': {'write_only': True}, }
 
@@ -83,7 +83,7 @@ class SignInSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password')
+        fields = ('username', 'password',)
 
     def validate(self, data: Generic[InputDataDict]) -> User:
         """InputData validation."""
@@ -101,6 +101,14 @@ class SignInSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError("Incorrect credentials.")
 
 
+# class VerifyAccountSerializer(serializers.ModelSerializer):
+
+#     acc_hash = serializers.UUIDField(format='hex_verbose')
+
+#     class Meta:
+#         model = User
+#         fields = ('acc_hash',)
+
 class CustomSerializer(serializers.Serializer):
     file = serializers.FileField(required=True)
     age = serializers.IntegerField(required=True)
@@ -110,4 +118,4 @@ class CustomSerializer(serializers.Serializer):
 
     class Meta:
 
-        fields = ('file', 'age', 'sex', 'report', 'report2')
+        fields = ('file', 'age', 'sex', 'report', 'report2',)

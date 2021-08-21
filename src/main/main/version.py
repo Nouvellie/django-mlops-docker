@@ -12,7 +12,7 @@ __logs__        =  {
     'date':         "08/21/2021",
     'info':         [
         'New versioning info struct.',
-        '',
+        'TFLite FashionMnist serialized.',
     ],
     'todo':         True,
     'commit':       "",

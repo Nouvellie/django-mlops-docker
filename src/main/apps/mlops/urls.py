@@ -10,36 +10,38 @@ from django.urls import path
 
 
 urlpatterns = [
+    # FashionMnist.
+    path(
+        'tflite-fmnist',
+        TFLiteFashionMnistAPIView.as_view(),
+        name='tflite_fmnist',
+    ),
     path(
         'hdf5json-fmnist',
         HDF5JSONFashionMnistAPIView.as_view(),
         name='hdf5json_fmnist',
     ),
 
-    path(
-        'tflite-fmnist',
-        TFLiteFashionMnistAPIView.as_view(),
-        name='tflite_fmnist',
-    ),
-
+    # ImdbSentiment.
     path(
         'tflite-isentiment',
         TFLiteImdbSentimentAPIView.as_view(),
         name='tflite_isentiment',
     ),
 
+    # Stackoverflow
     path(
         'tflite-soverflow',
         TFLiteStackoverflowAPIView.as_view(),
         name='tflite_soverflow',
     ),
 
+    # CatsvsDogs
     path(
         'tflite-cvsdogs',
         TFLiteCatsvsdogsAPIView.as_view(),
         name='tflite_cvdogs',
     ),
-
     path(
         'hdf5json-cvsdogs',
         HDF5JSONCatsvsdogsAPIView.as_view(),
