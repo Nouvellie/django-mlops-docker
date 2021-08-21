@@ -28,6 +28,7 @@ __logs__        =  {
         "ML models muted. OK",
         "Remove AllyAny from MLOps. OK",
         "Rstrip removed.",
+        "Token on swagger",
     ],
     'todo':         True,
     'commit':       "",
@@ -42,12 +43,13 @@ TODO_TASKS = { # TASK-STATUS
     "DEBUG for emails url.": False,
     "Html/css for emails.": False,
     "Check email environ config": False,
-    "Token on swagger": False,
+    "SignIn swagger redirect": False,
 
     "Raise error if it is not a text file.": True,
     "Mlops input serializer.": True,
     "ML models muted.": True,
     "Remove AllyAny from MLOps.": True,
+    "Token on swagger": True,
 }
 
 full_info = {
