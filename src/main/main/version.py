@@ -11,8 +11,16 @@ __logs__        =  {
     'version':      "0.19.0",
     'date':         "08/21/2021",
     'info':         [
-        'New versioning info struct.',
-        'TFLite FashionMnist serialized.',
+        "New versioning info struct.",
+        "TFLite/HDF5JSON FashionMnist serialized.",
+        "TFLite/HDF5JSON FashionMnist API reworked.",
+        "TFLite/HDF5JSON CatsVsDogs serialized.",
+        "TFLite/HDF5JSON CatsVsDogs API reworked.",
+        "TFLite ImdbSentiment serialized.",
+        "TFLite ImdbSentiment API reworked.",
+        "Custom exception created. (CustomError)",
+        "Some output fixed and adapted. (error)",
+        "ImdbSentiment now accepts 'docx, md, txt'":,
     ],
     'todo':         True,
     'commit':       "",
@@ -28,7 +36,8 @@ TODO_TASKS = { # TASK-STATUS-VERSION
     'DEBUG for emails url.': False,
     'ML models muted.': False,
     'Html/css for emails.': False,
-    'Mlops input serializer.': False, 
+    'Mlops input serializer.': False,
+    'Remove AllyAny from MLOps.': False,
 }
 
 full_info = {

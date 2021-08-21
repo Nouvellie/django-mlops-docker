@@ -28,7 +28,7 @@ $ pip install -r requirement.txt
 ## Install libs (manual)
 
 ```
-$ pip install django==3.2.6 djangorestframework==3.12.4 django-environ-2==2.1.0 tensorflow==2.6.0 mysqlclient==2.0.3 pillow==8.3.1 matplotlib==3.4.3 jupyterlab==3.1.7 ipykernel==6.2.0 graphviz==0.17 pydot==1.4.2 beautifulsoup4==4.9.3 lxml==4.6.3 drf_yasg==1.20.0 pyyaml==5.4.1 gunicorn==20.1.0
+$ pip install django==3.2.6 djangorestframework==3.12.4 django-environ-2==2.1.0 tensorflow==2.6.0 mysqlclient==2.0.3 pillow==8.3.1 matplotlib==3.4.3 jupyterlab==3.1.7 ipykernel==6.2.0 graphviz==0.17 pydot==1.4.2 beautifulsoup4==4.9.3 lxml==4.6.3 drf_yasg==1.20.0 pyyaml==5.4.1 gunicorn==20.1.0 python-docx==0.8.11
 ```
 
 ## Tensorflow GPU

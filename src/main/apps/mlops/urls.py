@@ -1,50 +1,54 @@
 from .views import (
-    HDF5JSONCatsvsdogsAPIView,
-    HDF5JSONFashionMnistAPIView,
-    TFLiteCatsvsdogsAPIView,
-    TFLiteFashionMnistAPIView,
-    TFLiteImdbSentimentAPIView,
+    TFLiteFashionMnist,
+    HDF5JSONFashionMnist,
+
+    TFLiteImdbSentiment,
+    
     TFLiteStackoverflowAPIView,
+
+    TFLiteCatsVsDogs,
+    HDF5JSONCatsVsDogs,
 )
 from django.urls import path
 
 
 urlpatterns = [
-    # FashionMnist.
+
+# FashionMnist.
     path(
         'tflite-fmnist',
-        TFLiteFashionMnistAPIView.as_view(),
+        TFLiteFashionMnist.as_view(),
         name='tflite_fmnist',
     ),
     path(
         'hdf5json-fmnist',
-        HDF5JSONFashionMnistAPIView.as_view(),
+        HDF5JSONFashionMnist.as_view(),
         name='hdf5json_fmnist',
     ),
 
-    # ImdbSentiment.
+# ImdbSentiment.
     path(
         'tflite-isentiment',
-        TFLiteImdbSentimentAPIView.as_view(),
+        TFLiteImdbSentiment.as_view(),
         name='tflite_isentiment',
     ),
 
-    # Stackoverflow
+# Stackoverflow
     path(
         'tflite-soverflow',
         TFLiteStackoverflowAPIView.as_view(),
         name='tflite_soverflow',
     ),
 
-    # CatsvsDogs
+# CatsvsDogs
     path(
         'tflite-cvsdogs',
-        TFLiteCatsvsdogsAPIView.as_view(),
+        TFLiteCatsVsDogs.as_view(),
         name='tflite_cvdogs',
     ),
     path(
         'hdf5json-cvsdogs',
-        HDF5JSONCatsvsdogsAPIView.as_view(),
+        HDF5JSONCatsVsDogs.as_view(),
         name='hdf5json_cvdogs',
     ),
 ]
