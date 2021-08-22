@@ -4,7 +4,7 @@ services:
     nginx:
         image: nginx:1.21.1        
         ports:
-            - "8080:80"
+            - "80:80"
         volumes:
             - ./config/nginx/conf.d:/etc/nginx/conf.d
             - static_volume:/home/main/static

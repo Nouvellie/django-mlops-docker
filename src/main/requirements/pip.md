@@ -19,6 +19,12 @@ $ virtualenv djangomlopsdocker
 $ source djangotflite/bin/activate
 ```
 
+#### Mysqlclient for ubuntu (pre-lib)
+
+```sh
+$ sudo apt install libmysqlclient-dev
+```
+
 ## Install libs (auto)
 
 ```

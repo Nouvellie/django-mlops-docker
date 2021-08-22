@@ -15,6 +15,8 @@ RUN python3 -m venv djangomlopsdocker
 
 COPY --chown=main ./src/main/requirements /home/main/requirements/
 
+RUN ./djangomlopsdocker/bin/pip3 install --upgrade pip
+
 RUN ./djangomlopsdocker/bin/pip3 install -r /home/main/requirements/requirement.txt
 
 COPY --chown=main ./src/main /home/main/
