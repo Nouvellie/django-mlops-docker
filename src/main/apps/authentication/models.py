@@ -36,6 +36,46 @@ class UserManager(BaseUserManager):
         return user
 
 
+    def create_superuser(self, email, username, password, **other_fields):
+
+        other_fields.setdefault('is_staff', True)
+        other_fields.setdefault('is_superuser', True)
+        other_fields.setdefault('is_active', True)
+        other_fields.setdefault('is_verified', True)
+
+        if other_fields.get('is_staff') is not True:
+            raise ValueError(
+                'Superuser must be assigned to is_staff=True.')
+        if other_fields.get('is_superuser') is not True:
+            raise ValueError(
+                'Superuser must be assigned to is_superuser=True.')
+        if other_fields.get('is_verified') is not True:
+            raise ValueError(
+                'Superuser must be assigned to is_verified=True.')
+
+        return self.create_user(username, email, password, **other_fields)
+
+
+    def create_staffuser(self, email, username, password, **other_fields):
+
+        other_fields.setdefault('is_staff', True)
+        other_fields.setdefault('is_superuser', False)
+        other_fields.setdefault('is_active', True)
+        other_fields.setdefault('is_verified', True)
+
+        if other_fields.get('is_staff') is not True:
+            raise ValueError(
+                'Staffuser must be assigned to is_staff=True.')
+        if other_fields.get('is_superuser') is not False:
+            raise ValueError(
+                'Staffuser must be assigned to is_superuser=False.')
+        if other_fields.get('is_verified') is not True:
+            raise ValueError(
+                'Superuser must be assigned to is_verified=True.')
+
+        return self.create_user(username, email, password, **other_fields)
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     """Creates a modified class based on AbstractBaseUser."""
 

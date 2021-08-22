@@ -15,6 +15,7 @@ __logs__        =  {
         "PEP8."
         "Documentation.",
         "Typing fixed.",
+        "Superuser creation fixed.",
     ],
     'todo':         True,
     'commit':       "",
