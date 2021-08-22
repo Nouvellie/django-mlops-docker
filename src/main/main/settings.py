@@ -5,6 +5,7 @@ import random
 from datetime import timedelta
 from pathlib import Path
 
+# Environ preload.
 URIPATH = Path(os.path.dirname(__file__)).joinpath(".env")
 env = environ.Env(DEBUG=(bool, False))
 environ.Env.read_env(env_file=str(URIPATH))
@@ -53,18 +54,19 @@ INSTALLED_APPS = DJANGO_APPS + DJANGOREST_APPS + CUSTOM_APPS
 AUTH_USER_MODEL = 'authentication.User'
 
 # Allow inactive users to sign in. (is_active=False)
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.AllowAllUsersModelBackend']
 
 # Remporary Token authentication in swagger.
 SWAGGER_SETTINGS = {
-   'USE_SESSION_AUTH': False,
-   'SECURITY_DEFINITIONS': {
-      'Token': {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Token': {
             'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header'
-      }
-   },
+        }
+    },
 }
 
 REST_FRAMEWORK = {
@@ -75,7 +77,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
     ],
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated', 
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',

@@ -11,7 +11,10 @@ __logs__        =  {
     'version':      "0.20.0",
     'date':         "08/21/2021",
     'info':         [
-        "",
+        "SignUp API/Serializer fixed.",
+        "PEP8."
+        "Documentation.",
+        "Typing fixed.",
     ],
     'todo':         True,
     'commit':       "",
@@ -25,8 +28,9 @@ TODO_TASKS = { # TASK-STATUS
     "CheckpointModelLoader not created yet.": False,
     "DEBUG for emails url.": False,
     "Html/css for emails.": False,
-    "Check email environ config": False,
-    "SignIn swagger redirect": False,
+    "Check email environ config.": False,
+    "SignIn swagger redirect.": False,
+    "Swagger yaml on settings.": False,
 }
 
 full_info = {

@@ -3,7 +3,7 @@ from .views import (
     HDF5JSONFashionMnist,
 
     TFLiteImdbSentiment,
-    
+
     TFLiteStackoverflow,
 
     TFLiteCatsVsDogs,
@@ -14,7 +14,7 @@ from django.urls import path
 
 urlpatterns = [
 
-# FashionMnist.
+    # FashionMnist.
     path(
         'tflite-fmnist',
         TFLiteFashionMnist.as_view(),
@@ -26,21 +26,21 @@ urlpatterns = [
         name='hdf5json_fmnist',
     ),
 
-# ImdbSentiment.
+    # ImdbSentiment.
     path(
         'tflite-isentiment',
         TFLiteImdbSentiment.as_view(),
         name='tflite_isentiment',
     ),
 
-# Stackoverflow
+    # Stackoverflow
     path(
         'tflite-soverflow',
         TFLiteStackoverflow.as_view(),
         name='tflite_soverflow',
     ),
 
-# CatsvsDogs
+    # CatsvsDogs
     path(
         'tflite-cvsdogs',
         TFLiteCatsVsDogs.as_view(),

@@ -12,7 +12,7 @@ from typing import (
     TypeVar,
     Union,
 )
-SelfClass = TypeVar('SelfClass')
+SELFCLASS = TypeVar('SELFCLASS')
 
 
 class OutputDecoder:
@@ -34,7 +34,7 @@ class OutputDecoder:
     >> decoder = OutputDecoder(ordered_model_output = ["class1", "class2", "class3"], threshold = 0.5)
     """
 
-    def __new__(cls, ordered_model_output: Optional[List[str]] = None, argmax: bool = False, threshold: Optional[Union[float, List[float]]] = None, *args, **kwargs) -> Generic[SelfClass]:
+    def __new__(cls, ordered_model_output: Optional[List[str]] = None, argmax: bool = False, threshold: Optional[Union[float, List[float]]] = None, *args, **kwargs) -> Generic[SELFCLASS]:
         return super(OutputDecoder, cls).__new__(cls, *args, **kwargs)
 
     def __init__(self, ordered_model_output: Optional[List[str]] = None, argmax: bool = False, threshold: Optional[Union[float, List[float]]] = None) -> None:

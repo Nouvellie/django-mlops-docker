@@ -10,7 +10,7 @@ from typing import (
     TypeVar,
 )
 
-SelfClass = TypeVar('SelfClass')
+SELFCLASS = TypeVar('SELFCLASS')
 ABBREVIATIONS_WORDLIST_PATH = Path(__file__).resolve(
 ).parent.joinpath("resources/abbreviations_wordlist.json")
 
@@ -21,7 +21,7 @@ class ImdbSentimentTextModificator:
     Credits: # https://github.com/laxmimerit/preprocess_kgptalkie (github-based class)
     """
 
-    def __new__(cls, review: str, *args, **kwargs) -> Generic[SelfClass]:
+    def __new__(cls, review: str, *args, **kwargs) -> Generic[SELFCLASS]:
         return super(ImdbSentimentTextModificator, cls).__new__(cls, *args, **kwargs)
 
     def __init__(self, review: str) -> None:

@@ -42,47 +42,65 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
 
 class SignUpSerializer(serializers.ModelSerializer):
-    """This class serializes the creation of a new account, with all its corresponding validations."""
+    """This class serializes the creation of a new account, with all the validations are ok."""
 
-    password = serializers.CharField(write_only=True, required=True, validators=[
-        validate_password], style={'input_type': 'password', })
-    password2 = serializers.CharField(write_only=True, required=True, style={
-        'input_type': 'password', })
+    password = serializers.CharField(
+        required=True,
+        write_only=True,
+        label="Password",
+        validators=[validate_password],
+        trim_whitespace=False,
+        style={'input_type': 'password', }
+    )
+    password2 = serializers.CharField(
+        required=True,
+        write_only=True,
+        label="Confirm Password",
+        validators=[validate_password],
+        trim_whitespace=False,
+        style={'input_type': 'password', }
+    )
 
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password', 'password2',)
-        extra_kwargs = {'password': {'write_only': True},
-                        'password2': {'write_only': True}, }
 
     def create(self, validated_data: Generic[API_INPUTS]) -> User:
         """User creation."""
         password = validated_data.pop('password', None)
         validated_data.pop('password2', None)
-        instance = self.Meta.model(**validated_data)
+        new_user = self.Meta.model(**validated_data)
         if password is not None:
-            instance.set_password(password)
-        instance.save()
-        user = User.objects.get(username=instance.username)
+            new_user.set_password(password)
+        new_user.save()
+        user = User.objects.get(username=new_user.username)
         Token.objects.create(user=user)
-        return instance
+        return user
 
-    def validate(self, data: Generic[API_INPUTS]) -> Dict:
-        """InputData validation."""
-        if data['password'] != data['password2']:
-            raise serializers.ValidationError(
-                {"password": "Password fields didn't match."})
-        return data
-
-    def update(self, instance: User, validated_data: Generic[API_INPUTS]) -> User:
-        """Password handle."""
-        for data, value in validated_data.items():
-            if data == 'password':
-                instance.set_password(value)
-            else:
-                setattr(instance, data, value)
-        instance.save()
-        return instance
+    def validate(self, attrs: Generic[API_INPUTS]) -> Generic[API_INPUTS]:
+        """SignUp data validation."""
+        if attrs['password'] != attrs['password2']:
+            raise CustomError(detail="Password fields didn't match.", code=400)
+        if attrs['username'] == attrs['password']:
+            raise CustomError(
+                detail="For your security the username and password cannot be the same.", code=403)
+        if attrs['password'] == attrs['email'].split("@")[0]:
+            raise CustomError(
+                detail="For your security the email and password cannot be the same.", code=403)
+        if attrs['password'].startswith(str(attrs['email'].split("@")[0][:4])):
+            raise CustomError(
+                detail="For your security, the password cannot contain your e-mail address.", code=403)
+        if attrs['password'].startswith(str(attrs['username'][:4])):
+            raise CustomError(
+                detail="For your security, the password cannot contain your username.", code=403)
+        if attrs['username'] == attrs['email'].split("@")[0]:
+            raise CustomError(
+                detail="For your security the username and email address cannot be the same.", code=403)
+        # Validation @email.
+        # if attrs['email'].split("@")[1].split(".")[0].lower() != 'nouvellie':
+        #     raise CustomError(
+        #         detail="The e-mail does not correspond to those allowed in the system.", code=403)
+        return super().validate(attrs)
 
 
 class SignInSerializer(serializers.ModelSerializer):
@@ -102,24 +120,24 @@ class SignInSerializer(serializers.ModelSerializer):
         fields = ('username', 'password',)
 
     def validate(self, attrs: Generic[API_INPUTS]) -> Generic[API_INPUTS]:
-        """User validation."""
+        """SignIn data validation."""
         user = authenticate(**attrs)
         if user:
             if user.is_active and user.is_verified:
-                attrs.update({'user': user})     
+                attrs.update({'user': user})
                 return super().validate(attrs)
             elif user.is_active and not user.is_verified:
-                raise CustomError(detail="This account has not been verified.", code=403)
+                raise CustomError(
+                    detail="This account has not been verified.", code=403)
             elif not user.is_active:
-                raise CustomError(detail="This account has been deactivated by an administrator.", code=401)
+                raise CustomError(
+                    detail="This account has been deactivated by an administrator.", code=401)
         else:
             raise CustomError(detail="Incorrect credentials.", code=401)
 
     def get_user(self):
         """Return User."""
         return list(self.validated_data.items())[-1][1]
-        
-
 
 
 # class VerifyAccountSerializer(serializers.ModelSerializer):

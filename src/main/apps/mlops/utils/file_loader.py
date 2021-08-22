@@ -16,14 +16,14 @@ from typing import (
 
 # Some extra settings.
 ImageFile.LOAD_TRUNCATED_IMAGES = True
-InMemoryUploadedFile = TypeVar('InMemoryUploadedFile')
-PILImage = TypeVar('PILImage')
+INMEMORYUPLOADEDFILE = TypeVar('INMEMORYUPLOADEDFILE')
+PILIMAGE = TypeVar('PILIMAGE')
 
 
 class FashionMnistFileLoader:
     """Preloading of inputs (mostly files) from the FashionMnist API."""
 
-    def __call__(self, model_input: Generic[InMemoryUploadedFile]) -> Generic[PILImage]:
+    def __call__(self, model_input: Generic[INMEMORYUPLOADEDFILE]) -> Generic[PILIMAGE]:
         model_input = Image.open(model_input)
         model_input = model_input.convert('L')
         return model_input
@@ -64,7 +64,7 @@ class StackoverflowFileLoader:
 class CatsvsdogsFileLoader:
     """Preloading of inputs (mostly files) into the Catsvsdogs API."""
 
-    def __call__(self, model_input: Generic[InMemoryUploadedFile]) -> str:
+    def __call__(self, model_input: Generic[INMEMORYUPLOADEDFILE]) -> str:
         path = default_storage.save(f"tmp/{model_input.name}", ContentFile(model_input.file.read()))
         model_input.file.seek(0)
         model_input = os.path.join(MEDIA_ROOT, path)

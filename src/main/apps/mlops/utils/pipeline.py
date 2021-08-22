@@ -10,7 +10,7 @@ from typing import (
     Tuple,
     TypeVar,
 )
-SelfClass = TypeVar('SelfClass')
+SELFCLASS = TypeVar('SELFCLASS')
 
 FUNCTIONS_PIPELINE = OrderedDict()
 
@@ -34,7 +34,7 @@ class Pipeline:
 
     FUNCTIONS_PIPELINE = FUNCTIONS_PIPELINE
 
-    def __new__(cls, pipeline: Optional[List[Tuple[str, dict]]] = None, *args, **kwargs) -> Generic[SelfClass]:
+    def __new__(cls, pipeline: Optional[List[Tuple[str, dict]]] = None, *args, **kwargs) -> Generic[SELFCLASS]:
         return super(Pipeline, cls).__new__(cls, *args, **kwargs)
 
     def __init__(self, pipeline: Optional[List[Tuple[str, dict]]] = None) -> None:

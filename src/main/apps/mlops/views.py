@@ -4,26 +4,26 @@ import time
 import traceback
 
 from .serializers import (
-	FASHION_MNIST_HELP_TEXT,
-	FashionMnistSerializer,
+    FASHION_MNIST_HELP_TEXT,
+    FashionMnistSerializer,
 
-	IMDB_SENTIMENT_HELP_TEXT,
-	ImdbSentimentSerializer,
+    IMDB_SENTIMENT_HELP_TEXT,
+    ImdbSentimentSerializer,
 
-	STACKOVERFLOW_HELP_TEXT,
-	StackoverflowSerializer,
+    STACKOVERFLOW_HELP_TEXT,
+    StackoverflowSerializer,
 
-	CATS_VS_DOGS_HELP_TEXT,
-	CatsVsDogsSerializer,
+    CATS_VS_DOGS_HELP_TEXT,
+    CatsVsDogsSerializer,
 )
 from .utils.model_loader import (
-	CheckpointModelLoader,
-	HDF5JSONModelLoader,
-	TFLiteModelLoader,
+    CheckpointModelLoader,
+    HDF5JSONModelLoader,
+    TFLiteModelLoader,
 )
 from main.settings import (
-	DEBUG,
-	MODEL_ROOT,
+    DEBUG,
+    MODEL_ROOT,
 )
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
@@ -77,183 +77,189 @@ threshold_catsvsdogs_hdf5json_model = HDF5JSONModelLoader(
 
 
 class TFLiteFashionMnist(GenericAPIView):
-	"""API for Fashion Mnist tflite model."""
+    """API for Fashion Mnist tflite model."""
 
-	serializer_class = FashionMnistSerializer
+    serializer_class = FashionMnistSerializer
 
-	def post(self, request, format=None, *args, **kwargs):
-		serializer = self.get_serializer(data=request.data)
-		if serializer.is_valid(raise_exception=True):
-			model_input = serializer.validated_data['image']
+    def post(self, request, format=None, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            model_input = serializer.validated_data['image']
 
-			argmax_true_tflite_result = argmax_fashion_mnist_tflite_model.predict(
-				model_input, confidence=True)
-			argmax_false_tflite_result = argmax_fashion_mnist_tflite_model.predict(
-				model_input)
-			threshold_true_tflite_result = threshold_fashion_mnist_tflite_model.predict(
-				model_input, confidence=True)
-			threshold_false_tflite_result = threshold_fashion_mnist_tflite_model.predict(
-				model_input)
+            argmax_true_tflite_result = argmax_fashion_mnist_tflite_model.predict(
+                model_input, confidence=True)
+            argmax_false_tflite_result = argmax_fashion_mnist_tflite_model.predict(
+                model_input)
+            threshold_true_tflite_result = threshold_fashion_mnist_tflite_model.predict(
+                model_input, confidence=True)
+            threshold_false_tflite_result = threshold_fashion_mnist_tflite_model.predict(
+                model_input)
 
-			api_output = [{
-				'argmax_true': argmax_true_tflite_result,
-				'argmax_false': argmax_false_tflite_result,
-				'threshold_true': threshold_true_tflite_result,
-				'threshold_false': threshold_false_tflite_result,}, 
-			HTTP_200_OK]
-		else:
-			api_output = [{'error': FASHION_MNIST_HELP_TEXT}, HTTP_400_BAD_REQUEST]
-		return Response(api_output[0], status=api_output[1])
+            api_output = [{
+                'argmax_true': argmax_true_tflite_result,
+                'argmax_false': argmax_false_tflite_result,
+                'threshold_true': threshold_true_tflite_result,
+                'threshold_false': threshold_false_tflite_result, },
+                HTTP_200_OK]
+        else:
+            api_output = [{'error': FASHION_MNIST_HELP_TEXT},
+                          HTTP_400_BAD_REQUEST]
+        return Response(api_output[0], status=api_output[1])
 
 
 class HDF5JSONFashionMnist(GenericAPIView):
-	"""API for Fashion Mnist hdf5json model."""
+    """API for Fashion Mnist hdf5json model."""
 
-	serializer_class = FashionMnistSerializer
+    serializer_class = FashionMnistSerializer
 
-	def post(self, request, format=None, *args, **kwargs):
-		serializer = self.get_serializer(data=request.data)
-		if serializer.is_valid(raise_exception=True):
-			model_input = serializer.validated_data['image']
+    def post(self, request, format=None, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            model_input = serializer.validated_data['image']
 
-			argmax_true_hdf5json_result = argmax_fashion_mnist_hdf5json_model.predict(
-				model_input, confidence=True)
-			argmax_false_hdf5json_result = argmax_fashion_mnist_hdf5json_model.predict(
-				model_input)
-			threshold_true_hdf5json_result = threshold_fashion_mnist_hdf5json_model.predict(
-				model_input, confidence=True)
-			threshold_false_hdf5json_result = threshold_fashion_mnist_hdf5json_model.predict(
-				model_input)
+            argmax_true_hdf5json_result = argmax_fashion_mnist_hdf5json_model.predict(
+                model_input, confidence=True)
+            argmax_false_hdf5json_result = argmax_fashion_mnist_hdf5json_model.predict(
+                model_input)
+            threshold_true_hdf5json_result = threshold_fashion_mnist_hdf5json_model.predict(
+                model_input, confidence=True)
+            threshold_false_hdf5json_result = threshold_fashion_mnist_hdf5json_model.predict(
+                model_input)
 
-			api_output = [{
-				'argmax_true': argmax_true_hdf5json_result,
-				'argmax_false': argmax_false_hdf5json_result,
-				'threshold_true': threshold_true_hdf5json_result,
-				'threshold_false': threshold_false_hdf5json_result,}, 
-			HTTP_200_OK]
-		else:
-			api_output = [{'error': FASHION_MNIST_HELP_TEXT}, HTTP_400_BAD_REQUEST]
-		return Response(api_output[0], status=api_output[1])
+            api_output = [{
+                'argmax_true': argmax_true_hdf5json_result,
+                'argmax_false': argmax_false_hdf5json_result,
+                'threshold_true': threshold_true_hdf5json_result,
+                'threshold_false': threshold_false_hdf5json_result, },
+                HTTP_200_OK]
+        else:
+            api_output = [{'error': FASHION_MNIST_HELP_TEXT},
+                          HTTP_400_BAD_REQUEST]
+        return Response(api_output[0], status=api_output[1])
 
 
 class TFLiteImdbSentiment(GenericAPIView):
-	"""API for Imdb Sentiment tflite model."""
+    """API for Imdb Sentiment tflite model."""
 
-	serializer_class = ImdbSentimentSerializer
+    serializer_class = ImdbSentimentSerializer
 
-	def post(self, request, format=None, *args, **kwargs):
-		serializer = self.get_serializer(data=request.data)
-		if serializer.is_valid(raise_exception=True):
-			model_input = serializer.validated_data['review']
+    def post(self, request, format=None, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            model_input = serializer.validated_data['review']
 
-			argmax_true_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
-				model_input, confidence=True)
-			argmax_false_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
-				model_input)
-			threshold_true_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
-				model_input, confidence=True)
-			threshold_false_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
-				model_input)
-			processed_argmax_true_tflite_result = processed_argmax_imdb_sentiment_tflite_model.predict(
-				model_input, confidence=True)
+            argmax_true_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
+                model_input, confidence=True)
+            argmax_false_tflite_result = argmax_imdb_sentiment_tflite_model.predict(
+                model_input)
+            threshold_true_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
+                model_input, confidence=True)
+            threshold_false_tflite_result = threshold_imdb_sentiment_tflite_model.predict(
+                model_input)
+            processed_argmax_true_tflite_result = processed_argmax_imdb_sentiment_tflite_model.predict(
+                model_input, confidence=True)
 
-			api_output = [{
-				'argmax_true': argmax_true_tflite_result,
-				'argmax_false': argmax_false_tflite_result,
-				'threshold_true': threshold_true_tflite_result,
-				'threshold_false': threshold_false_tflite_result,
-				'processed_argmax_true': processed_argmax_true_tflite_result,}, 
-			HTTP_200_OK]
-		else:
-			api_output = [{'error': IMDB_SENTIMENT_HELP_TEXT}, HTTP_400_BAD_REQUEST]
-		return Response(api_output[0], status=api_output[1])
+            api_output = [{
+                'argmax_true': argmax_true_tflite_result,
+                'argmax_false': argmax_false_tflite_result,
+                'threshold_true': threshold_true_tflite_result,
+                'threshold_false': threshold_false_tflite_result,
+                'processed_argmax_true': processed_argmax_true_tflite_result, },
+                HTTP_200_OK]
+        else:
+            api_output = [{'error': IMDB_SENTIMENT_HELP_TEXT},
+                          HTTP_400_BAD_REQUEST]
+        return Response(api_output[0], status=api_output[1])
 
 
 class TFLiteStackoverflow(GenericAPIView):
-	"""API for StackOverFlow tflite model."""
+    """API for StackOverFlow tflite model."""
 
-	serializer_class = StackoverflowSerializer
+    serializer_class = StackoverflowSerializer
 
-	def post(self, request, format=None, *args, **kwargs):
-		serializer = self.get_serializer(data=request.data)
-		if serializer.is_valid(raise_exception=True):
-			model_input = serializer.validated_data['code']
+    def post(self, request, format=None, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            model_input = serializer.validated_data['code']
 
-			argmax_true_tflite_result = argmax_stackoverflow_tflite_model.predict(
-				model_input, confidence=True)
-			argmax_false_tflite_result = argmax_stackoverflow_tflite_model.predict(
-				model_input)
-			threshold_true_tflite_result = threshold_stackoverflow_tflite_model.predict(
-				model_input, confidence=True)
-			threshold_false_tflite_result = threshold_stackoverflow_tflite_model.predict(
-				model_input)
+            argmax_true_tflite_result = argmax_stackoverflow_tflite_model.predict(
+                model_input, confidence=True)
+            argmax_false_tflite_result = argmax_stackoverflow_tflite_model.predict(
+                model_input)
+            threshold_true_tflite_result = threshold_stackoverflow_tflite_model.predict(
+                model_input, confidence=True)
+            threshold_false_tflite_result = threshold_stackoverflow_tflite_model.predict(
+                model_input)
 
-			api_output = [{
-				'argmax_true': argmax_true_tflite_result,
-				'argmax_false': argmax_false_tflite_result,
-				'threshold_true': threshold_true_tflite_result,
-				'threshold_false': threshold_false_tflite_result,}, 
-			HTTP_200_OK]
-		else:
-			api_output = [{'error': STACKOVERFLOW_HELP_TEXT}, HTTP_400_BAD_REQUEST]
-		return Response(api_output[0], status=api_output[1])
+            api_output = [{
+                'argmax_true': argmax_true_tflite_result,
+                'argmax_false': argmax_false_tflite_result,
+                'threshold_true': threshold_true_tflite_result,
+                'threshold_false': threshold_false_tflite_result, },
+                HTTP_200_OK]
+        else:
+            api_output = [{'error': STACKOVERFLOW_HELP_TEXT},
+                          HTTP_400_BAD_REQUEST]
+        return Response(api_output[0], status=api_output[1])
 
 
 class TFLiteCatsVsDogs(GenericAPIView):
-	"""API for Cats Vs Dogs tflite model."""
+    """API for Cats Vs Dogs tflite model."""
 
-	serializer_class = CatsVsDogsSerializer
+    serializer_class = CatsVsDogsSerializer
 
-	def post(self, request, format=None, *args, **kwargs):
-		serializer = self.get_serializer(data=request.data)
-		if serializer.is_valid(raise_exception=True):
-			model_input = serializer.validated_data['image']
+    def post(self, request, format=None, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            model_input = serializer.validated_data['image']
 
-			argmax_true_tflite_result = argmax_catsvsdogs_tflite_model.predict(
-				model_input, confidence=True)
-			argmax_false_tflite_result = argmax_catsvsdogs_tflite_model.predict(
-				model_input)
-			threshold_true_tflite_result = threshold_catsvsdogs_tflite_model.predict(
-				model_input, confidence=True)
-			threshold_false_tflite_result = threshold_catsvsdogs_tflite_model.predict(
-				model_input)
+            argmax_true_tflite_result = argmax_catsvsdogs_tflite_model.predict(
+                model_input, confidence=True)
+            argmax_false_tflite_result = argmax_catsvsdogs_tflite_model.predict(
+                model_input)
+            threshold_true_tflite_result = threshold_catsvsdogs_tflite_model.predict(
+                model_input, confidence=True)
+            threshold_false_tflite_result = threshold_catsvsdogs_tflite_model.predict(
+                model_input)
 
-			api_output = [{
-				'argmax_true': argmax_true_tflite_result,
-				'argmax_false': argmax_false_tflite_result,
-				'threshold_true': threshold_true_tflite_result,
-				'threshold_false': threshold_false_tflite_result,}, 
-			HTTP_200_OK]
-		else:
-			api_output = [{'error': CATS_VS_DOGS_HELP_TEXT}, HTTP_400_BAD_REQUEST]
-		return Response(api_output[0], status=api_output[1])
+            api_output = [{
+                'argmax_true': argmax_true_tflite_result,
+                'argmax_false': argmax_false_tflite_result,
+                'threshold_true': threshold_true_tflite_result,
+                'threshold_false': threshold_false_tflite_result, },
+                HTTP_200_OK]
+        else:
+            api_output = [{'error': CATS_VS_DOGS_HELP_TEXT},
+                          HTTP_400_BAD_REQUEST]
+        return Response(api_output[0], status=api_output[1])
 
 
 class HDF5JSONCatsVsDogs(GenericAPIView):
-	"""API for Cats vs Dogs hdf5json model."""
+    """API for Cats vs Dogs hdf5json model."""
 
-	serializer_class = CatsVsDogsSerializer
+    serializer_class = CatsVsDogsSerializer
 
-	def post(self, request, format=None, *args, **kwargs):
-		serializer = self.get_serializer(data=request.data)
-		if serializer.is_valid(raise_exception=True):
-			model_input = serializer.validated_data['image']
+    def post(self, request, format=None, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            model_input = serializer.validated_data['image']
 
-			argmax_true_hdf5json_result = argmax_catsvsdogs_hdf5json_model.predict(
-				model_input, confidence=True)
-			argmax_false_hdf5json_result = argmax_catsvsdogs_hdf5json_model.predict(
-				model_input)
-			threshold_true_hdf5json_result = threshold_catsvsdogs_hdf5json_model.predict(
-				model_input, confidence=True)
-			threshold_false_hdf5json_result = threshold_catsvsdogs_hdf5json_model.predict(
-				model_input)
+            argmax_true_hdf5json_result = argmax_catsvsdogs_hdf5json_model.predict(
+                model_input, confidence=True)
+            argmax_false_hdf5json_result = argmax_catsvsdogs_hdf5json_model.predict(
+                model_input)
+            threshold_true_hdf5json_result = threshold_catsvsdogs_hdf5json_model.predict(
+                model_input, confidence=True)
+            threshold_false_hdf5json_result = threshold_catsvsdogs_hdf5json_model.predict(
+                model_input)
 
-			api_output = [{
-				'argmax_true': argmax_true_hdf5json_result,
-				'argmax_false': argmax_false_hdf5json_result,
-				'threshold_true': threshold_true_hdf5json_result,
-				'threshold_false': threshold_false_hdf5json_result,}, 
-			HTTP_200_OK]
-		else:
-			api_output = [{'error': CATS_VS_DOGS_HELP_TEXT}, HTTP_400_BAD_REQUEST]
-		return Response(api_output[0], status=api_output[1])
+            api_output = [{
+                'argmax_true': argmax_true_hdf5json_result,
+                'argmax_false': argmax_false_hdf5json_result,
+                'threshold_true': threshold_true_hdf5json_result,
+                'threshold_false': threshold_false_hdf5json_result, },
+                HTTP_200_OK]
+        else:
+            api_output = [{'error': CATS_VS_DOGS_HELP_TEXT},
+                          HTTP_400_BAD_REQUEST]
+        return Response(api_output[0], status=api_output[1])

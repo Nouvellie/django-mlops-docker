@@ -5,7 +5,7 @@ from typing import (
     Generic,
     TypeVar,
 )
-SelfClass = TypeVar('SelfClass')
+SELFCLASS = TypeVar('SELFCLASS')
 DEFAULT_DETAIL = "An error has ocurred"
 DEFAULT_CODE = status.HTTP_400_BAD_REQUEST
 
@@ -13,7 +13,7 @@ DEFAULT_CODE = status.HTTP_400_BAD_REQUEST
 class CustomError(APIException):
     """Custom exception for any type of error generated in the applications."""
 
-    def __new__(cls, detail: str = DEFAULT_DETAIL, code: status = DEFAULT_CODE, *args, **kwargs) -> Generic[SelfClass]:
+    def __new__(cls, detail: str = DEFAULT_DETAIL, code: status = DEFAULT_CODE, *args, **kwargs) -> Generic[SELFCLASS]:
         return super(CustomError, cls).__new__(cls, *args, **kwargs)
 
     def __init__(self, detail: str = DEFAULT_DETAIL, code: status = DEFAULT_CODE) -> response:

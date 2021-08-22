@@ -11,7 +11,6 @@ from .token import (
     get_token,
     refresh_token,
 )
-from django.shortcuts import render
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -25,11 +24,6 @@ from rest_framework.status import (
     HTTP_426_UPGRADE_REQUIRED,
 )
 from rest_framework.views import APIView
-from typing import (
-    Generic,
-    TypeVar,
-)
-JSONResponse = TypeVar('JSONResponse')
 
 
 class SignUpAPI(GenericAPIView):
@@ -38,9 +32,9 @@ class SignUpAPI(GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = SignUpSerializer
 
-    def post(self, request, *args, **kwargs) -> Generic[JSONResponse]:
+    def post(self, request, format=None, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             send_email(request, user)
             return Response({
@@ -48,7 +42,7 @@ class SignUpAPI(GenericAPIView):
                 "token": get_token(user),
             }, status=HTTP_201_CREATED)
         else:
-            return Response({'error': serializer.errors,}, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
 
 
 class SignInAPI(GenericAPIView):
@@ -57,7 +51,7 @@ class SignInAPI(GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = SignInSerializer
 
-    def post(self, request, *args, **kwargs) -> Generic[JSONResponse]:
+    def post(self, request, format=None, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.get_user()
@@ -66,7 +60,7 @@ class SignInAPI(GenericAPIView):
                 "token": refresh_token(user),
             }, status=HTTP_200_OK)
         else:
-            return Response({'error': serializer.errors,}, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
 
 
 class UserAPI(GenericAPIView):
@@ -75,7 +69,7 @@ class UserAPI(GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = SignInSerializer
 
-    def post(self, request, *args, **kwargs) -> Generic[JSONResponse]:
+    def post(self, request, format=None, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data
@@ -84,7 +78,7 @@ class UserAPI(GenericAPIView):
                 "token": check_token(user),
             }, status=HTTP_200_OK)
         else:
-            return Response({'error': serializer.errors,}, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
 
 
 class TokenAPI(GenericAPIView):
@@ -93,7 +87,7 @@ class TokenAPI(GenericAPIView):
     permission_classes = (AllowAny,)
     serializer_class = SignInSerializer
 
-    def post(self, request, *args, **kwargs) -> Generic[JSONResponse]:
+    def post(self, request, format=None, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data
@@ -103,13 +97,13 @@ class TokenAPI(GenericAPIView):
                 "info": token_info['info'],
             }, status=HTTP_200_OK)
         else:
-            return Response({'error': serializer.errors,}, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
 
 
 class VerifyAPI(APIView):
     """Api that sends a link to the user's email to validate the account."""
 
-    def post(self, request, format=None):
+    def post(self, request, format=None, *args, **kwargs):
         try:
             send_email(request)
             return Response({'info': 'Email sent.'}, status=HTTP_200_OK)
@@ -122,7 +116,7 @@ class VerifyAccountAPI(APIView):
 
     permission_classes = (AllowAny,)
 
-    def get(self, request):
+    def get(self, request, format=None, *args, **kwargs):
         account_verified = account_verification(
             acc_hash=self.request.GET.get('verify'))
 

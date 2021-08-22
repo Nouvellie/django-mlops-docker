@@ -15,19 +15,19 @@ from typing import (
     List,
     TypeVar,
 )
-NewUser = TypeVar('NewUser')
+NEWUSER = TypeVar('NEWUSER')
 
 
 class UserManager(BaseUserManager):
     """Creates a modified class based on BaseUserManager."""
 
-    def create_user(self, username: str, email: str, password: str, **other_fields) -> Generic[NewUser]:
+    def create_user(self, username: str, email: str, password: str, **other_fields) -> Generic[NEWUSER]:
         """User creation."""
         if not email:
             raise ValueError(_("You must provide an email address."))
 
         if not username:
-            raise TypeError("You must provide a user name.")
+            raise TypeError("You must provide a username.")
 
         email = self.normalize_email(email)
         user = self.model(username=username, email=email, **other_fields)

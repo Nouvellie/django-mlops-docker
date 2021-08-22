@@ -9,13 +9,13 @@ from typing import (
     List,
     TypeVar,
 )
-SelfClass = TypeVar('SelfClass')
+SELFCLASS = TypeVar('SELFCLASS')
 
 
 class EmailThread(Thread):
     """Class for sending e-mails at the thread level."""
 
-    def __new__(cls, email, *args, **kwargs) -> Generic[SelfClass]:
+    def __new__(cls, email, *args, **kwargs) -> Generic[SELFCLASS]:
         return super(EmailThread, cls).__new__(cls, *args, **kwargs)
 
     def __init__(self, email, *args, **kwargs) -> None:
