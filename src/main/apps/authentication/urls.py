@@ -1,8 +1,9 @@
 from .views import (
-    SignInAPI,
-    SignUpAPI,
-    TokenAPI,
-    UserAPI,
+    SignIn,
+    SignUp,
+    TokenInfoOut,
+    UserInfoIn,
+    UserInfoOut,
     VerifyAPI,
     VerifyAccountAPI,
 )
@@ -14,37 +15,42 @@ urlpatterns = [
 # SignUp:
     path(
         'signup',
-        SignUpAPI.as_view(),
+        SignUp.as_view(),
         name='signup',
     ),
 # SignIn:
     path(
         'signin',
-        SignInAPI.as_view(),
+        SignIn.as_view(),
         name='signin',
     ),
 
 # INFO:
     path(
-        'token',
-        TokenAPI.as_view(),
-        name='token',
+        'user-info-in',
+        UserInfoIn.as_view(),
+        name='user_info_in',
     ),
     path(
-        'user',
-        UserAPI.as_view(),
-        name='user_info',
+        'user-info-out',
+        UserInfoOut.as_view(),
+        name='user_info_out',
+    ),
+    path(
+        'token-info-out',
+        TokenInfoOut.as_view(),
+        name='token_out',
     ),
 
 # ACCOUNT MANAGEMENT:
     path(
-        'verify-account',
-        VerifyAccountAPI.as_view(),
-        name='verify_account',
-    ),
-    path(
         'verify',
         VerifyAPI.as_view(),
         name='verify',
+    ),
+    path(
+        'verify-account',
+        VerifyAccountAPI.as_view(),
+        name='verify_account',
     ),
 ]

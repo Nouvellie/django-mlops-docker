@@ -131,7 +131,7 @@ class SignInSerializer(serializers.ModelSerializer):
                     detail="This account has not been verified.", code=403)
             elif not user.is_active:
                 raise CustomError(
-                    detail="This account has been deactivated by an administrator.", code=401)
+                    detail="This account has been deactivated by an administrator.", code=403)
         else:
             raise CustomError(detail="Incorrect credentials.", code=401)
 

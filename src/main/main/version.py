@@ -9,13 +9,18 @@ __structure__   =     "str(version) - str(date) - list(info) - bool(todo) - str(
 __version__     =     "0.20.0"
 __logs__        =  {
     'version':      "0.20.0",
-    'date':         "08/21/2021",
+    'date':         "08/22/2021",
     'info':         [
         "SignUp API/Serializer fixed.",
         "PEP8."
         "Documentation.",
         "Typing fixed.",
         "Superuser creation fixed.",
+        "User and Token info View fixed.",
+        "User and Token views are for in/out calls.",
+        "Emailbackend fixed email environ.",
+        "Html/css for emails. OK",
+        "Retrieve API View for User info with Token auth.",
     ],
     'todo':         True,
     'commit':       "",
@@ -28,10 +33,12 @@ TODO_TASKS = { # TASK-STATUS
     "Text classification model get Vectorized input. (not str).": False,
     "CheckpointModelLoader not created yet.": False,
     "DEBUG for emails url.": False,
-    "Html/css for emails.": False,
-    "Check email environ config.": False,
     "SignIn swagger redirect.": False,
     "Swagger yaml on settings.": False,
+    "Html/css for emails.": False,
+
+    "Check email environ config.": True,
+    
 }
 
 full_info = {

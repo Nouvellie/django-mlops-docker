@@ -36,7 +36,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-    def create_superuser(self, email, username, password, **other_fields):
+    def create_superuser(self, username, email, password, **other_fields):
 
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
@@ -56,7 +56,7 @@ class UserManager(BaseUserManager):
         return self.create_user(username, email, password, **other_fields)
 
 
-    def create_staffuser(self, email, username, password, **other_fields):
+    def create_staffuser(self, username, email, password, **other_fields):
 
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', False)

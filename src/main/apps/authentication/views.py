@@ -11,7 +11,10 @@ from .token import (
     get_token,
     refresh_token,
 )
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import (
+    GenericAPIView,
+    RetrieveAPIView,
+)
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.status import (
@@ -26,7 +29,7 @@ from rest_framework.status import (
 from rest_framework.views import APIView
 
 
-class SignUpAPI(GenericAPIView):
+class SignUp(GenericAPIView):
     """Api for account creation, and an automatic email to verify the account."""
 
     permission_classes = (AllowAny,)
@@ -45,7 +48,7 @@ class SignUpAPI(GenericAPIView):
             return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
 
 
-class SignInAPI(GenericAPIView):
+class SignIn(GenericAPIView):
     """Api for signin, which in turn refreshes the current token."""
 
     permission_classes = (AllowAny,)
@@ -63,7 +66,7 @@ class SignInAPI(GenericAPIView):
             return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
 
 
-class UserAPI(GenericAPIView):
+class UserInfoOut(GenericAPIView):
     """Api that displays relevant user information. (token included)"""
 
     permission_classes = (AllowAny,)
@@ -71,8 +74,8 @@ class UserAPI(GenericAPIView):
 
     def post(self, request, format=None, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.get_user()
             return Response({
                 "info": UserInfoSerializer(user, context=self.get_serializer_context()).data,
                 "token": check_token(user),
@@ -81,7 +84,15 @@ class UserAPI(GenericAPIView):
             return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
 
 
-class TokenAPI(GenericAPIView):
+class UserInfoIn(RetrieveAPIView):
+    """Api that displays relevant user information. (using token)"""
+    serializer_class = UserInfoSerializer
+
+    def get_object(self):
+        return self.request.user
+
+
+class TokenInfoOut(GenericAPIView):
     """Api that displays relevant information of each user's token."""
 
     permission_classes = (AllowAny,)
@@ -89,8 +100,8 @@ class TokenAPI(GenericAPIView):
 
     def post(self, request, format=None, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.get_user()
             token_info = check_token(user)
             return Response({
                 "token": token_info['token'],
