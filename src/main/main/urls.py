@@ -5,14 +5,14 @@ from django.urls import (
 )
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from main.version import __version__
+from main.setings import VERSION
 from rest_framework.permissions import AllowAny
 
 # Schema view settings.
 schema_view = get_schema_view(
     openapi.Info(
         title="DJANGO MLOPS DOCKER API",
-        default_version=__version__,
+        default_version=VERSION,
         description="Django API adaptation. (MLOps, TFLite, Hdf5Json, Pipeline...)",
         terms_of_service="https://github.com/Nouvellie/django-tflite/blob/main/readme.md",
         contact=openapi.Contact(email="roberto.rocuantv@gmail.com"),

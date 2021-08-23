@@ -4,6 +4,7 @@ import random
 
 from datetime import timedelta
 from pathlib import Path
+from requirements.version import __version__
 
 # Environ preload.
 URIPATH = Path(os.path.dirname(__file__)).joinpath(".env")
@@ -15,6 +16,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
+
+VERSION = __version__
 
 ALLOWED_HOSTS = ['*']
 
