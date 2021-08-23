@@ -6,16 +6,14 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - bool(todo) - str(commit) - none-bool(prod)"
-__version__     =     "0.21.0"
+__version__     =     "0.22.0"
 __logs__        =  {
-    'version':      "0.21.0",
+    'version':      "0.22.0",
     'date':         "08/23/2021",
     'info':         [
-        "Https swagger schema and base URL.",
-        "SignIn swagger status_code=201?. OK",
-        "Swagger get are 200, post 201, always!.",
-        "User/token info in/out ready. (fixed, adapted)",
-        "TokenInfoSerializer created.",
+        "User info in updated.",
+        "UserInfoSerializer fix. OK",
+        "Versions on requirement folder.",
     ],
     'todo':         True,
     'commit':       "",
@@ -31,9 +29,8 @@ TODO_TASKS = { # TASK-STATUS
     "SignIn swagger redirect.": False,
     "Swagger yaml on settings.": False,
     "Html/css for emails.": False,
-    "UserInfoSerializer fix.": False,
-
-    "SignIn swagger status_code=201?.": True,   
+    
+    "UserInfoSerializer fix.": True,
 }
 
 full_info = {

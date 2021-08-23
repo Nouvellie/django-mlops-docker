@@ -1,4 +1,19 @@
 # __logs__        =  {
+#     'version':      "0.21.0",
+#     'date':         "08/23/2021",
+#     'info':         [
+#         "Https swagger schema and base URL.",
+#         "SignIn swagger status_code=201?. OK",
+#         "Swagger get are 200, post 201, always!.",
+#         "User/token info in/out ready. (fixed, adapted)",
+#         "TokenInfoSerializer created.",
+#     ],
+#     'todo':         True,
+#     'commit':       "8b479f0",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
 #     'version':      "0.20.0",
 #     'date':         "08/22/2021",
 #     'info':         [
@@ -18,7 +33,7 @@
 #         "SQLite3 removed from .gitignore.",
 #     ],
 #     'todo':         True,
-#     'commit':       "",
+#     'commit':       "f362f2e",
 #     "prod":         None,
 # }
 

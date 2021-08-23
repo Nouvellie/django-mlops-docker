@@ -88,7 +88,7 @@ class UserInfoOut(GenericAPIView):
 class UserInfoIn(RetrieveAPIView):
     """Api that displays relevant user information. (token included)"""
 
-    serializer_class = UserInfoSerializer
+    serializer_class = TokenInfoSerializer
 
     def get(self, request, format=None, *args, **kwargs):
         user_info = {
