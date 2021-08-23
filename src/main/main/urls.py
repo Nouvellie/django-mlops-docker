@@ -5,7 +5,7 @@ from django.urls import (
 )
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from main.setings import VERSION
+from main.settings import VERSION
 from rest_framework.permissions import AllowAny
 
 # Schema view settings.
