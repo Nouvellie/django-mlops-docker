@@ -2,6 +2,7 @@ from .views import (
     SignIn,
     SignUp,
     TokenInfoOut,
+    TokenInfoIn,
     UserInfoIn,
     UserInfoOut,
     VerifyAPI,
@@ -39,7 +40,12 @@ urlpatterns = [
     path(
         'token-info-out',
         TokenInfoOut.as_view(),
-        name='token_out',
+        name='token_info_out',
+    ),
+    path(
+        'token-info-in',
+        TokenInfoIn.as_view(),
+        name='token_info_in',
     ),
 
 # ACCOUNT MANAGEMENT:

@@ -18,6 +18,7 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="roberto.rocuantv@gmail.com"),
         license=openapi.License(name="MIT License"),
     ),
+    # url="https://nouvellie.django", # Swagger schema will be https.
     public=True,
     permission_classes=(AllowAny,),
 )

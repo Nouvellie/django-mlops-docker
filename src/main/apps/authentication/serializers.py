@@ -45,7 +45,6 @@ class SignUpSerializer(serializers.ModelSerializer):
     """This class serializes the creation of a new account, with all the validations are ok."""
 
     password = serializers.CharField(
-        required=True,
         write_only=True,
         label="Password",
         validators=[validate_password],
@@ -53,7 +52,6 @@ class SignUpSerializer(serializers.ModelSerializer):
         style={'input_type': 'password', }
     )
     password2 = serializers.CharField(
-        required=True,
         write_only=True,
         label="Confirm Password",
         validators=[validate_password],
@@ -106,9 +104,8 @@ class SignUpSerializer(serializers.ModelSerializer):
 class SignInSerializer(serializers.ModelSerializer):
     """Validates the credentials of an account when signin."""
 
-    username = serializers.CharField(required=True)
+    username = serializers.CharField()
     password = serializers.CharField(
-        required=True,
         write_only=True,
         label="Password",
         trim_whitespace=False,
@@ -138,6 +135,15 @@ class SignInSerializer(serializers.ModelSerializer):
     def get_user(self):
         """Return User."""
         return list(self.validated_data.items())[-1][1]
+
+
+class TokenInfoSerializer(serializers.Serializer):
+
+    token = serializers.CharField(
+        label="Token", help_text="Token hash. (unique)")
+
+    class Meta:
+        fields = ('Token tokenhash',)
 
 
 # class VerifyAccountSerializer(serializers.ModelSerializer):

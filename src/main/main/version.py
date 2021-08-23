@@ -6,25 +6,16 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - bool(todo) - str(commit) - none-bool(prod)"
-__version__     =     "0.20.0"
+__version__     =     "0.21.0"
 __logs__        =  {
-    'version':      "0.20.0",
-    'date':         "08/22/2021",
+    'version':      "0.21.0",
+    'date':         "08/23/2021",
     'info':         [
-        "SignUp API/Serializer fixed.",
-        "PEP8."
-        "Documentation.",
-        "Typing fixed.",
-        "Superuser creation fixed.",
-        "User and Token info View fixed.",
-        "User and Token views are for in/out calls.",
-        "Emailbackend fixed email environ.",
-        "Html/css for emails. OK",
-        "Retrieve API View for User info with Token auth.",
-        "Dockerfile nginx port 80.",
-        "Pip --upgrade from Dockerfile.",
-        "Pip readme updated. (mysqlclient prelib)",
-        "SQLite3 removed from .gitignore.",
+        "Https swagger schema and base URL.",
+        "SignIn swagger status_code=201?. OK",
+        "Swagger get are 200, post 201, always!.",
+        "User/token info in/out ready. (fixed, adapted)",
+        "TokenInfoSerializer created.",
     ],
     'todo':         True,
     'commit':       "",
@@ -40,9 +31,9 @@ TODO_TASKS = { # TASK-STATUS
     "SignIn swagger redirect.": False,
     "Swagger yaml on settings.": False,
     "Html/css for emails.": False,
+    "UserInfoSerializer fix.": False,
 
-    "Check email environ config.": True,
-    
+    "SignIn swagger status_code=201?.": True,   
 }
 
 full_info = {

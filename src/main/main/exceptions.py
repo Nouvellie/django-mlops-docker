@@ -6,7 +6,7 @@ from typing import (
     TypeVar,
 )
 SELFCLASS = TypeVar('SELFCLASS')
-DEFAULT_DETAIL = "An error has ocurred"
+DEFAULT_DETAIL = "An error has ocurred."
 DEFAULT_CODE = status.HTTP_400_BAD_REQUEST
 
 

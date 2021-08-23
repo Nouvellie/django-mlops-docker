@@ -1,4 +1,28 @@
 # __logs__        =  {
+#     'version':      "0.20.0",
+#     'date':         "08/22/2021",
+#     'info':         [
+#         "SignUp API/Serializer fixed.",
+#         "PEP8."
+#         "Documentation.",
+#         "Typing fixed.",
+#         "Superuser creation fixed.",
+#         "User and Token info View fixed.",
+#         "User and Token views are for in/out calls.",
+#         "Emailbackend fixed email environ.",
+#         "Html/css for emails. OK",
+#         "Retrieve API View for User info with Token auth.",
+#         "Dockerfile nginx port 80.",
+#         "Pip --upgrade from Dockerfile.",
+#         "Pip readme updated. (mysqlclient prelib)",
+#         "SQLite3 removed from .gitignore.",
+#     ],
+#     'todo':         True,
+#     'commit':       "",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
 #     'version':      "0.19.0",
 #     'date':         "08/21/2021",
 #     'info':         [

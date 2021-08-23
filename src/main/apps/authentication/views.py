@@ -4,6 +4,7 @@ from .serializers import (
     SignUpSerializer,
     UserInfoSerializer,
     UserSerializer,
+    TokenInfoSerializer,
 )
 from .token import (
     account_verification,
@@ -85,11 +86,16 @@ class UserInfoOut(GenericAPIView):
 
 
 class UserInfoIn(RetrieveAPIView):
-    """Api that displays relevant user information. (using token)"""
+    """Api that displays relevant user information. (token included)"""
+
     serializer_class = UserInfoSerializer
 
-    def get_object(self):
-        return self.request.user
+    def get(self, request, format=None, *args, **kwargs):
+        user_info = {
+            "info": UserInfoSerializer(request.user, context=self.get_serializer_context()).data,
+            "token": check_token(request.user),
+        }
+        return Response(user_info, status=HTTP_200_OK)
 
 
 class TokenInfoOut(GenericAPIView):
@@ -109,6 +115,16 @@ class TokenInfoOut(GenericAPIView):
             }, status=HTTP_200_OK)
         else:
             return Response({'error': serializer.errors, }, status=HTTP_400_BAD_REQUEST)
+
+
+class TokenInfoIn(RetrieveAPIView):
+    """Api that displays relevant information of each user's token."""
+
+    serializer_class = TokenInfoSerializer
+
+    def get(self, request, format=None, *args, **kwargs):
+        token_info = check_token(request.user)
+        return Response(token_info, status=HTTP_200_OK)
 
 
 class VerifyAPI(APIView):
