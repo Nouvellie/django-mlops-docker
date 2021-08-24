@@ -38,11 +38,8 @@ class EmailPreparation:
         email = EmailMessage(
             subject=data['subject'], body=data['body'], to=[data['to']])
         if thread:
-            print("th")
             EmailThread(email).start()
         else:
-            print("noth")
-            print(email)
             email.content_subtype = "html"
             email.send()
 
@@ -83,5 +80,4 @@ def send_email(request: Dict, user=None, thread: bool=True) -> None:
         'subject': f"Nouvellie: Account verification.",
         'url': abs_url,
     }
-    print(data)
     EmailPreparation.send(data=data, thread=thread)

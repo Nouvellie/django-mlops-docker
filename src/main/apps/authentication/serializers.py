@@ -1,4 +1,5 @@
 import re
+import uuid
 
 from .models import User
 from django.contrib.auth import authenticate
@@ -179,7 +180,7 @@ class AccountVerificationSerializer(serializers.ModelSerializer):
             raise CustomError(
                 detail="The verification link is invalid, please request a new one.", code=403)
 
-    def check_user(self, acc_hash) -> Dict:
+    def check_user(self, acc_hash: uuid) -> Dict:
         """User validation from hash."""
         checked_user = {}
         try:

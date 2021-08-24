@@ -19,6 +19,7 @@ __logs__        =  {
         "Account verification API ready.",
         "Account verification serializer ready.",
         "Get user from hash created.",
+        "Send email thread adaptation.",
     ],
     'todo':         True,
     'commit':       "",
