@@ -1,5 +1,6 @@
 from .email import send_email
 from .serializers import (
+    AccountVerificationSerializer,
     SignInSerializer,
     SignUpSerializer,
     UserInfoSerializer,
@@ -24,6 +25,7 @@ from rest_framework.status import (
     HTTP_202_ACCEPTED,
     HTTP_400_BAD_REQUEST,
     HTTP_401_UNAUTHORIZED,
+    HTTP_403_FORBIDDEN,
     HTTP_404_NOT_FOUND,
     HTTP_426_UPGRADE_REQUIRED,
 )
@@ -40,7 +42,7 @@ class SignUp(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
-            send_email(request, user)
+            send_email(request=request, user=user, thread=True)
             return Response({
                 "credentials": UserSerializer(user, context=self.get_serializer_context()).data,
                 "token": get_token(user),
@@ -127,29 +129,33 @@ class TokenInfoIn(RetrieveAPIView):
         return Response(token_info, status=HTTP_200_OK)
 
 
-class VerifyAPI(APIView):
+class Verify(GenericAPIView):
     """Api that sends a link to the user's email to validate the account."""
 
-    def post(self, request, format=None, *args, **kwargs):
+    serializer_class = TokenInfoSerializer
+
+    def get(self, request, format=None, *args, **kwargs):
         try:
-            send_email(request)
+            send_email(request=request, user=request.user, thread=False)
             return Response({'info': 'Email sent.'}, status=HTTP_200_OK)
         except:
             return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
 
 
-class VerifyAccountAPI(APIView):
-    """This api receives the verification sent to the email, processes it and, if it is correct, validates the account."""
+class AccountVerification(GenericAPIView):
+    """This api receives the verification link sent to the email, processes it and, if it is correct, validates the account."""
 
     permission_classes = (AllowAny,)
+    serializer_class = AccountVerificationSerializer
 
     def get(self, request, format=None, *args, **kwargs):
-        account_verified = account_verification(
-            acc_hash=self.request.GET.get('verify'))
-
-        if account_verified['status']:
-            return Response({'info': 'Account successfully verified!'}, status=HTTP_202_ACCEPTED)
-        elif not account_verified['status']:
-            return Response({'error': account_verified['error']}, status=HTTP_400_BAD_REQUEST)
+        acc_hash = self.request.GET.get('verify')
+        if acc_hash:
+            regex = re.compile("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\Z", re.I)
+            if not bool(regex.match(acc_hash)):
+                return Response({'error': "The verification link is invalid, please request a new one."}, status=HTTP_403_FORBIDDEN)
+            serializer = serializer = self.get_serializer(data={'acc_hash': acc_hash})
+            if serializer.is_valid(raise_exception=True):
+                return Response({'info': 'Account successfully verified!'}, status=HTTP_202_ACCEPTED)
         else:
-            return Response({'error': 'A problem occurred while the account was being validated, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': 'The account must be verified with the link sent to the following e-mail address.'}, status=HTTP_400_BAD_REQUEST)

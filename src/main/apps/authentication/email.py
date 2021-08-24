@@ -32,14 +32,22 @@ class EmailPreparation:
     """Preparation class for sending e-mails at the thread level."""
 
     @staticmethod
-    def send(data: List) -> None:
+    def send(data: List, thread: bool) -> None:
         """Send all the necessary parameters that make up the e-mail."""
+        
         email = EmailMessage(
             subject=data['subject'], body=data['body'], to=[data['to']])
-        EmailThread(email).start()
+        if thread:
+            print("th")
+            EmailThread(email).start()
+        else:
+            print("noth")
+            print(email)
+            email.content_subtype = "html"
+            email.send()
 
 
-def send_email(request: Dict, user=None) -> None:
+def send_email(request: Dict, user=None, thread: bool=True) -> None:
     if user:
         acc_hash = str(user.acc_hash)
         username = str(user.username)
@@ -54,7 +62,7 @@ def send_email(request: Dict, user=None) -> None:
     # 	pre_url = 'https://'
     pre_url = 'http://'
     current_site = str(get_current_site(request))
-    relative_link = str(reverse('verify_account'))
+    relative_link = str(reverse('account_verification'))
     abs_url = f"{pre_url}{current_site}{relative_link}?verify={acc_hash}"
     body = f"""
 		<html align="center" style="font-family: Arial">
@@ -75,4 +83,5 @@ def send_email(request: Dict, user=None) -> None:
         'subject': f"Nouvellie: Account verification.",
         'url': abs_url,
     }
-    EmailPreparation.send(data)
+    print(data)
+    EmailPreparation.send(data=data, thread=thread)

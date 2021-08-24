@@ -1,3 +1,5 @@
+import re
+
 from .models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
@@ -143,13 +145,46 @@ class TokenInfoSerializer(serializers.Serializer):
         label="Token", help_text="Token hash. (unique)")
 
     class Meta:
-        fields = ('Token tokenhash',)
+        fields = ('token',)
 
 
-# class VerifyAccountSerializer(serializers.ModelSerializer):
+class AccountVerificationSerializer(serializers.ModelSerializer):
 
-#     acc_hash = serializers.UUIDField(format='hex_verbose')
+    acc_hash = serializers.CharField(
+        write_only=True,
+        label="Hash",
+        help_text="Hash link sent to email."
+    )
 
-#     class Meta:
-#         model = User
-#         fields = ('acc_hash',)
+    class Meta:
+        model = User
+        fields = ('acc_hash',)
+
+    def validate(self, attrs: Generic[API_INPUTS]) -> Generic[API_INPUTS]:
+        """Hash validation."""
+        acc_hash = attrs['acc_hash']
+        checked_user = self.check_user(acc_hash)
+        if checked_user['status']:
+            if not checked_user['user'].is_active:
+                raise CustomError(
+                    detail="This account cannot be verified because it has been deactivated by an administrator.", code=403)
+            elif checked_user['user'].is_verified:
+                raise CustomError(
+                    detail="This account has already been verified.", code=208)
+            else:
+                checked_user['user'].is_verified = True
+                checked_user['user'].save()
+                return super().validate(attrs)
+        else:
+            raise CustomError(
+                detail="The verification link is invalid, please request a new one.", code=403)
+
+    def check_user(self, acc_hash) -> Dict:
+        """User validation from hash."""
+        checked_user = {}
+        try:
+            user = User.objects.get(acc_hash=acc_hash)
+            checked_user = {'status': True, 'user': user}
+        except:
+            checked_user['status'] = False
+        return checked_user

@@ -47,8 +47,9 @@ def account_verification(acc_hash: str) -> Dict:
     """This function receives the verification sent to the email, processes it and, if it is correct, validates the account."""
     account_verified = {}
     account_verified['status'] = False
-
+    print("jeje")
     user = User.objects.get(acc_hash=acc_hash)
+    print("jaja",user)
 
     if not user.is_active:
         account_verified['error'] = 'This account cannot be verified because it has been deactivated by an administrator.'

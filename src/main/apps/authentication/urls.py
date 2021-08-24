@@ -5,8 +5,8 @@ from .views import (
     TokenInfoIn,
     UserInfoIn,
     UserInfoOut,
-    VerifyAPI,
-    VerifyAccountAPI,
+    Verify,
+    AccountVerification,
 )
 from django.urls import path
 
@@ -51,12 +51,12 @@ urlpatterns = [
 # ACCOUNT MANAGEMENT:
     path(
         'verify',
-        VerifyAPI.as_view(),
+        Verify.as_view(),
         name='verify',
     ),
     path(
-        'verify-account',
-        VerifyAccountAPI.as_view(),
-        name='verify_account',
+        'account-verification',
+        AccountVerification.as_view(),
+        name='account_verification',
     ),
 ]
