@@ -178,3 +178,16 @@ class AccountVerificationSerializer(serializers.ModelSerializer):
             user.is_verified = True
             user.save()
             return super().validate(attrs)
+
+
+class PasswordResetSerializer(serializers.ModelSerializer):
+
+    pass_token = serializers.CharField(
+        write_only=True,
+        label="PassToken",
+        help_text="Hash link sent to email."
+    )
+
+    class Meta:
+        model = User
+        fields = ('pass_token',)

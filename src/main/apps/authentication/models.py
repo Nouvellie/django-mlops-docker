@@ -88,6 +88,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     acc_hash = models.CharField(unique=True, default=uuid.uuid4, max_length=40)
+    pass_token = models.CharField(unique=True, max_length=40)
     is_verified = models.BooleanField(
         default=False,
         help_text=_(
