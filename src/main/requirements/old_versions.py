@@ -1,4 +1,24 @@
 # __logs__        =  {
+#     'version':      "0.22.0",
+#     'date':         "08/23/2021",
+#     'info':         [
+#         "User info in updated.",
+#         "UserInfoSerializer fix. OK",
+#         "Versions on requirement folder.",
+#         "Gmail settings fixed. (port as int, gmail password app with 2FA)",
+#         "Verify and email verify API ready.",
+#         "Account verification API ready.",
+#         "Account verification serializer ready.",
+#         "Get user from hash created.",
+#         "Send email thread adaptation.",
+#         "Installed apps fixed.",
+#     ],
+#     'todo':         True,
+#     'commit':       "8e5693b",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
 #     'version':      "0.21.0",
 #     'date':         "08/23/2021",
 #     'info':         [

@@ -1,4 +1,3 @@
-import re
 import uuid
 
 from .models import User
@@ -164,28 +163,18 @@ class AccountVerificationSerializer(serializers.ModelSerializer):
     def validate(self, attrs: Generic[API_INPUTS]) -> Generic[API_INPUTS]:
         """Hash validation."""
         acc_hash = attrs['acc_hash']
-        checked_user = self.check_user(acc_hash)
-        if checked_user['status']:
-            if not checked_user['user'].is_active:
-                raise CustomError(
-                    detail="This account cannot be verified because it has been deactivated by an administrator.", code=403)
-            elif checked_user['user'].is_verified:
-                raise CustomError(
-                    detail="This account has already been verified.", code=208)
-            else:
-                checked_user['user'].is_verified = True
-                checked_user['user'].save()
-                return super().validate(attrs)
-        else:
+        if not User.objects.filter(acc_hash=acc_hash).exists():
             raise CustomError(
                 detail="The verification link is invalid, please request a new one.", code=403)
-
-    def check_user(self, acc_hash: uuid) -> Dict:
-        """User validation from hash."""
-        checked_user = {}
-        try:
+        else:
             user = User.objects.get(acc_hash=acc_hash)
-            checked_user = {'status': True, 'user': user}
-        except:
-            checked_user['status'] = False
-        return checked_user
+        if not user.is_active:
+            raise CustomError(
+                detail="This account cannot be verified because it has been deactivated by an administrator.", code=403)
+        elif user.is_verified:
+            raise CustomError(
+                detail="This account has already been verified.", code=208)
+        else:
+            user.is_verified = True
+            user.save()
+            return super().validate(attrs)

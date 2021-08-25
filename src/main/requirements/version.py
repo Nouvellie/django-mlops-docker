@@ -6,21 +6,13 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - bool(todo) - str(commit) - none-bool(prod)"
-__version__     =     "0.22.0"
+__version__     =     "0.23.0"
 __logs__        =  {
-    'version':      "0.22.0",
-    'date':         "08/23/2021",
+    'version':      "0.23.0",
+    'date':         "08/25/2021",
     'info':         [
-        "User info in updated.",
-        "UserInfoSerializer fix. OK",
-        "Versions on requirement folder.",
-        "Gmail settings fixed. (port as int, gmail password app with 2FA)",
-        "Verify and email verify API ready.",
-        "Account verification API ready.",
-        "Account verification serializer ready.",
-        "Get user from hash created.",
-        "Send email thread adaptation.",
-        "Installed apps fixed.",
+        "Account verification serializer updated.",
+        "Get_user removed. (user.exists())",
     ],
     'todo':         True,
     'commit':       "",
@@ -36,8 +28,6 @@ TODO_TASKS = { # TASK-STATUS
     "SignIn swagger redirect.": False,
     "Swagger yaml on settings.": False,
     "Html/css for emails.": False,
-    
-    "UserInfoSerializer fix.": True,
 }
 
 full_info = {

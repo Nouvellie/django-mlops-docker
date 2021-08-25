@@ -1,3 +1,5 @@
+import re
+
 from .email import send_email
 from .serializers import (
     AccountVerificationSerializer,
