@@ -1,4 +1,5 @@
 from django.http import response
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import APIException
 from rest_framework import status
 from typing import (
@@ -19,3 +20,20 @@ class CustomError(APIException):
     def __init__(self, detail: dict = DEFAULT_DETAIL, code: status = DEFAULT_CODE) -> response:
         self.detail = detail
         self.status_code = code
+
+
+class CustomTokenAuthentication(TokenAuthentication):
+    """Exception is rewritten, for a custom error."""
+    def authenticate_credentials(self, key: str) -> tuple:
+        model = self.get_model()
+        try:
+            token = model.objects.select_related('user').get(key=key)
+        except model.DoesNotExist:
+            raise CustomError(
+                detail={'error': 'Invalid token.'}, code=401)
+
+        if not token.user.is_active:
+            raise CustomError(
+                detail={'error': 'This account has been deactivated by an administrator.'}, code=401)
+
+        return (token.user, token)

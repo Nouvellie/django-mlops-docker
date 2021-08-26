@@ -1,4 +1,3 @@
-import datetime
 import uuid
 
 from .models import User
@@ -54,86 +53,75 @@ class EmailPreparation:
 
 def send_email(request: dict, user=None, thread: bool = True, task: int = 0) -> None:
     if user:
-        acc_hash = str(user.acc_hash)
         username = str(user.username)
         email = str(user.email)
     else:
-        acc_hash = str(request.user.acc_hash)
         username = str(request.user.username)
         email = str(request.user.email)
+
+    user = User.objects.get(username=username)
+    # if DEBUG:
+    #   pre_url = 'http://'
+    # else:
+    #   pre_url = 'https://'
+    pre_url = 'http://'
+    current_site = str(get_current_site(request))
+    user.acc_hash = uuid.uuid4()
+    user.acc_hash_expiration = datetime.now(timezone.utc)
+    user.pass_token = uuid.uuid4()
+    user.pass_token_expiration = datetime.now(timezone.utc)
+    user.save()
 # Account verification.
     if task == 1:
-        user = User.objects.get(username=username)
-        timenow = datetime.now(timezone.utc)
-        # if DEBUG:
-        # 	pre_url = 'http://'
-        # else:
-        # 	pre_url = 'https://'
-        pre_url = 'http://'
-        work = 'verify'
-        current_site = str(get_current_site(request))
-        relative_link = relative_link = str(reverse('account_verification'))
-        new_link = relative_link = str(reverse('verify'))
-        new_url = f"{pre_url}{current_site}{new_link}"
-        abs_url = f"{pre_url}{current_site}{relative_link}?{work}={acc_hash}"
-        body = f"""
-    		<html align="center" style="font-family: Arial">
-    		  <head></head>
-    		  <body style="background-color: rgb(12, 14, 19); color: white;" >
-    		  	<br><br><br>
-    		    <h2>Hi {username}.</h2>
-    		    <p>Use the link below to verify your account. This link allows you to verify your account within 24 hours of its generation, after which you will have to generate another link. (Each time a session is started, the verification link will change)</p>
-    		    <h5>Verify: {abs_url}</h5>
-                <br>
-                <h5>New link: {new_url}</h5>
-    		    <br><br><br>
-    		    <br><br>
-    		  </body>
-    		</html>
-    	"""
-        data = {
-            'body': body,
-            'to': email,
-            'subject': f"Nouvellie: Account verification.",
-            'url': abs_url,
-        }
-        EmailPreparation.send(data=data, thread=thread)
+        relative_info = 'account_verification'
+        relative_pre = 'Account verification link:'
+        new_info = 'verify'
+        new_pre = 'Request new link:'
+        url_end = f"?verify={acc_hash}"
+        subject = "Nouvellie: Account verification"
+        main_msg = "Use the link below to verify your account. This link allows you to verify your account within 24 hours of its generation, after which you will have to generate another link. (Each time a session is started, the verification link will change)"
 
-    elif task == 2:
-        user = User.objects.get(username=username)
-        timenow = datetime.now(timezone.utc)
-        if timenow > (user.pass_token_expiration + timedelta(days=1)):
-            raise CustomError(detail={'error': "invalid token."}, code=400)
-
-        pre_url = 'http://'
-        current_site = str(get_current_site(request))
-        relative_link = relative_link = str(reverse('password_reset'))
-        new_link = relative_link = str(reverse('reset'))
-        new_url = f"{pre_url}{current_site}{new_link}"
+# Password reset.
+    elif task == 2:        
+        relative_info = 'password_reset'
+        relative_pre = 'Password reset link:'
+        new_info = 'reset'
+        new_pre = 'Request new link:'
         token = user.pass_token
-        abs_url = f"{pre_url}{current_site}{relative_link}?token={token}&password=newpassword"
-        body = f"""
-            <html align="center" style="font-family: Arial">
-              <head></head>
-              <body style="background-color: rgb(12, 14, 19); color: white;" >
-                <br><br><br>
-                <h2>Hi {username}.</h2>
-                <p>Send us the new password by replacing the value "newpassword" in the url indicated. This link allows you to change your password within 24 hours of its generation, after which you will have to generate another link. (The password must contain at least 8 characters and cannot contain the initials of your username or email address, special characters are allowed)</p>
-                <h5>Validate: {abs_url}</h5>
-                <br>
-                <h5>New link: {new_url}</h5>
-                <br><br><br>
-                <br><br>
-              </body>
-            </html>
-        """
-        data = {
-            'body': body,
-            'to': email,
-            'subject': f"Nouvellie: Password reset.",
-            'url': abs_url,
-        }
+        url_end = f"?token={token}&password=newpassword"
+        subject = "Nouvellie: Password reset"
+        main_msg = "Send us the new password by replacing the value 'newpassword' in the url indicated. This link allows you to change your password within 2 hours of its generation, after which you will have to generate another link. (The password must contain at least 8 characters and cannot contain the initials of your username or email address, special characters are allowed)"
+        
+    data = email_preparation(pre_url, current_site, relative_info, new_info, relative_pre, new_pre, url_end, username, email, subject, main_msg)
+        
+    EmailPreparation.send(data=data, thread=thread)
 
-        EmailPreparation.send(data=data, thread=thread)
-    else:
-        raise CustomError(detail={'error': "Incorrect task."}, code=400)
+
+def email_preparation(pre_url: str, current_site: str, relative_info: str, new_info: str , relative_pre: str, new_pre: str, url_end: str, username: str, email: str, subject: str, main_msg: str) -> dict:
+
+    relative_link = str(reverse(relative_info))
+    new_link = str(reverse(new_info))
+    abs_url = f"{pre_url}{current_site}{relative_link}{url_end}"
+    new_url = f"{pre_url}{current_site}{new_link}"
+
+    body = f"""
+        <html align="center" style="font-family: Arial">
+          <head></head>
+          <body style="background-color: rgb(12, 14, 19); color: white;" >
+            <br><br><br>
+            <h2>Hi {username}.</h2>
+            <p>{main_msg}</p>
+            <h5>Validate: {abs_url}</h5>
+            <h5>New link: {new_url}</h5>
+            <br><br><br>
+            <br><br>
+          </body>
+        </html>
+    """
+
+    data = {
+        'body': body,
+        'to': email,
+        'subject': subject,
+    }
+    return data

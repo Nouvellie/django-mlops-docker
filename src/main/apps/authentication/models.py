@@ -84,7 +84,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=150, blank=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     acc_hash = models.CharField(unique=True, default=uuid.uuid4, max_length=40)
-    acc_has_expiration = models.DateTimeField(default=timezone.now)
+    acc_hash_expiration = models.DateTimeField(default=timezone.now)
     pass_token = models.CharField(
         unique=True, default=uuid.uuid4, max_length=40)
     pass_token_expiration = models.DateTimeField(default=timezone.now)
@@ -101,7 +101,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         default=False,
         help_text=_('Designates whether the user can log into this admin site.'))
-    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = 'username'

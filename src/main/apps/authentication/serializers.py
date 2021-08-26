@@ -15,10 +15,7 @@ from rest_framework import serializers
 
 
 # HELP TEXT.
-FASHION_MNIST_HELP_TEXT = f"Please enter an image to process with FashionMnist model. The filename cannot be longer than 50 characters and only .png format will be accepted."
-IMDB_SENTIMENT_HELP_TEXT = f"Please enter a file or text (review) to be processed with the Imdb Sentiment model. The filename cannot be longer than 50 characters and the allowed formats are '.md, .txt, .docx'. (In case both parameters are sent, the file is validated first and only one is answered.)"
 PASSWORD_HELP_TEXT = f"Please enter a file or text (code) to be processed with the Stackoverflow model. The filename cannot be longer than 50 characters and the allowed formats are '.md, .txt, .docx'. (In case both parameters are sent, the file is validated first and only one is answered.)"
-CATS_VS_DOGS_HELP_TEXT = f"Please enter an image to process with CatsVsDogs model. The filename cannot be longer than 50 characters and only .jpg format will be accepted."
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,7 +32,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'is_verified',
-                  'created_at', 'first_name', 'last_name',)
+                  'date_joined', 'first_name', 'last_name',)
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -75,7 +72,8 @@ class SignUpSerializer(serializers.ModelSerializer):
     def validate(self, attrs: dict) -> dict:
         """SignUp data validation."""
         if attrs['password'] != attrs['password2']:
-            raise CustomError(detail={'error': "Password fields didn't match."}, code=400)
+            raise CustomError(
+                detail={'error': "Password fields didn't match."}, code=400)
         if attrs['username'] == attrs['password']:
             raise CustomError(
                 detail={'error': "For your security the username and password cannot be the same."}, code=403)
@@ -106,7 +104,6 @@ class SignInSerializer(serializers.ModelSerializer):
         write_only=True,
         label="Password",
         trim_whitespace=False,
-        validators=[validate_password],
         style={'input_type': 'password', }
     )
 
@@ -118,8 +115,8 @@ class SignInSerializer(serializers.ModelSerializer):
         """SignIn data validation."""
         user = authenticate(**attrs)
         if user:
-            user.acc_hash = uuid.uuid4
-            user.acc_has_expiration = datetime.now(timezone.utc)
+            user.acc_hash = uuid.uuid4()
+            user.acc_hash_expiration = datetime.now(timezone.utc)
             user.save()
             if user.is_active and user.is_verified:
                 attrs.update({'user': user})
@@ -131,7 +128,8 @@ class SignInSerializer(serializers.ModelSerializer):
                 raise CustomError(
                     detail={'error': "This account has been deactivated by an administrator."}, code=403)
         else:
-            raise CustomError(detail={'error': "Incorrect credentials."}, code=401)
+            raise CustomError(
+                detail={'error': "Incorrect credentials."}, code=401)
 
     def get_user(self) -> User:
         """Return User."""
@@ -165,18 +163,22 @@ class AccountVerificationSerializer(serializers.ModelSerializer):
         if not User.objects.filter(acc_hash=acc_hash).exists():
             raise CustomError(
                 detail={'error': "The verification link is invalid, please request a new one."}, code=403)
-        
+
         user = User.objects.get(acc_hash=acc_hash)
-        if not user.is_active:
+        timenow = datetime.now(timezone.utc)
+        if timenow > (user.acc_hash_expiration + timedelta(days=1)):
+            raise CustomError(detail={'error': "Link has expired."}, code=400)
+
+        elif not user.is_active:
             raise CustomError(
                 detail={'error': "This account cannot be verified because it has been deactivated by an administrator."}, code=403)
         elif user.is_verified:
             raise CustomError(
-                detail={'error': "This account has already been verified."}, code=208)
+                detail={'error': "This account has already been verified."}, code=202)
         else:
             user.is_verified = True
-            user.acc_hash = uuid.uuid4
-            user.acc_has_expiration = datetime.now(timezone.utc)
+            user.acc_hash = uuid.uuid4()
+            user.acc_hash_expiration = datetime.now(timezone.utc)
             user.save()
             return super().validate(attrs)
 
@@ -200,21 +202,25 @@ class PasswordResetSerializer(serializers.ModelSerializer):
         fields = ('pass_token', 'password')
 
     def validate(self, attrs: dict) -> dict:
+        """Password validation."""
         if not User.objects.filter(pass_token=attrs['pass_token']).exists():
             raise CustomError(
                 detail={'error': "The token is invalid, please request a new one."}, code=403)
         user = User.objects.get(pass_token=attrs['pass_token'])
-        if attrs['password'] == user.email.split("@")[0]:
+        timenow = datetime.now(timezone.utc)
+        if timenow > (user.pass_token_expiration + timedelta(days=1/12)):
+            raise CustomError(detail={'error': "Link has expired."}, code=400)
+        elif attrs['password'] == user.email.split("@")[0]:
             raise CustomError(
                 detail={'error': "For your security the email and password cannot be the same."}, code=403)
-        if attrs['password'].startswith(str(user.email.split("@")[0][:4])):
+        elif attrs['password'].startswith(str(user.email.split("@")[0][:4])):
             raise CustomError(
                 detail={'error': "For your security, the password cannot contain your email address."}, code=403)
-        if attrs['password'].startswith(str(user.username[:4])):
+        elif attrs['password'].startswith(str(user.username[:4])):
             raise CustomError(
                 detail={'error': "For your security, the password cannot contain your username."}, code=403)
         user.set_password(attrs['password'])
-        user.pass_token = uuid.uuid4
+        user.pass_token = uuid.uuid4()
         user.pass_token_expiration = datetime.now(timezone.utc)
         user.save()
         return super().validate(attrs)

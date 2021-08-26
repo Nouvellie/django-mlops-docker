@@ -17,6 +17,11 @@ __logs__        =  {
         "New user attributes. (pass_token, and expiration hashes)",
         "Hashtags are renewed every time they are used.",
         "PEP8 and typing adapted.",
+        "CustomTokenAuthentication",
+        "Email preparation function added.",
+        "Send email reset token/hash now.",
+        "Verify/reset serializer validation.",
+        "SQL query added.",
     ],
     'todo':         True,
     'commit':       "",
@@ -32,6 +37,7 @@ TODO_TASKS = { # TASK-STATUS
     "SignIn swagger redirect.": False,
     "Swagger yaml on settings.": False,
     "Html/css for emails.": False,
+    "UserInfoSerializer date format.": False, 
 }
 
 full_info = {

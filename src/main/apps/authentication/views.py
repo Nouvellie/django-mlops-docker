@@ -1,6 +1,7 @@
 import re
 
 from .email import send_email
+from .models import User
 from .serializers import (
     AccountVerificationSerializer,
     PasswordResetSerializer,
@@ -130,9 +131,15 @@ class TokenInfoIn(RetrieveAPIView):
 class Verify(GenericAPIView):
     """Api that sends a link to the user's email to validate their account."""
 
+    permission_classes = (AllowAny,)
     serializer_class = TokenInfoSerializer
 
     def get(self, request, format=None, *args, **kwargs):
+        user = User.objects.get(username=request.user)
+        if user.is_verified and user.is_active:
+            return Response({'info': 'This account has already been verified.'}, status=HTTP_202_ACCEPTED)
+        if not user.is_active:
+            return Response({'info': 'This account cannot be verified because it has been deactivated by an administrator.'}, status=HTTP_403_FORBIDDEN)
         try:
             send_email(request=request, user=request.user,
                        thread=False, task=1)
@@ -168,12 +175,18 @@ class PasswordResetRequest(GenericAPIView):
     serializer_class = TokenInfoSerializer
 
     def get(self, request, format=None, *args, **kwargs):
-        try:
-            send_email(request=request, user=request.user,
-                       thread=False, task=2)
-            return Response({'info': 'Email sent.'}, status=HTTP_200_OK)
-        except:
-            return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
+        user = User.objects.get(username=request.user)
+        if user.is_verified and user.is_active:
+            try:
+                send_email(request=request, user=request.user,
+                           thread=False, task=2)
+                return Response({'info': 'Email sent.'}, status=HTTP_200_OK)
+            except:
+                return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)    
+        elif not user.is_active:
+            return Response({'info': 'This account cannot be verified because it has been deactivated by an administrator.'}, status=HTTP_403_FORBIDDEN)
+        elif not user.is_verified:
+            return Response({'info': 'This account has not been verified.'}, status=HTTP_403_FORBIDDEN)
 
 
 class PasswordReset(GenericAPIView):
