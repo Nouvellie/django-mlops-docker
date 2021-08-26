@@ -27,6 +27,7 @@ from rest_framework.status import (
     HTTP_201_CREATED,
     HTTP_202_ACCEPTED,
     HTTP_400_BAD_REQUEST,
+    HTTP_401_UNAUTHORIZED,
     HTTP_403_FORBIDDEN,
 )
 
@@ -135,6 +136,8 @@ class Verify(GenericAPIView):
     serializer_class = TokenInfoSerializer
 
     def get(self, request, format=None, *args, **kwargs):
+        if not User.objects.filter(username=request.user).exists():
+            return Response({'error': "The link must be requested while signed in.."}, status=HTTP_401_UNAUTHORIZED)
         user = User.objects.get(username=request.user)
         if user.is_verified and user.is_active:
             return Response({'info': 'This account has already been verified.'}, status=HTTP_202_ACCEPTED)
@@ -144,7 +147,8 @@ class Verify(GenericAPIView):
             send_email(request=request, user=request.user,
                        thread=False, task=1)
             return Response({'info': 'Email sent.'}, status=HTTP_200_OK)
-        except:
+        except Exception as e:
+            print(str(e))
             return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -172,9 +176,12 @@ class AccountVerification(GenericAPIView):
 class PasswordResetRequest(GenericAPIView):
     """Api that sends a link to the user's email to reset his password."""
 
+    permission_classes = (AllowAny,)
     serializer_class = TokenInfoSerializer
 
     def get(self, request, format=None, *args, **kwargs):
+        if not User.objects.filter(username=request.user).exists():
+            return Response({'error': "The link must be requested while signed in.."}, status=HTTP_401_UNAUTHORIZED)
         user = User.objects.get(username=request.user)
         if user.is_verified and user.is_active:
             try:

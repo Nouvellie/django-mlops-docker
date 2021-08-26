@@ -22,6 +22,7 @@ __logs__        =  {
         "Send email reset token/hash now.",
         "Verify/reset serializer validation.",
         "SQL query added.",
+        "Validation for get request without credentials."
     ],
     'todo':         True,
     'commit':       "",

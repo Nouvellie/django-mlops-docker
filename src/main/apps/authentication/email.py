@@ -71,6 +71,7 @@ def send_email(request: dict, user=None, thread: bool = True, task: int = 0) -> 
     user.pass_token = uuid.uuid4()
     user.pass_token_expiration = datetime.now(timezone.utc)
     user.save()
+    acc_hash = user.acc_hash
 # Account verification.
     if task == 1:
         relative_info = 'account_verification'

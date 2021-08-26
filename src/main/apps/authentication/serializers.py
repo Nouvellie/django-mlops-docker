@@ -118,12 +118,9 @@ class SignInSerializer(serializers.ModelSerializer):
             user.acc_hash = uuid.uuid4()
             user.acc_hash_expiration = datetime.now(timezone.utc)
             user.save()
-            if user.is_active and user.is_verified:
+            if user.is_active:
                 attrs.update({'user': user})
                 return super().validate(attrs)
-            elif user.is_active and not user.is_verified:
-                raise CustomError(
-                    detail={'error': "This account has not been verified."}, code=403)
             elif not user.is_active:
                 raise CustomError(
                     detail={'error': "This account has been deactivated by an administrator."}, code=403)
