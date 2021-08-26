@@ -38,7 +38,7 @@ class FashionMnistSerializer(serializers.Serializer):
         media_type = attrs.get('image').name.split(".")[-1]
         if not media_type.endswith("png"):
             raise CustomError(
-                detail="Only .png format will be accepted.", code=415)
+                detail={'error': "Only .png format will be accepted."}, code=415)
         return super().validate(attrs)
 
 
@@ -71,7 +71,7 @@ class ImdbSentimentSerializer(serializers.Serializer):
             if not media_type.endswith(('docx', 'txt', 'md')):
                 if not attrs.get('text'):
                     raise CustomError(
-                        detail="Only '.doc .txt or .md' format will be accepted.", code=415)
+                        detail={'error': "Only '.doc .txt or .md' format will be accepted."}, code=415)
                 else:
                     attrs.update({'review': attrs.get('text')})
             else:
@@ -80,7 +80,7 @@ class ImdbSentimentSerializer(serializers.Serializer):
             attrs.update({'review': attrs.get('text')})
         elif not attrs.get('file') and not attrs.get('text'):
             raise CustomError(
-                detail="You must send at least one. (text or file)", code=400)
+                detail={'error': "You must send at least one. (text or file)"}, code=400)
         return super().validate(attrs)
 
 
@@ -113,7 +113,7 @@ class StackoverflowSerializer(serializers.Serializer):
             if not media_type.endswith(('docx', 'txt', 'md')):
                 if not attrs.get('text'):
                     raise CustomError(
-                        detail="Only '.doc .txt or .md' format will be accepted.", code=415)
+                        detail={'error': "Only '.doc .txt or .md' format will be accepted."}, code=415)
                 else:
                     attrs.update({'code': attrs.get('text')})
             else:
@@ -122,7 +122,7 @@ class StackoverflowSerializer(serializers.Serializer):
             attrs.update({'code': attrs.get('text')})
         elif not attrs.get('file') and not attrs.get('text'):
             raise CustomError(
-                detail="You must send at least one. (text or file)", code=400)
+                detail={'error': "You must send at least one. (text or file)"}, code=400)
         return super().validate(attrs)
 
 
@@ -146,5 +146,5 @@ class CatsVsDogsSerializer(serializers.Serializer):
         media_type = attrs.get('image').name.split(".")[-1]
         if not media_type.endswith("jpg"):
             raise CustomError(
-                detail="Only .jpg format will be accepted.", code=415)
+                detail={'error': "Only .jpg format will be accepted."}, code=415)
         return super().validate(attrs)

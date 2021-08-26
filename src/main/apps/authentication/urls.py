@@ -1,4 +1,7 @@
 from .views import (
+    AccountVerification,
+    PasswordReset,
+    PasswordResetRequest,
     SignIn,
     SignUp,
     TokenInfoOut,
@@ -6,7 +9,6 @@ from .views import (
     UserInfoIn,
     UserInfoOut,
     Verify,
-    AccountVerification,
 )
 from django.urls import path
 
@@ -58,5 +60,15 @@ urlpatterns = [
         'account-verification',
         AccountVerification.as_view(),
         name='account_verification',
+    ),
+    path(
+        'reset',
+        PasswordResetRequest.as_view(),
+        name='reset',
+    ),
+    path(
+        'password-reset',
+        PasswordReset.as_view(),
+        name='password_reset',
     ),
 ]

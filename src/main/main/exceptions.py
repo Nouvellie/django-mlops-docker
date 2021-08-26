@@ -17,5 +17,6 @@ class CustomError(APIException):
         return super(CustomError, cls).__new__(cls, *args, **kwargs)
 
     def __init__(self, detail: str = DEFAULT_DETAIL, code: status = DEFAULT_CODE) -> response:
-        self.detail = {'error': detail}
+        # self.detail = {'error': detail}
+        self.detail = detail
         self.status_code = code

@@ -1,4 +1,16 @@
 # __logs__        =  {
+#     'version':      "0.23.0",
+#     'date':         "08/25/2021",
+#     'info':         [
+#         "Account verification serializer updated.",
+#         "Get_user removed. (user.exists())",
+#     ],
+#     'todo':         True,
+#     'commit':       "3b7b5a6",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
 #     'version':      "0.22.0",
 #     'date':         "08/23/2021",
 #     'info':         [

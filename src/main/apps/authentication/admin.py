@@ -8,22 +8,22 @@ class UserAdminConfig(UserAdmin):
 
     ordering = ['-created_at']
     list_display = ('username', 'email', 'is_active',
-                    'is_verified', 'is_staff', 'is_superuser', 'acc_hash')
+                    'is_verified', 'is_staff', 'is_superuser', 'acc_hash', 'acc_has_expiration', 'pass_token', 'pass_token_expiration')
     list_filder = ('username', 'email', 'is_active',
-                   'is_verified', 'is_staff', 'is_superuser', 'acc_hash')
+                   'is_verified', 'is_staff', 'is_superuser', 'acc_hash', 'acc_has_expiration', 'pass_token', 'pass_token_expiration')
     search_fields = ('username', 'email')
 
     fieldsets = (
         (None, {'fields': ('first_name', 'last_name', 'email')}),
         ('Permission', {'fields': ('is_active',
-                                   'is_verified', 'is_staff', 'is_superuser', 'acc_hash')}),
+                                   'is_verified', 'is_staff', 'is_superuser', 'acc_hash', 'acc_has_expiration', 'pass_token', 'pass_token_expiration')}),
         ('Dates', {'fields': ('last_login',)}),
     )
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'first_name', 'password1', 'password2', 'is_active', 'is_verified', 'is_staff', 'acc_hash')}
+            'fields': ('username', 'email', 'first_name', 'password1', 'password2', 'is_active', 'is_verified', 'is_staff', 'acc_hash', 'acc_has_expiration', 'pass_token', 'pass_token_expiration')}
          ),
     )
 

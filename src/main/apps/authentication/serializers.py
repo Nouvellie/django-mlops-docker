@@ -1,6 +1,11 @@
 import uuid
 
 from .models import User
+from datetime import (
+    datetime,
+    timedelta,
+    timezone,
+)
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.signals import user_logged_in
@@ -80,22 +85,22 @@ class SignUpSerializer(serializers.ModelSerializer):
     def validate(self, attrs: Generic[API_INPUTS]) -> Generic[API_INPUTS]:
         """SignUp data validation."""
         if attrs['password'] != attrs['password2']:
-            raise CustomError(detail="Password fields didn't match.", code=400)
+            raise CustomError(detail={'error': "Password fields didn't match."}, code=400)
         if attrs['username'] == attrs['password']:
             raise CustomError(
-                detail="For your security the username and password cannot be the same.", code=403)
+                detail={'error': "For your security the username and password cannot be the same."}, code=403)
         if attrs['password'] == attrs['email'].split("@")[0]:
             raise CustomError(
-                detail="For your security the email and password cannot be the same.", code=403)
+                detail={'error': "For your security the email and password cannot be the same."}, code=403)
         if attrs['password'].startswith(str(attrs['email'].split("@")[0][:4])):
             raise CustomError(
-                detail="For your security, the password cannot contain your e-mail address.", code=403)
+                detail={'error': "For your security, the password cannot contain your e-mail address."}, code=403)
         if attrs['password'].startswith(str(attrs['username'][:4])):
             raise CustomError(
-                detail="For your security, the password cannot contain your username.", code=403)
+                detail={'error': "For your security, the password cannot contain your username."}, code=403)
         if attrs['username'] == attrs['email'].split("@")[0]:
             raise CustomError(
-                detail="For your security the username and email address cannot be the same.", code=403)
+                detail={'error': "For your security the username and email address cannot be the same."}, code=403)
         # Validation @email.
         # if attrs['email'].split("@")[1].split(".")[0].lower() != 'nouvellie':
         #     raise CustomError(
@@ -111,6 +116,7 @@ class SignInSerializer(serializers.ModelSerializer):
         write_only=True,
         label="Password",
         trim_whitespace=False,
+        validators=[validate_password],
         style={'input_type': 'password', }
     )
 
@@ -122,17 +128,20 @@ class SignInSerializer(serializers.ModelSerializer):
         """SignIn data validation."""
         user = authenticate(**attrs)
         if user:
+            user.acc_hash = uuid.uuid4
+            user.acc_has_expiration = datetime.now(timezone.utc)
+            user.save()
             if user.is_active and user.is_verified:
                 attrs.update({'user': user})
                 return super().validate(attrs)
             elif user.is_active and not user.is_verified:
                 raise CustomError(
-                    detail="This account has not been verified.", code=403)
+                    detail={'error': "This account has not been verified."}, code=403)
             elif not user.is_active:
                 raise CustomError(
-                    detail="This account has been deactivated by an administrator.", code=403)
+                    detail={'error': "This account has been deactivated by an administrator."}, code=403)
         else:
-            raise CustomError(detail="Incorrect credentials.", code=401)
+            raise CustomError(detail={'error': "Incorrect credentials."}, code=401)
 
     def get_user(self):
         """Return User."""
@@ -165,17 +174,19 @@ class AccountVerificationSerializer(serializers.ModelSerializer):
         acc_hash = attrs['acc_hash']
         if not User.objects.filter(acc_hash=acc_hash).exists():
             raise CustomError(
-                detail="The verification link is invalid, please request a new one.", code=403)
-        else:
-            user = User.objects.get(acc_hash=acc_hash)
+                detail={'error': "The verification link is invalid, please request a new one."}, code=403)
+        
+        user = User.objects.get(acc_hash=acc_hash)
         if not user.is_active:
             raise CustomError(
-                detail="This account cannot be verified because it has been deactivated by an administrator.", code=403)
+                detail={'error': "This account cannot be verified because it has been deactivated by an administrator."}, code=403)
         elif user.is_verified:
             raise CustomError(
-                detail="This account has already been verified.", code=208)
+                detail={'error': "This account has already been verified."}, code=208)
         else:
             user.is_verified = True
+            user.acc_hash = uuid.uuid4
+            user.acc_has_expiration = datetime.now(timezone.utc)
             user.save()
             return super().validate(attrs)
 
@@ -185,9 +196,36 @@ class PasswordResetSerializer(serializers.ModelSerializer):
     pass_token = serializers.CharField(
         write_only=True,
         label="PassToken",
-        help_text="Hash link sent to email."
+    )
+    password = serializers.CharField(
+        write_only=True,
+        label="NewPassword",
+        trim_whitespace=False,
+        validators=[validate_password],
+        style={'input_type': 'password', }
     )
 
     class Meta:
         model = User
-        fields = ('pass_token',)
+        fields = ('pass_token', 'password')
+
+    def validate(self, attrs):
+        if not User.objects.filter(pass_token=attrs['pass_token']).exists():
+            raise CustomError(
+                detail={'error': "The token is invalid, please request a new one."}, code=403)
+        user = User.objects.get(pass_token=attrs['pass_token'])
+        if attrs['password'] == user.email.split("@")[0]:
+            raise CustomError(
+                detail={'error': "For your security the email and password cannot be the same."}, code=403)
+        if attrs['password'].startswith(str(user.email.split("@")[0][:4])):
+            raise CustomError(
+                detail={'error': "For your security, the password cannot contain your email address."}, code=403)
+        if attrs['password'].startswith(str(user.username[:4])):
+            raise CustomError(
+                detail={'error': "For your security, the password cannot contain your username."}, code=403)
+        user.set_password(attrs['password'])
+        user.pass_token = uuid.uuid4
+        user.pass_token_expiration = datetime.now(timezone.utc)
+        user.save()
+
+        return super().validate(attrs)

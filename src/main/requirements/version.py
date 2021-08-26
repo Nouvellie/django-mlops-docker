@@ -6,13 +6,16 @@ __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - bool(todo) - str(commit) - none-bool(prod)"
-__version__     =     "0.23.0"
+__version__     =     "0.24.0"
 __logs__        =  {
-    'version':      "0.23.0",
-    'date':         "08/25/2021",
+    'version':      "0.24.0",
+    'date':         "08/26/2021",
     'info':         [
-        "Account verification serializer updated.",
-        "Get_user removed. (user.exists())",
+        "Password reset API/serializer ready.",
+        "Custom exception dict adaptation.",
+        "Account verification function removed.",
+        "New user attributes. (pass_token, and expiration hashes)",
+        "Hashtags are renewed every time they are used.",
     ],
     'todo':         True,
     'commit':       "",

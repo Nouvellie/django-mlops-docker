@@ -3,6 +3,7 @@ import re
 from .email import send_email
 from .serializers import (
     AccountVerificationSerializer,
+    PasswordResetSerializer,
     SignInSerializer,
     SignUpSerializer,
     UserInfoSerializer,
@@ -10,7 +11,6 @@ from .serializers import (
     TokenInfoSerializer,
 )
 from .token import (
-    account_verification,
     check_token,
     get_token,
     refresh_token,
@@ -26,12 +26,8 @@ from rest_framework.status import (
     HTTP_201_CREATED,
     HTTP_202_ACCEPTED,
     HTTP_400_BAD_REQUEST,
-    HTTP_401_UNAUTHORIZED,
     HTTP_403_FORBIDDEN,
-    HTTP_404_NOT_FOUND,
-    HTTP_426_UPGRADE_REQUIRED,
 )
-from rest_framework.views import APIView
 
 
 class SignUp(GenericAPIView):
@@ -44,7 +40,7 @@ class SignUp(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
-            send_email(request=request, user=user, thread=True)
+            send_email(request=request, user=user, thread=True, task=1)
             return Response({
                 "credentials": UserSerializer(user, context=self.get_serializer_context()).data,
                 "token": get_token(user),
@@ -132,13 +128,13 @@ class TokenInfoIn(RetrieveAPIView):
 
 
 class Verify(GenericAPIView):
-    """Api that sends a link to the user's email to validate the account."""
+    """Api that sends a link to the user's email to validate their account."""
 
     serializer_class = TokenInfoSerializer
 
     def get(self, request, format=None, *args, **kwargs):
         try:
-            send_email(request=request, user=request.user, thread=False)
+            send_email(request=request, user=request.user, thread=False, task=1)
             return Response({'info': 'Email sent.'}, status=HTTP_200_OK)
         except:
             return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
@@ -160,4 +156,39 @@ class AccountVerification(GenericAPIView):
             if serializer.is_valid(raise_exception=True):
                 return Response({'info': 'Account successfully verified!'}, status=HTTP_202_ACCEPTED)
         else:
-            return Response({'error': 'The account must be verified with the link sent to the following e-mail address.'}, status=HTTP_400_BAD_REQUEST)
+            return Response({'error': 'The account must be verified with the link sent to the registered email address.'}, status=HTTP_400_BAD_REQUEST)
+
+
+class PasswordResetRequest(GenericAPIView):
+    """Api that sends a link to the user's email to reset his password."""
+
+    serializer_class = TokenInfoSerializer
+
+    def get(self, request, format=None, *args, **kwargs):
+        try:
+            send_email(request=request, user=request.user, thread=False, task=2)
+            return Response({'info': 'Email sent.'}, status=HTTP_200_OK)
+        except:
+            return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
+
+
+class PasswordReset(GenericAPIView):
+    """API to change the password using a temporary token."""
+    
+    permission_classes = (AllowAny,)
+    serializer_class = PasswordResetSerializer
+
+    def get(self, request, format=None, *args, **kwargs):
+        pass_token = self.request.GET.get('token')
+        password = self.request.GET.get('password')
+        if pass_token and password:
+            regex = re.compile("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\Z", re.I)
+            if not bool(regex.match(pass_token)):
+                return Response({'error': "The password reset link is invalid, please request a new one."}, status=HTTP_403_FORBIDDEN)
+            serializer = serializer = self.get_serializer(data={'pass_token': pass_token, 'password': password})
+            if serializer.is_valid(raise_exception=True):
+                return Response({'info': 'Password successfully reset!'}, status=HTTP_202_ACCEPTED)
+        if not password:
+            return Response({'error': 'The new password must be sent.'}, status=HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'The password must be reset with the link sent to the registered email address.'}, status=HTTP_400_BAD_REQUEST)
