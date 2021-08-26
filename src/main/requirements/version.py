@@ -16,6 +16,7 @@ __logs__        =  {
         "Account verification function removed.",
         "New user attributes. (pass_token, and expiration hashes)",
         "Hashtags are renewed every time they are used.",
+        "PEP8 and typing adapted.",
     ],
     'todo':         True,
     'commit':       "",

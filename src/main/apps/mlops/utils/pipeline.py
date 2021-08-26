@@ -3,7 +3,6 @@ import json
 from collections import OrderedDict
 from pathlib import Path
 from typing import (
-    Any,
     Generic,
     List,
     Optional,
@@ -40,7 +39,7 @@ class Pipeline:
     def __init__(self, pipeline: Optional[List[Tuple[str, dict]]] = None) -> None:
         self.pipeline = pipeline if pipeline else []
 
-    def __call__(self, model_input: Any) -> Any:
+    def __call__(self, model_input: any) -> any:
         """Apply pipeline to the input 'x'."""
         for pipe in self.pipeline:
             func_name, *args, kwargs = pipe
@@ -55,7 +54,7 @@ class Pipeline:
         return model_input
 
     @classmethod
-    def apply(cls, model_input: Any, func_name: Any, *args, **kwargs) -> Any:
+    def apply(cls, model_input: any, func_name: any, *args, **kwargs) -> any:
         """Compute func(x, *args, **kwargs)"""
         if func_name in cls.FUNCTIONS_PIPELINE:
             return cls.FUNCTIONS_PIPELINE[func_name](model_input, *args, **kwargs)

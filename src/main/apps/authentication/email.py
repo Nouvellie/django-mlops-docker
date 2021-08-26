@@ -14,9 +14,7 @@ from main.exceptions import CustomError
 from main.settings import DEBUG
 from threading import Thread
 from typing import (
-    Dict,
     Generic,
-    List,
     TypeVar,
 )
 SELFCLASS = TypeVar('SELFCLASS')
@@ -42,9 +40,9 @@ class EmailPreparation:
     """Preparation class for sending e-mails at the thread level."""
 
     @staticmethod
-    def send(data: List, thread: bool) -> None:
+    def send(data: list, thread: bool) -> None:
         """Send all the necessary parameters that make up the e-mail."""
-        
+
         email = EmailMessage(
             subject=data['subject'], body=data['body'], to=[data['to']])
         if thread:
@@ -54,7 +52,7 @@ class EmailPreparation:
             email.send()
 
 
-def send_email(request: Dict, user=None, thread: bool=True, task: int = 0) -> None:
+def send_email(request: dict, user=None, thread: bool = True, task: int = 0) -> None:
     if user:
         acc_hash = str(user.acc_hash)
         username = str(user.username)
@@ -63,7 +61,6 @@ def send_email(request: Dict, user=None, thread: bool=True, task: int = 0) -> No
         acc_hash = str(request.user.acc_hash)
         username = str(request.user.username)
         email = str(request.user.email)
-    # user = User.objects.get(username=username)
 # Account verification.
     if task == 1:
         user = User.objects.get(username=username)

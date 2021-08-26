@@ -12,17 +12,7 @@ from django.contrib.auth.signals import user_logged_in
 from main.exceptions import CustomError
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
-from typing import (
-    Dict,
-    Generic,
-    List,
-    TypeVar,
-)
-from typing import (
-    Generic,
-    TypeVar,
-)
-API_INPUTS = TypeVar('API_INPUTS')
+
 
 # HELP TEXT.
 FASHION_MNIST_HELP_TEXT = f"Please enter an image to process with FashionMnist model. The filename cannot be longer than 50 characters and only .png format will be accepted."
@@ -70,7 +60,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'password', 'password2',)
 
-    def create(self, validated_data: Generic[API_INPUTS]) -> User:
+    def create(self, validated_data: dict) -> User:
         """User creation."""
         password = validated_data.pop('password', None)
         validated_data.pop('password2', None)
@@ -82,7 +72,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         Token.objects.create(user=user)
         return user
 
-    def validate(self, attrs: Generic[API_INPUTS]) -> Generic[API_INPUTS]:
+    def validate(self, attrs: dict) -> dict:
         """SignUp data validation."""
         if attrs['password'] != attrs['password2']:
             raise CustomError(detail={'error': "Password fields didn't match."}, code=400)
@@ -124,7 +114,7 @@ class SignInSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'password',)
 
-    def validate(self, attrs: Generic[API_INPUTS]) -> Generic[API_INPUTS]:
+    def validate(self, attrs: dict) -> dict:
         """SignIn data validation."""
         user = authenticate(**attrs)
         if user:
@@ -143,7 +133,7 @@ class SignInSerializer(serializers.ModelSerializer):
         else:
             raise CustomError(detail={'error': "Incorrect credentials."}, code=401)
 
-    def get_user(self):
+    def get_user(self) -> User:
         """Return User."""
         return list(self.validated_data.items())[-1][1]
 
@@ -169,7 +159,7 @@ class AccountVerificationSerializer(serializers.ModelSerializer):
         model = User
         fields = ('acc_hash',)
 
-    def validate(self, attrs: Generic[API_INPUTS]) -> Generic[API_INPUTS]:
+    def validate(self, attrs: dict) -> dict:
         """Hash validation."""
         acc_hash = attrs['acc_hash']
         if not User.objects.filter(acc_hash=acc_hash).exists():
@@ -209,7 +199,7 @@ class PasswordResetSerializer(serializers.ModelSerializer):
         model = User
         fields = ('pass_token', 'password')
 
-    def validate(self, attrs):
+    def validate(self, attrs: dict) -> dict:
         if not User.objects.filter(pass_token=attrs['pass_token']).exists():
             raise CustomError(
                 detail={'error': "The token is invalid, please request a new one."}, code=403)
@@ -227,5 +217,4 @@ class PasswordResetSerializer(serializers.ModelSerializer):
         user.pass_token = uuid.uuid4
         user.pass_token_expiration = datetime.now(timezone.utc)
         user.save()
-
         return super().validate(attrs)

@@ -5,7 +5,6 @@ from django.utils.translation import gettext as _
 from math import floor
 from pathlib import Path
 from typing import (
-    Dict,
     Generic,
     List,
     Optional,
@@ -51,7 +50,7 @@ class OutputDecoder:
             threshold=self.threshold
         )
 
-    def decode_by_argmax(self, list_output: List[float]) -> List:
+    def decode_by_argmax(self, list_output: List[float]) -> list:
         """Output decoding via argmax."""
         if len(list_output) == 1 and list_output[0] > 0.5:
             output_decoded = [self.ordered_model_output[0]]
@@ -65,7 +64,7 @@ class OutputDecoder:
             model_output_pos = np.argmax(list_output)
         return output_decoded, model_output_pos
 
-    def decode_by_threshold(self, list_output: List[float]) -> List:
+    def decode_by_threshold(self, list_output: List[float]) -> list:
         """Output decoding via threshold."""
         if len(list_output) == 1 and list_output[0] > 0.5:
             output_decoded = [self.ordered_model_output[0]]
@@ -87,7 +86,7 @@ class OutputDecoder:
             return output_decoded, _
         return output_decoded, model_output_pos
 
-    def output_decoding(self, model_output: np.ndarray, confidence: bool = False) -> Dict:
+    def output_decoding(self, model_output: np.ndarray, confidence: bool = False) -> dict:
         """Decode the model output.
         Args:
                 model_output (np.array): Output of a keras model.

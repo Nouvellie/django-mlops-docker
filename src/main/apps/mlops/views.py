@@ -1,8 +1,3 @@
-import os
-import re
-import time
-import traceback
-
 from .serializers import (
     FASHION_MNIST_HELP_TEXT,
     FashionMnistSerializer,
@@ -37,7 +32,6 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
     HTTP_426_UPGRADE_REQUIRED,
 )
-from rest_framework.views import APIView
 
 ######################## PRELOADED MODELS ########################
 

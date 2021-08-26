@@ -10,9 +10,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authtoken.models import Token
 from typing import (
-    Dict,
     Generic,
-    List,
     TypeVar,
 )
 NEWUSER = TypeVar('NEWUSER')
@@ -35,8 +33,7 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-
-    def create_superuser(self, username, email, password, **other_fields):
+    def create_superuser(self, username: str, email: str, password: str, **other_fields) -> Generic[NEWUSER]:
 
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
@@ -55,8 +52,7 @@ class UserManager(BaseUserManager):
 
         return self.create_user(username, email, password, **other_fields)
 
-
-    def create_staffuser(self, username, email, password, **other_fields):
+    def create_staffuser(self, username: str, email: str, password: str, **other_fields) -> Generic[NEWUSER]:
 
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', False)
@@ -89,7 +85,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     acc_hash = models.CharField(unique=True, default=uuid.uuid4, max_length=40)
     acc_has_expiration = models.DateTimeField(default=timezone.now)
-    pass_token = models.CharField(unique=True, default=uuid.uuid4, max_length=40)
+    pass_token = models.CharField(
+        unique=True, default=uuid.uuid4, max_length=40)
     pass_token_expiration = models.DateTimeField(default=timezone.now)
     is_verified = models.BooleanField(
         default=False,

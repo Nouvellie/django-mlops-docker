@@ -134,7 +134,8 @@ class Verify(GenericAPIView):
 
     def get(self, request, format=None, *args, **kwargs):
         try:
-            send_email(request=request, user=request.user, thread=False, task=1)
+            send_email(request=request, user=request.user,
+                       thread=False, task=1)
             return Response({'info': 'Email sent.'}, status=HTTP_200_OK)
         except:
             return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
@@ -149,10 +150,12 @@ class AccountVerification(GenericAPIView):
     def get(self, request, format=None, *args, **kwargs):
         acc_hash = self.request.GET.get('verify')
         if acc_hash:
-            regex = re.compile("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\Z", re.I)
+            regex = re.compile(
+                "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\Z", re.I)
             if not bool(regex.match(acc_hash)):
                 return Response({'error': "The verification link is invalid, please request a new one."}, status=HTTP_403_FORBIDDEN)
-            serializer = serializer = self.get_serializer(data={'acc_hash': acc_hash})
+            serializer = serializer = self.get_serializer(
+                data={'acc_hash': acc_hash})
             if serializer.is_valid(raise_exception=True):
                 return Response({'info': 'Account successfully verified!'}, status=HTTP_202_ACCEPTED)
         else:
@@ -166,7 +169,8 @@ class PasswordResetRequest(GenericAPIView):
 
     def get(self, request, format=None, *args, **kwargs):
         try:
-            send_email(request=request, user=request.user, thread=False, task=2)
+            send_email(request=request, user=request.user,
+                       thread=False, task=2)
             return Response({'info': 'Email sent.'}, status=HTTP_200_OK)
         except:
             return Response({'error': 'There was a problem sending the email, try again in a moment.'}, status=HTTP_400_BAD_REQUEST)
@@ -174,7 +178,7 @@ class PasswordResetRequest(GenericAPIView):
 
 class PasswordReset(GenericAPIView):
     """API to change the password using a temporary token."""
-    
+
     permission_classes = (AllowAny,)
     serializer_class = PasswordResetSerializer
 
@@ -182,10 +186,12 @@ class PasswordReset(GenericAPIView):
         pass_token = self.request.GET.get('token')
         password = self.request.GET.get('password')
         if pass_token and password:
-            regex = re.compile("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\Z", re.I)
+            regex = re.compile(
+                "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\Z", re.I)
             if not bool(regex.match(pass_token)):
                 return Response({'error': "The password reset link is invalid, please request a new one."}, status=HTTP_403_FORBIDDEN)
-            serializer = serializer = self.get_serializer(data={'pass_token': pass_token, 'password': password})
+            serializer = serializer = self.get_serializer(
+                data={'pass_token': pass_token, 'password': password})
             if serializer.is_valid(raise_exception=True):
                 return Response({'info': 'Password successfully reset!'}, status=HTTP_202_ACCEPTED)
         if not password:

@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 *.DS_Store
 **/migrations/*
+**__pycache__*
 
 # C extensions
 *.so

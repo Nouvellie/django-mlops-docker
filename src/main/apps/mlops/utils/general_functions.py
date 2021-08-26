@@ -5,7 +5,6 @@ import unicodedata
 from bs4 import BeautifulSoup
 from pathlib import Path
 from typing import (
-    Dict,
     Generic,
     TypeVar,
 )
@@ -38,7 +37,7 @@ class ImdbSentimentTextModificator:
         self.misspelled_words_proofreader()
 
     @staticmethod
-    def get_abbreviations_wordlist() -> Dict:
+    def get_abbreviations_wordlist() -> dict:
         """Get abbreviations words from json."""
         with open(ABBREVIATIONS_WORDLIST_PATH, "r") as aw:
             abbreviations_wordlist = json.load(aw)

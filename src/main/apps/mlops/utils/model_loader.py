@@ -1,7 +1,5 @@
 import numpy as np
 import os
-import re
-import traceback
 
 from .file_loader import (
     CatsvsdogsFileLoader,
@@ -27,19 +25,16 @@ from tensorflow import (
 )
 from tensorflow.keras.models import model_from_json
 from typing import (
-    Any,
-    Dict,
     Generic,
-    List,
     TypeVar,
 )
-SelfClass = TypeVar('SelfClass')
+SELFCLASS = TypeVar('SELFCLASS')
 
 
 class BaseModelLoader(ABC):
     """Metaclass for defining the model loader."""
 
-    def __new__(cls, model_dir: str, *args, **kwargs) -> Generic[SelfClass]:
+    def __new__(cls, model_dir: str, *args, **kwargs) -> Generic[SELFCLASS]:
         return super(BaseModelLoader, cls).__new__(cls, *args, **kwargs)
 
     def __init__(self, model_dir: str) -> None:
@@ -82,7 +77,7 @@ class BaseModelLoader(ABC):
         else:
             pass
 
-    def generate_model_input(self, model_input: Any) -> List:
+    def generate_model_input(self, model_input: any) -> list:
         """From file -> array -> preprocessing -> model input."""
         model_input = self.file_loader(model_input)
         model_input = self.preprocessing(model_input)
@@ -95,7 +90,7 @@ class BaseModelLoader(ABC):
         pass
 
     @abstractmethod
-    def predict(self) -> Dict:
+    def predict(self, model_input: any, confidence: bool) -> dict:
         """With this function the inference of the model is generated."""
         pass
 
@@ -119,34 +114,28 @@ class TFLiteModelLoader(BaseModelLoader):
         self.output_details = self.interpreter.get_output_details()
         # print(f"The model {self.model_dir.title()} has been successfully pre-loaded. (TFLITE)")
 
-    def predict(self, model_input: Any, confidence: bool = False) -> Dict:
-        try:
-            model_input = self.generate_model_input(model_input)
+    def predict(self, model_input: any, confidence: bool = False) -> dict:
+        model_input = self.generate_model_input(model_input)
 
-            if self.model_type in (1, 4):
-                for i, j in enumerate(model_input):
-                    model_input_tensor = convert_to_tensor(
-                        np.array(j), np.float32)
-                    self.interpreter.set_tensor(
-                        self.input_details[i]['index'], model_input_tensor)
+        if self.model_type in (1, 4):
+            for i, j in enumerate(model_input):
+                model_input_tensor = convert_to_tensor(
+                    np.array(j), np.float32)
+                self.interpreter.set_tensor(
+                    self.input_details[i]['index'], model_input_tensor)
 
-            elif self.model_type in (2, 3):
-                for i, j in enumerate(model_input):
-                    self.interpreter.set_tensor(
-                        self.input_details[i]['index'], j)
+        elif self.model_type in (2, 3):
+            for i, j in enumerate(model_input):
+                self.interpreter.set_tensor(
+                    self.input_details[i]['index'], j)
 
-            self.interpreter.invoke()
+        self.interpreter.invoke()
 
-            prediction = self.interpreter.get_tensor(
-                self.output_details[0]['index'])
-            result = self.postprocessing.output_decoding(
-                model_output=prediction, confidence=confidence)
-            return result
-        except Exception as e:
-            if DEBUG:
-                full_traceback = re.sub(
-                    r"\n\s*", " || ", traceback.format_exc())
-                print(full_traceback, e)
+        prediction = self.interpreter.get_tensor(
+            self.output_details[0]['index'])
+        result = self.postprocessing.output_decoding(
+            model_output=prediction, confidence=confidence)
+        return result
 
 
 class HDF5JSONModelLoader(BaseModelLoader):
@@ -161,18 +150,12 @@ class HDF5JSONModelLoader(BaseModelLoader):
         self.model.load_weights(hdf5_path)
         # print(f"The model {self.model_dir.title()} has been successfully pre-loaded. (HDF5-JSON)")
 
-    def predict(self, model_input: Any, confidence: bool = False) -> Dict:
-        try:
-            model_input = self.generate_model_input(model_input)
-            prediction = self.model.predict(model_input)
-            result = self.postprocessing.output_decoding(
-                model_output=prediction, confidence=confidence)
-            return result
-        except Exception as e:
-            if DEBUG:
-                full_traceback = re.sub(
-                    r"\n\s*", " || ", traceback.format_exc())
-                print(full_traceback, e)
+    def predict(self, model_input: any, confidence: bool = False) -> dict:
+        model_input = self.generate_model_input(model_input)
+        prediction = self.model.predict(model_input)
+        result = self.postprocessing.output_decoding(
+            model_output=prediction, confidence=confidence)
+        return result
 
 
 class CheckpointModelLoader(BaseModelLoader):
@@ -181,5 +164,5 @@ class CheckpointModelLoader(BaseModelLoader):
     def model_preload(self) -> None:
         pass
 
-    def predict(self) -> Dict:
+    def predict(self, model_input: any, confidence: bool) -> dict:
         pass

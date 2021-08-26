@@ -15,20 +15,20 @@ from django.urls import path
 
 urlpatterns = [
 
-# SignUp:
+    # SignUp:
     path(
         'signup',
         SignUp.as_view(),
         name='signup',
     ),
-# SignIn:
+    # SignIn:
     path(
         'signin',
         SignIn.as_view(),
         name='signin',
     ),
 
-# INFO:
+    # INFO:
     path(
         'user-info-in',
         UserInfoIn.as_view(),
@@ -50,7 +50,7 @@ urlpatterns = [
         name='token_info_in',
     ),
 
-# ACCOUNT MANAGEMENT:
+    # ACCOUNT MANAGEMENT:
     path(
         'verify',
         Verify.as_view(),

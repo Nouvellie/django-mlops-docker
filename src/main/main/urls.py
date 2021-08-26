@@ -26,16 +26,16 @@ schema_view = get_schema_view(
 
 urlpatterns = [
 
-# Admin:
+    # Admin:
     path('nouve-admin/', admin.site.urls),
 
-# Core app:
+    # Core app:
     path(
         '',
         include('apps.core.urls'),
     ),
 
-# Apps:
+    # Apps:
     path(
         'mlops/',
         include('apps.mlops.urls'),
@@ -46,7 +46,7 @@ urlpatterns = [
         include('apps.authentication.urls'),
     ),
 
-# Swagger:
+    # Swagger:
     path(
         'swagger',
         schema_view.with_ui('swagger', cache_timeout=0),
