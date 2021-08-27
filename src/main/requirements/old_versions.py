@@ -1,4 +1,31 @@
 # __logs__        =  {
+#     'version':      "0.24.0",
+#     'date':         "08/26/2021",
+#     'info':         [
+#         "Password reset API/serializer ready.",
+#         "Custom exception dict adaptation.",
+#         "Account verification function removed.",
+#         "New user attributes. (pass_token, and expiration hashes)",
+#         "Hashtags are renewed every time they are used.",
+#         "PEP8 and typing adapted.",
+#         "CustomTokenAuthentication",
+#         "Email preparation function added.",
+#         "Send email reset token/hash now.",
+#         "Verify/reset serializer validation.",
+#         "SQL query added.",
+#         "Validation for get request without credentials.",
+#         "Swagger documentation added.",
+#         "Swagger postman json generator.",
+#         "UserInfoSerializer date format. OK",
+#         "Custom http 404/500 error.",
+#         "Swagger yaml on settings. OK",
+#     ],
+#     'todo':         True,
+#     'commit':       "69ba344",
+#     "prod":         None,
+# }
+
+# __logs__        =  {
 #     'version':      "0.23.0",
 #     'date':         "08/25/2021",
 #     'info':         [

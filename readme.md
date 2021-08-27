@@ -9,6 +9,8 @@
 - Class-Based-Views.
 - New versioning system.
 - Django Environ.
+- Django Rest Framework. (custom)
+- Django authentication. (rest)
 - Jupyter lab. (examples/creations)
 
 ## Run docker (two options)
@@ -32,6 +34,8 @@ $ docker-compose up --build
 - [Model Loader. (TFLite-HDF5JSON)](https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/apps/mlops/utils/model_loader.py)
 - [Versioning.](https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/main/version.py)
 - [Django Environ.](https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/main/.env)
+- [Rest authentication.](https://github.com/Nouvellie/django-mlops-docker/tree/main/src/main/apps/authentication)
+- [Custom exceptions.](https://github.com/Nouvellie/django-mlops-docker/blob/main/src/main/main/exceptions.py)
 - [Docker-compose.](https://github.com/Nouvellie/django-mlops-docker/blob/main/docker-compose.yml)
 - [DockerFile.](https://github.com/Nouvellie/django-mlops-docker/blob/main/Dockerfile)
 - [Nginx conf.](https://github.com/Nouvellie/django-mlops-docker/blob/main/config/nginx/conf.d/myproject.conf)
@@ -42,4 +46,5 @@ $ docker-compose up --build
 
 <br><br>
 ***Created by Nouvellie, 08/07/2021***<br>
-***Credits to Ávila Jorge, for all the help in machine learning, from scratch. [Github](https://github.com/jorgeavilacartes)***<br>
+***Credits to Ávila Jorge, for all the help in machine learning, from scratch. [Github.](https://github.com/jorgeavilacartes)***<br>
+***Credits to Truly Cryce, Serializers, auth and exceptions. [Github.](https://github.com/CryceTruly)***<br>

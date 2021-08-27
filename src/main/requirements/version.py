@@ -1,32 +1,17 @@
 __author__      =     "Rocuant Roberto"
 __created__     =     "08/07/2021" # MM/DD/YYYY
-__credits__     =     "Ávila Jorge (mlops app)"
+__credits__     =     "Ávila Jorge (mlops app), Truly Cryce (authentication app)"
 __copyright__   =     None
 __email__       =     "roberto.rocuantv@gmail.com"
 __maintainer__  =     "Rocuant Roberto"
 __prod__        =     None
 __structure__   =     "str(version) - str(date) - list(info) - bool(todo) - str(commit) - none-bool(prod)"
-__version__     =     "0.24.0"
+__version__     =     "0.25.0"
 __logs__        =  {
-    'version':      "0.24.0",
-    'date':         "08/26/2021",
+    'version':      "0.25.0",
+    'date':         "08/27/2021",
     'info':         [
-        "Password reset API/serializer ready.",
-        "Custom exception dict adaptation.",
-        "Account verification function removed.",
-        "New user attributes. (pass_token, and expiration hashes)",
-        "Hashtags are renewed every time they are used.",
-        "PEP8 and typing adapted.",
-        "CustomTokenAuthentication",
-        "Email preparation function added.",
-        "Send email reset token/hash now.",
-        "Verify/reset serializer validation.",
-        "SQL query added.",
-        "Validation for get request without credentials.",
-        "Swagger documentation added.",
-        "Swagger postman json generator.",
-        "UserInfoSerializer date format. OK",
-        "Custom http 404/500 error.",
+        "Main readme updated.",
     ],
     'todo':         True,
     'commit':       "",
@@ -36,14 +21,11 @@ __logs__        =  {
 TODO_TASKS = { # TASK-STATUS
     "DVC not implemented yet.": False,
     "Fix pipeline from_json.": False,
-    "Text classification model get Vectorized input. (not str).": False,
+    "Text classification model. (get Vectorized input not str).": False,
     "CheckpointModelLoader not created yet.": False,
     "DEBUG for emails url.": False,
     "SignIn swagger redirect.": False,
-    "Swagger yaml on settings.": False,
     "Html/css for emails.": False,
-    
-    "UserInfoSerializer date format.": True, 
 }
 
 full_info = {
