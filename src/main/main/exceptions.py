@@ -1,4 +1,7 @@
-from django.http import response
+from django.http import (
+    JsonResponse,
+    response,
+)
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import APIException
 from rest_framework import status
@@ -37,3 +40,18 @@ class CustomTokenAuthentication(TokenAuthentication):
                 detail={'error': 'This account has been deactivated by an administrator.'}, code=401)
 
         return (token.user, token)
+
+
+def http_404_not_found(request: any, exception: APIException) -> JsonResponse:
+    message = ("The endpoint is not found.")
+
+    response = JsonResponse(data={'error': message, 'status_code': 404})
+    response.status_code = 404
+    return response
+
+def http_500_internal_server_error(request: any) -> JsonResponse:
+    message = ("An error ocurred, it's on us.")
+
+    response = JsonResponse(data={'error': message, 'status_code': 500})
+    response.status_code = 500
+    return response

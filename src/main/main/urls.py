@@ -63,3 +63,6 @@ urlpatterns = [
         name='schema_redoc'
     ),
 ]
+
+handler404 = 'main.exceptions.http_404_not_found'
+handler500 = 'main.exceptions.http_500_internal_server_error'

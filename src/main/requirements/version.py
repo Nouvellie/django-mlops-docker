@@ -26,6 +26,7 @@ __logs__        =  {
         "Swagger documentation added.",
         "Swagger postman json generator.",
         "UserInfoSerializer date format. OK",
+        "Custom http 404/500 error.",
     ],
     'todo':         True,
     'commit':       "",
