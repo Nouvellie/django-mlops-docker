@@ -53,6 +53,11 @@ urlpatterns = [
         name='schema_swagger_ui'
     ),
     path(
+        'swagger/apis.json',
+        schema_view.without_ui(cache_timeout=0),
+        name='schema_swagger_ui'
+    ),
+    path(
         'docs',
         schema_view.with_ui('redoc', cache_timeout=0),
         name='schema_redoc'

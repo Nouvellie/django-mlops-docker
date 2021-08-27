@@ -100,7 +100,7 @@ class TFLiteFashionMnist(GenericAPIView):
                           HTTP_400_BAD_REQUEST]
         return Response(api_output[0], status=api_output[1])
 
-
+# from rest_framework.authentication import TokenAuthentication
 class HDF5JSONFashionMnist(GenericAPIView):
     """API for Fashion Mnist hdf5json model."""
 

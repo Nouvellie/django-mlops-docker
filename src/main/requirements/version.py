@@ -22,7 +22,10 @@ __logs__        =  {
         "Send email reset token/hash now.",
         "Verify/reset serializer validation.",
         "SQL query added.",
-        "Validation for get request without credentials."
+        "Validation for get request without credentials.",
+        "Swagger documentation added.",
+        "Swagger postman json generator.",
+        "UserInfoSerializer date format. OK",
     ],
     'todo':         True,
     'commit':       "",
@@ -38,7 +41,8 @@ TODO_TASKS = { # TASK-STATUS
     "SignIn swagger redirect.": False,
     "Swagger yaml on settings.": False,
     "Html/css for emails.": False,
-    "UserInfoSerializer date format.": False, 
+    
+    "UserInfoSerializer date format.": True, 
 }
 
 full_info = {
